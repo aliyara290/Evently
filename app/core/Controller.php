@@ -21,3 +21,5 @@ class Controller {
         exit();
     }
 }
+
+test
