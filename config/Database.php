@@ -31,5 +31,3 @@ class Database {
         return self::$instance->pdo;
     }
 }
-
-test
