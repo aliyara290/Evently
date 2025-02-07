@@ -119,3 +119,21 @@ document.getElementById('toggleSidebar').addEventListener('click', function() {
   document.getElementById('themeToggle').addEventListener('click', function() {
     document.body.classList.toggle('dark');
   });
+  document.addEventListener("DOMContentLoaded", () => {
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.getElementById("toggleSidebar");
+
+    toggleBtn.addEventListener("click", () => {
+        if (sidebar.classList.contains("-translate-x-full")) {
+            sidebar.classList.remove("-translate-x-full");
+            toggleBtn.classList.add("left-64");
+            toggleBtn.classList.remove("left-2");
+            toggleBtn.innerHTML = "◀"; 
+        } else {
+            sidebar.classList.add("-translate-x-full");
+            toggleBtn.classList.remove("left-64");
+            toggleBtn.classList.add("left-2");
+            toggleBtn.innerHTML = "▶"; 
+        }
+    });
+});
