@@ -12,3 +12,4 @@ $router->get("/", HomeController::class, "home");
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
 $router->dispatch();
+
