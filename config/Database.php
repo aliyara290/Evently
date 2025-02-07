@@ -24,7 +24,7 @@ class Database {
             echo "failed to connect: " . $e->getMessage();
         }
     }
-    public static function instance() {
+    public static function getInstance() {
         if(self::$instance === null) {
             self::$instance = new self();
         }
