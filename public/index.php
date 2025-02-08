@@ -22,7 +22,4 @@ $router->get("/organizer/category", OrganizerController::class, "Category_page")
 $router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 
-
-
-
 $router->dispatch();
