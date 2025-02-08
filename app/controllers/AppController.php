@@ -9,4 +9,7 @@ class AppController {
     public function forbidden() {
         View::render("forbidden");
     }
+    public function faqs() {
+        View::render("faqs");
+    }
 }
