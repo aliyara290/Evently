@@ -110,15 +110,6 @@ renderEvents(events);
 
 
 // event de sidebar
-document.getElementById('toggleSidebar').addEventListener('click', function() {
-    const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('hidden');
-  });
-  
-  // Toggle theme (light/dark)
-  document.getElementById('themeToggle').addEventListener('click', function() {
-    document.body.classList.toggle('dark');
-  });
   document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.getElementById("sidebar");
     const toggleBtn = document.getElementById("toggleSidebar");

@@ -13,4 +13,6 @@ $router->get("/", HomeController::class, "home");
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
 $router->get("/organizer/dashboard", OrganizerController::class, "page");
+$router->get("/organizer/category", OrganizerController::class, "Category_page");
+
 $router->dispatch();
