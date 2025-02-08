@@ -29,19 +29,19 @@
         <!-- Categories Table -->
         <div class="bg-white shadow-md rounded-md p-6">
             <h2 class="text-xl font-semibold mb-4">Category List</h2>
-            <table class="table-auto w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Name</th>
-                        <th class="border border-gray-300 px-4 py-2 text-center">Actions</th>
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                    <thead class="bg-gray-50">
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                        <tr class="hover:bg-gray-100">
-                            <td class="border border-gray-300 px-4 py-2">2</td>
-                            <td class="border border-gray-300 px-4 py-2">abdelouafi</td>
-                            <td class="border border-gray-300 px-4 py-2 text-center flex justify-center gap-2">
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 whitespace-nowrap">2</td>
+                            <td class="px-6 py-4 whitespace-nowrap">abdelouafi</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-center flex justify-center gap-2">
                                 <!-- Edit Button -->
                             <form action="../../../Controllers/update_category.php" method="POST" class="inline-block">
                                 <input type="hidden" name="category_id" value="#">
