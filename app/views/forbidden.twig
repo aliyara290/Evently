@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found & 403 Forbidden</title>
-    <link href="/assets/css/output.css" rel="stylesheet">
-</head>
-<body class="bg-gray-900 text-white flex items-center justify-center h-screen">
-    <div id="forbidden" class="text-center">
-        <h1 class="text-7xl font-bold text-red-500">Forbidden</h1>
-        <p class="text-xl mt-2">Access Denied! You don’t have permission to view this page.</p>
-        <a href="/" class="mt-4 inline-block px-6 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">Go Back</a>
-    </div>
-</body>
-</html>
+
+{% extends "./front/layouts/Base.twig"%}
+
+{% block content %}
+	<div class="text-[#101828] flex items-center justify-center py-24">
+		<div id="not-found" class="text-center">
+			<h1 class="text-7xl font-bold text-[#f05537]">Forbidden</h1>
+			<p class="text-xl mt-2">Access Denied! You don’t have permission to view this page.</p>
+			<a href="/" class="mt-4 inline-block px-6 py-2 text-white bg-[#f05537] rounded-lg hover:bg-[#d63621]">Go Home</a>
+		</div>
+	</div>
+{% endblock %}
