@@ -17,5 +17,8 @@ $router->get("/404", AppController::class, "notFound");
 $router->get("/register", AuthController::class, "register");
 $router->get("/organizer/dashboard", OrganizerController::class, "page");
 $router->get("/organizer/category", OrganizerController::class, "Category_page");
+$router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_page");
+
+
 
 $router->dispatch();

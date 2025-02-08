@@ -9,4 +9,7 @@ class OrganizerController {
     public function Category_page() {
         View::render("admin/Category");
     }
+    public function Mange_user_page() {
+        View::render("admin/Mange_user");
+    }
 }  
