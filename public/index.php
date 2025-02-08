@@ -24,4 +24,9 @@ $router->get("/organizer/category", OrganizerController::class, "Category_page")
 $router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 
+$router->get("/login", AuthController::class, "login");
+$router->get("/forgetPassword", AuthController::class, "forgetPassword");
+$router->get("/resetPassword", AuthController::class, "resetPassword");
+
+
 $router->dispatch();
