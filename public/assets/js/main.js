@@ -53,7 +53,7 @@ function renderCalendar() {
     const calendarDays = document.getElementById('calendarDays');
     const currentDate = new Date();
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-
+    
     let calendarHTML = '';
     for (let i = 1; i <= daysInMonth; i++) {
         const dayEvents = events.filter(event => new Date(event.date).getDate() === i);
@@ -128,12 +128,12 @@ document.getElementById('toggleSidebar').addEventListener('click', function() {
             sidebar.classList.remove("-translate-x-full");
             toggleBtn.classList.add("left-64");
             toggleBtn.classList.remove("left-2");
-            toggleBtn.innerHTML = "◀";
+            toggleBtn.innerHTML = "◀"; 
         } else {
             sidebar.classList.add("-translate-x-full");
             toggleBtn.classList.remove("left-64");
             toggleBtn.classList.add("left-2");
-            toggleBtn.innerHTML = "▶";
+            toggleBtn.innerHTML = "▶"; 
         }
     });
 });
