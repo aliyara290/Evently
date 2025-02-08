@@ -14,4 +14,7 @@ $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
 
 $router->get("/register", AuthController::class, "register");
+$router->get("/login", AuthController::class, "login");
+
+
 $router->dispatch();
