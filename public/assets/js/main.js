@@ -1,4 +1,22 @@
 let Evently;
+
+
+function togglePassword(id) {
+    const eye_slash = document.getElementById('eye-slash');
+    const eye = document.getElementById('eye');
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        eye_slash.classList.add('hidden');
+        eye.classList.remove('hidden');
+
+    } else {
+        input.type = "password";
+        eye_slash.classList.remove('hidden');
+        eye.classList.add('hidden');
+
+    }
+}
 let events = [
     { id: 1, title: 'Conférence Tech', date: '2025-02-15', location: 'Paris' },
     { id: 2, title: 'Workshop Design', date: '2025-02-20', location: 'Lyon' }
