@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&family=Unbounded:wght@200..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-unbounded: "Unbounded", sans-serif; 
+  --color-orange: #f05537;
+  --color-darkblue: #101828;
+  --color-darkblue: #101828;
+  --color-darkOrange: #b32a19;
+}
