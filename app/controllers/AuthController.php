@@ -12,4 +12,11 @@ class AuthController{
     public function login(){
         view::render("login");
     }
+    public function forgetPassword(){
+        view::render("forgetPassword");
+    }
+
+    public function resetPassword(){
+        view::render("resetPassword");
+    }
 }
