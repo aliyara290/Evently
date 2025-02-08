@@ -15,6 +15,8 @@ $router->get("/404", AppController::class, "notFound");
 
 $router->get("/register", AuthController::class, "register");
 $router->get("/login", AuthController::class, "login");
+$router->get("/forgetPassword", AuthController::class, "forgetPassword");
+$router->get("/resetPassword", AuthController::class, "resetPassword");
 
 
 $router->dispatch();
