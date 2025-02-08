@@ -53,7 +53,7 @@ function renderCalendar() {
     const calendarDays = document.getElementById('calendarDays');
     const currentDate = new Date();
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-    
+
     let calendarHTML = '';
     for (let i = 1; i <= daysInMonth; i++) {
         const dayEvents = events.filter(event => new Date(event.date).getDate() === i);
@@ -73,7 +73,7 @@ function renderCalendar() {
 
 function filterEvents() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = events.filter(event => 
+    const filtered = events.filter(event =>
         event.title.toLowerCase().includes(searchTerm) ||
         event.location.toLowerCase().includes(searchTerm)
     );
@@ -114,7 +114,7 @@ document.getElementById('toggleSidebar').addEventListener('click', function() {
     const sidebar = document.getElementById('sidebar');
     sidebar.classList.toggle('hidden');
   });
-  
+
   // Toggle theme (light/dark)
   document.getElementById('themeToggle').addEventListener('click', function() {
     document.body.classList.toggle('dark');
@@ -128,12 +128,31 @@ document.getElementById('toggleSidebar').addEventListener('click', function() {
             sidebar.classList.remove("-translate-x-full");
             toggleBtn.classList.add("left-64");
             toggleBtn.classList.remove("left-2");
-            toggleBtn.innerHTML = "◀"; 
+            toggleBtn.innerHTML = "◀";
         } else {
             sidebar.classList.add("-translate-x-full");
             toggleBtn.classList.remove("left-64");
             toggleBtn.classList.add("left-2");
-            toggleBtn.innerHTML = "▶"; 
+            toggleBtn.innerHTML = "▶";
         }
     });
 });
+
+
+
+function togglePassword(id) {
+    const eye_slash = document.getElementById('eye-slash');
+    const eye = document.getElementById('eye');
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+        input.type = "text";
+        eye_slash.classList.add('hidden');
+        eye.classList.remove('hidden');
+
+    } else {
+        input.type = "password";
+        eye_slash.classList.remove('hidden');
+        eye.classList.add('hidden');
+
+    }
+}
