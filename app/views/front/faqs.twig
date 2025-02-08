@@ -1,0 +1,131 @@
+{% extends "./layouts/Base.twig"%}
+
+{% block content %}
+<main class="w-11/12 mx-auto pt-4 pb-12 flex flex-col gap-10">
+	<div class="w-full">
+		<div class="flex justify-center py-6 pb-8">
+			<h2 class="font-unbounded text-3xl text-darkblue font-bold">FAQs</h2>
+		</div>
+		<div class="divide-y divide-gray-300 rounded-xl border border-gray-300 bg-white">
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden" open>
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">What types of events can I manage on this platform?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					You can manage a wide range of events, including conferences, webinars, concerts, corporate meetings, weddings, and more.
+				</p>
+			</details>
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">How can attendees register for an event?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					Attendees can register through a simple online form on the event page. Organizers can enable ticketing options and set registration limits.
+				</p>
+			</details>
+
+
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">Can I sell tickets through the platform?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					Yes, our platform allows you to sell tickets online with multiple payment options and track sales in real-time.
+				</p>
+			</details>
+
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">How do I manage event registrations?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					Our platform provides an easy-to-use dashboard where you can track attendee registrations, send confirmations, and manage guest lists.
+				</p>
+			</details>
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">Can I integrate this platform with other tools?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					Yes, our platform integrates with payment gateways, CRM systems, and marketing tools like MailChimp and Google Analytics.
+				</p>
+			</details>
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">Does the platform support virtual events?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					Yes, we offer integration with live-streaming tools and webinar platforms to host virtual and hybrid events.
+				</p>
+			</details>
+
+			<details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+				<summary class="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
+					<h2 class="text-lg font-medium">Is there a mobile app for managing events?</h2>
+					<span class="relative size-5 shrink-0">
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<svg xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100" fill="none" viewbox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</span>
+				</summary>
+				<p class="mt-4 leading-relaxed text-gray-700">
+					Yes, we provide a mobile app that allows you to manage events, track attendees, and send updates on the go.
+				</p>
+			</details>
+		</div>
+	</div>
+
+</main>
+
+{% endblock %}
