@@ -1,6 +1,7 @@
 -- Active: 1738852313284@@127.0.0.1@5432@Evently
 CREATE DATABASE evently_db
 
+
 CREATE TABLE role (
                       id SERIAL PRIMARY KEY,
                       name VARCHAR(50) CHECK (name IN ('admin', 'Participant', 'Organizer'))
