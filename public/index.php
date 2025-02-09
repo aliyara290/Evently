@@ -27,6 +27,6 @@ $router->get("/organizer/Event_management", OrganizerController::class, "Event_m
 $router->get("/login", AuthController::class, "login");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");
 $router->get("/resetPassword", AuthController::class, "resetPassword");
-
+ 
 
 $router->dispatch();
