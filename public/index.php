@@ -3,12 +3,12 @@ require __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . "/../config/Database.php";
 use App\Core\Router;
 use App\Middleware\AuthMiddleware;
-use App\Controllers\EventController;
-use App\Controllers\EventsController;
-use App\Controllers\HomeController;
-use App\Controllers\OrganizerController;
-use App\controllers\AuthController;
-use App\Controllers\AppController;
+use App\Controllers\Front\EventController;
+use App\Controllers\Front\EventsController;
+use App\Controllers\Front\HomeController;
+use App\Controllers\Front\OrganizerController;
+use App\controllers\Front\AuthController;
+use App\Controllers\Front\AppController;
 
 $router = new Router();
 
@@ -28,5 +28,6 @@ $router->get("/login", AuthController::class, "login");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");
 $router->get("/resetPassword", AuthController::class, "resetPassword");
  
+
 
 $router->dispatch();
