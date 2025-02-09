@@ -1,5 +1,5 @@
 <?php 
-namespace App\Controllers;
+namespace App\Controllers\Front;
 use App\Core\View;
 
 class AppController {

@@ -1,52 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Categories</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+{% block content %}
 
-</head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
-<div class="flex flex-col md:flex-row">
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-3xl font-bold text-center mb-8">Manage Categories</h1>
+<body class="flex flex-col md:flex-row">
+    <!-- Sidebar -->
+    {% include 'front/organizer/layout/sidebar.twig' %}
+    <!-- Main Content -->
+    <div class="flex-1 p-6 ml-64">
+        <!-- Header -->
+        {% include 'front/organizer/layout/header.twig' %}
         <!-- Add Category Form -->
         <div class="bg-white shadow-md rounded-md p-6 mb-6">
-            <h2 class="text-xl font-semibold mb-4">Add New Category</h2>
+            <h2 class="text-xl font-semibold mb-4">Ajouter une nouvelle catégorie</h2>
             <form action="./Category.php" method="POST" class="flex items-center gap-4">
-                <input type="text" name="category_name" placeholder="Enter category name" required 
+                <input type="text" name="category_name" placeholder="Entrez le nom de la catégorie" required 
                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <button type="submit" name="add_category" 
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                    Add
+                    Ajouter
                 </button>
             </form>
         </div>
-
+    
         <!-- Categories Table -->
         <div class="bg-white shadow-md rounded-md p-6">
-            <h2 class="text-xl font-semibold mb-4">Category List</h2>
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                    <thead class="bg-gray-50">
+            <h2 class="text-xl font-semibold mb-4">Liste des catégories</h2>
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap">2</td>
-                            <td class="px-6 py-4 whitespace-nowrap">abdelouafi</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center flex justify-center gap-2">
-                                <!-- Edit Button -->
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">2</td>
+                        <td class="px-6 py-4 whitespace-nowrap">Catégorie Exemple</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center flex justify-center gap-2">
+                            <!-- Edit Button -->
                             <form action="../../../Controllers/update_category.php" method="POST" class="inline-block">
                                 <input type="hidden" name="category_id" value="#">
-                                <input type="text" name="category_name" 
-                                    value="#" 
-                                    class="px-2 py-1 border border-gray-300 rounded-md">
+                                <input type="text" name="category_name" value="#"
+                                       class="px-2 py-1 border border-gray-300 rounded-md">
                                 <button type="submit" name="edit_category" 
                                         class="px-4 py-2 rounded-md hover:bg-yellow-600">
                                     <i class="fas fa-edit text-yellow-500"></i>
@@ -61,15 +55,11 @@
                                     <i class="fas fa-trash text-red-500"></i>
                                 </button>
                             </form>
-
-
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
+{% endblock %}
 
-</body>
-</html>
