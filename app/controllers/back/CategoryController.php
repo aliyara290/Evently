@@ -36,6 +36,21 @@ class CategoryController {
         $categoryData = $this->categoryClass->afficherCategories($this->connection);
         echo  $this->twig->render('front/organizer/Category.twig', ['categories' => $categoryData]);
     }
+    public function deleteCategory(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['category_id']) && is_numeric($_POST['category_id'])) {
+                $id = intval($_POST['category_id']); 
+               
+                $this->categoryClass->deleteCategory($this->connection, $id);
+                header("Location: /organizer/category"); 
+                exit();
+            } else {
+                die("ID invalide ou manquant.");
+            }
+        } else {
+            die("Méthode de requête non autorisée.");
+        }
+    }
     
 
    
