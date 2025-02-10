@@ -1,72 +1,78 @@
-<?php 
+<?php
+
 namespace App\Models;
+
 use App\Core\Models;
 use App\Core\Security;
 use App\Core\Validator;
 use Exception;
 
-abstract class User {
+ class User
+{
     protected $role;
     protected string $identifier;
-    protected string $fullName;
-    protected string $username;
+    protected ?string $firstName = null;
+    protected ?string $lastName = null;
+    protected ?string $username = null;
     protected string $email;
-    protected string $password;
+    protected ?string $password = null;
+    protected ?string $googleId = null;
+    protected ?string $avatar = null;
 
-    public function setRole(string $role) {
+    public function setRole($role): void {
         $this->role = $role;
     }
-    public function getRole() {
-        return $this->role;
-    }
-    public function setIdentifier(string $identifier) {
+
+    public function setIdentifier(string $identifier): void {
         $this->identifier = $identifier;
     }
-    public function getIdentifier() {
-        return $this->identifier;
+
+    public function setFirstName(string $firstName): void {
+        $this->firstName = $firstName;
     }
-    public function setFullName(string $fullName) {
-        $this->fullName = $fullName;
+
+    public function setLastName(string $lastName): void {
+        $this->lastName = $lastName;
     }
-    public function getFullName() {
-        return $this->fullName;
-    }
-    public function setUsername(string $username) {
+
+    public function setUsername(string $username): void {
         $this->username = $username;
     }
-    public function getUsername() {
-        return $this->username;
-    }
-    public function setEmail(string $email) {
+
+    public function setEmail(string $email): void {
         $this->email = $email;
     }
-    public function getEmail() {
-        return $this->email;
-    }
-    public function setPassword(string $password) {
+
+    public function setPassword(string $password): void {
         $this->password = $password;
     }
-    public function getPassword() {
-        return $this->password;
+
+    public function setGoogleId(string $googleId): void {
+        $this->googleId = $googleId;
     }
-    // create table users (
-    //     id int primary key auto_increment,
-    //     username varchar(50),
-    //     email varchar(50) unique,
-    //     password_hash varchar(255),
-    //     profile_picture varchar(50)
-    //     );
-    public function register() {
-        $fullName = Validator::sanitize($this->fullName);
-        $username = Validator::sanitize($this->username);
-        $email = Validator::validateEmail($this->email);
-        $password = Validator::validatePassword($this->password);
-        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+
+    public function setAvatar(string $avatar): void {
+        $this->avatar = $avatar;
+    }
+
+    public function register()
+    {
+        $firstName = $this->firstName;
+        $lastName = $this->lastName;
+        $username = $this->username;
+        $email = $this->email;
+        $password = $this->password;
+        if($password !== null) {
+            $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+        }
         $data = [
-            "name" => $fullName,
-            "username" => $username,
+            "firstName" => $firstName,
+            "lastName" => $lastName,
+            "userName" => $username,
             "email" => $email,
-            "password" => $passwordHash,
+            "password_hash" => $passwordHash,
+            "google_id" => $passwordHash,
+            "avatar" => $passwordHash,
         ];
         try {
             return Models::create("users", $data);
@@ -74,14 +80,21 @@ abstract class User {
             echo 'failde to insert data: ' . $e->getMessage();
         }
     }
-
-    public function login() {
-        $email = Validator::sanitize($this->email);
-        $password = Validator::validatePassword($this->password);
-        $role = Validator::sanitize($this->role);
-        $data = [
-            "email" => $email,
-            "password" => $password
-        ];
+    public function findByEmail($email) {
+        try {
+            return Models::readByCondition("users", "email", $email);
+        } catch(Exception $e) {
+            echo "failed to find the email: " . $e->getMessage();
+        }
     }
+    // public function login()
+    // {
+    //     $email = Validator::sanitize($this->email);
+    //     $password = Validator::validatePassword($this->password);
+    //     $role = Validator::sanitize($this->role);
+    //     $data = [
+    //         "email" => $email,
+    //         "password" => $password
+    //     ];
+    // }
 }

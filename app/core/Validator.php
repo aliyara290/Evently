@@ -4,7 +4,7 @@ namespace App\Core;
 class Validator {
 
     public static function sanitize($input) {
-        return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+        return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
     }
 
     public static function validateEmail($email) {
