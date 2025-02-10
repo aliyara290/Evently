@@ -99,19 +99,24 @@
 
 					<li>
 
-						<button class="circl_nv flex justify-center items-center w-[42px] h-[42px] bg-gray-200 hover:bg-gray-300 text-orange  rounded-full cursor-pointer ">
-							<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" class="size-5">
-								<path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"/>
-							</svg>
+						<button class="circl_nv flex justify-center items-center w-[42px] h-[42px] bg-gray-200 hover:bg-gray-300 text-orange rounded-full cursor-pointer overflow-hidden">
+							{% if avatar is not empty %}
+								<img class="w-full h-full object-cover" src="{{ avatar }}" alt="picture">
+							{% else %}
+								<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" class="size-5">
+									<path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"/>
+								</svg>
+							{% endif %}
 						</button>
+
 
 					</li>
 				</ul>
 				<div class="menu_nv absolute right-0 top-full bg-white border border-1 border-gray-300 hidden">
 					<ul class="w-60 flex flex-col">
 						<a href="/account/profile">
-							<li class="w-full py-3 px-4 hover:bg-gray-100 ">
-								<span>Maalainine Yara</span>
+							<li class="flex flex-col w-full py-3 px-4 hover:bg-gray-100 ">
+								<span>{{firstName}} {{lastName}} </span>
 								<span>@maalinineyara</span>
 							</li>
 						</a>

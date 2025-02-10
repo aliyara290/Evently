@@ -1,4 +1,6 @@
 <?php 
+session_start();
+// session_destroy();   
 require __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . "/../config/Database.php";
 use App\Core\Router;
@@ -28,6 +30,8 @@ $router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_pa
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 
 $router->get("/login", AuthController::class, "login");
+$router->get("/auth/google", AuthController::class, "googleLogin");
+$router->get("/auth/google-callback", AuthController::class, "googleCallback");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");
 $router->get("/resetPassword", AuthController::class, "resetPassword");
 
