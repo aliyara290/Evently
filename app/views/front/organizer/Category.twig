@@ -3,22 +3,25 @@
 <body class="flex flex-col md:flex-row">
     <!-- Sidebar -->
     {% include 'front/organizer/layout/sidebar.twig' %}
+
     <!-- Main Content -->
     <div class="flex-1 p-6 ml-64">
         <!-- Header -->
         {% include 'front/organizer/layout/header.twig' %}
+
         <!-- Add Category Form -->
         <div class="bg-white shadow-md rounded-md p-6 mb-6">
             <h2 class="text-xl font-semibold mb-4">Ajouter une nouvelle catégorie</h2>
             <form action="/Category" method="POST" class="flex items-center gap-4">
                 <input type="text" name="category_name" placeholder="Entrez le nom de la catégorie" required 
                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button href="/categoriesCreate" type="submit" name="add_category" 
+                <button type="submit" name="add_category" 
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                     Ajouter
                 </button>
             </form>
         </div>
+
         <!-- Categories Table -->
         <div class="bg-white shadow-md rounded-md p-6">
             <h2 class="text-xl font-semibold mb-4">Liste des catégories</h2>
@@ -31,38 +34,57 @@
                     </tr>
                 </thead>
                 <tbody>
-             {% for category in categories %}
-
+                    {% for category in categories %}
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 whitespace-nowrap">{{category.id}}</td>
                         <td class="px-6 py-4 whitespace-nowrap">{{category.name}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-center flex justify-center gap-2">
-                            <!-- Edit Button -->
-                            <form action="../../../Controllers/update_category.php" method="POST" class="inline-block">
-                                <input type="hidden" name="category_id" value="#">
-                                <input type="text" name="category_name" value="#"
-                                       class="px-2 py-1 border border-gray-300 rounded-md">
-                                <button type="submit" name="edit_category" 
-                                        class="px-4 py-2 rounded-md hover:bg-yellow-600">
-                                    <i class="fas fa-edit text-yellow-500"></i>
-                                </button>
-                            </form>
+                            <!-- Edit Button (Trigger Modal) -->
+                            <button class="edit-btn px-4 py-2 rounded-md hover:bg-yellow-600" 
+                                    data-id="{{category.id}}" data-name="{{category.name}}">
+                                <i class="fas fa-edit text-yellow-500"></i>
+                            </button>
 
                             <!-- Delete Form -->
                             <form action="/Category/delete" method="POST" class="inline-block">
                                 <input type="hidden" name="category_id" value="{{category.id}}">
                                 <button type="submit" name="delete_category" 
-                                        class="px-4 py-2 rounded-md hover:bg-red-600">
+                                        class="delete-btn px-4 py-2 rounded-md hover:bg-red-600">
                                     <i class="fas fa-trash text-red-500"></i>
                                 </button>
                             </form>
                         </td>
                     </tr>
-                    {%  endfor  %}
-
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-{% endblock %}
 
+    <!-- Modal for Updating Category -->
+    <div id="editModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-md w-96">
+            <h2 class="text-xl font-semibold mb-4">Modifier la catégorie</h2>
+            <form action="/category/update" method="POST">
+                <input type="hidden" name="category_id" id="modal_category_id" value="{{category.id}}">
+                <label for="modal_category_name" class="block text-sm font-medium text-gray-700">Nom de la catégorie</label>
+                <input type="text" name="category_name" id="modal_category_name" 
+                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="button" id="closeModalBtn" 
+                            class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500">
+                        Annuler
+                    </button>
+                    <button type="submit" name="edit_category" 
+                            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                        Modifier
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- External JavaScript -->
+<script src="/assets/js/script.js"></script>
+
+{% endblock %}

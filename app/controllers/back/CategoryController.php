@@ -36,6 +36,7 @@ class CategoryController {
         $categoryData = $this->categoryClass->afficherCategories($this->connection);
         echo  $this->twig->render('front/organizer/Category.twig', ['categories' => $categoryData]);
     }
+
     public function deleteCategory(){
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['category_id']) && is_numeric($_POST['category_id'])) {
@@ -51,6 +52,27 @@ class CategoryController {
             die("Méthode de requête non autorisée.");
         }
     }
+
+    public function updateCategory() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_POST['category_id']) || !isset($_POST['category_name'])) {
+                die("Données invalides.");
+            }
+    
+            $id = intval($_POST['category_id']); 
+            $newName = htmlspecialchars(trim($_POST['category_name'])); 
+    
+            if (empty($newName)) {
+                die("Le nom de la catégorie ne peut pas être vide.");
+            }
+    
+            
+            $this->categoryClass->updateCategory($this->connection, $id, $newName);
+            header('Location: /organizer/category');
+            exit();
+        }
+    }
+    
     
 
    

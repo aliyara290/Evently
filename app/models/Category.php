@@ -21,4 +21,12 @@ class Category {
         $stmt->bindParam(":id",$id, PDO::PARAM_INT);
         $stmt->execute();
     }
+    public function updateCategory($pdo, $id, $newName) {
+        $sql = "UPDATE categories SET name = :name WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':name', $newName, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    
 }
