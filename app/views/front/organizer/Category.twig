@@ -31,9 +31,11 @@
                     </tr>
                 </thead>
                 <tbody>
+             {% for category in categories %}
+
                     <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap">2</td>
-                        <td class="px-6 py-4 whitespace-nowrap">Catégorie Exemple</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{category.id}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{category.name}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-center flex justify-center gap-2">
                             <!-- Edit Button -->
                             <form action="../../../Controllers/update_category.php" method="POST" class="inline-block">
@@ -56,6 +58,8 @@
                             </form>
                         </td>
                     </tr>
+                    {%  endfor  %}
+
                 </tbody>
             </table>
         </div>

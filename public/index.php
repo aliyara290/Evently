@@ -41,5 +41,7 @@ $router->get("/404", AppController::class, "notFound");
 
 // backand router
 $router->post("/Category",CategoryController::class, "create");
+$router->get("/organizer/categories", CategoryController::class, "afficherCategories");
+// delete category
 
 $router->dispatch();
