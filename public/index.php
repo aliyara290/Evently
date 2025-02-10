@@ -13,6 +13,7 @@ use App\Controllers\Front\HomeController;
 use App\Controllers\Front\OrganizerController;
 use App\controllers\Front\AuthController;
 use App\Controllers\Front\AppController;
+use App\controllers\back\CategoryController;
 
 $router = new Router();
 
@@ -37,5 +38,8 @@ $router->get("/resetPassword", AuthController::class, "resetPassword");
 
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
+
+// backand router
+$router->post("/Category",CategoryController::class, "create");
 
 $router->dispatch();
