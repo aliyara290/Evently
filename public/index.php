@@ -9,6 +9,7 @@ use App\Controllers\Front\EventController;
 use App\Controllers\Front\EventsController;
 use App\Controllers\Front\SettingController;
 use App\Controllers\Front\UserProfileController;
+use App\Controllers\Front\CreateEventController;
 use App\Controllers\Front\HomeController;
 use App\Controllers\Front\OrganizerController;
 use App\controllers\Front\AuthController;
@@ -28,6 +29,7 @@ $router->get("/organizer/dashboard", OrganizerController::class, "page");
 $router->get("/organizer/category", OrganizerController::class, "Category_page");
 $router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
+$router->get("/organizer/create", CreateEventController::class, "page");
 
 $router->get("/login", AuthController::class, "login");
 $router->get("/auth/google", AuthController::class, "googleLogin");

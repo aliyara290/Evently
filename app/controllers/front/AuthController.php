@@ -25,7 +25,6 @@ class AuthController
         $this->userModel = new User();
     }
 
-
     public function googleLogin()
     {
         $authUrl = $this->client->createAuthUrl();
@@ -57,12 +56,14 @@ class AuthController
             $this->userModel->setAvatar($googleUser->picture);
             $this->userModel->register();
         }
-        Session::set("email", $googleUser->email);
-        Session::set("firstName", $googleUser->givenName);
-        Session::set("lastName", $googleUser->familyName);
-        Session::set("avatar", $googleUser->picture);
-        Session::set("id", $googleUser->id);
-
+        
+        Session::set("user", [
+            "id" => $googleUser->id,
+            "email" => $googleUser->email,
+            "firstName" => $googleUser->givenName,
+            "lastName" => $googleUser->familyName,
+            "avatar" => $googleUser->picture
+        ]);
         header('Location: /');
         exit();
     }
