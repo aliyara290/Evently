@@ -14,6 +14,8 @@ use App\Controllers\Front\HomeController;
 use App\Controllers\Front\OrganizerController;
 use App\controllers\Front\AuthController;
 use App\Controllers\Front\AppController;
+use App\Controllers\Front\AdminController;
+
 use App\controllers\back\CategoryController;
 
 $router = new Router();
@@ -27,8 +29,8 @@ $router->get("/account/profile", UserProfileController::class, "page");
 $router->get("/faqs", AppController::class, "faqs");
 $router->get("/register", AuthController::class, "register");
 $router->get("/organizer/dashboard", OrganizerController::class, "page");
-$router->get("/organizer/category", OrganizerController::class, "Category_page");
-$router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_page");
+$router->get("/admin/category", AdminController::class, "Category_page");
+$router->get("/admin/Mange_user", AdminController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
 
@@ -43,7 +45,7 @@ $router->get("/404", AppController::class, "notFound");
 
 // backand router
 $router->post("/Category",CategoryController::class, "create");
-$router->get("/organizer/category", CategoryController::class, "afficherCategories");
+$router->get("/admin/category", CategoryController::class, "afficherCategories");
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
 $router->post("/category/update",CategoryController::class, "updateCategory");
 

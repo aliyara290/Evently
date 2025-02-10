@@ -29,12 +29,12 @@ class CategoryController {
             $categoryValue = htmlspecialchars(trim($_POST['category_name']));
           
             $this->categoryClass->createCategory($this->connection, $categoryValue);
-            header('location: /organizer/category');
+            header('location: /admin/category');
         }
     }
     public function afficherCategories() {
         $categoryData = $this->categoryClass->afficherCategories($this->connection);
-        echo  $this->twig->render('front/organizer/Category.twig', ['categories' => $categoryData]);
+        echo  $this->twig->render('front/admin/Category.twig', ['categories' => $categoryData]);
     }
 
     public function deleteCategory(){
@@ -43,7 +43,7 @@ class CategoryController {
                 $id = intval($_POST['category_id']); 
                
                 $this->categoryClass->deleteCategory($this->connection, $id);
-                header("Location: /organizer/category"); 
+                header("Location: /admin/category"); 
                 exit();
             } else {
                 die("ID invalide ou manquant.");
@@ -68,7 +68,7 @@ class CategoryController {
     
             
             $this->categoryClass->updateCategory($this->connection, $id, $newName);
-            header('Location: /organizer/category');
+            header('Location: /admin/category');
             exit();
         }
     }
