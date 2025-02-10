@@ -8,11 +8,20 @@
 		<!-- Profile Card -->
 		<div class="bg-white border-2 border-gray-200 shadow-lg rounded-2xl p-8 flex flex-col items-center text-center">
 			<div class="relative">
-				<div class="w-28 h-28 rounded-full overflow-hidden border-4 border-gray-200 shadow-lg">
-					<img src="/assets/images/linkedin.jpg" alt="Maalainine Yara" class="w-full h-full object-cover">
+				<div class="text-orange bg-gray-200 border-2 border-gray-300 w-28 h-28 rounded-full overflow-hidden shadow-lg flex justify-center items-center">
+					{% if user["avatar"] is not empty %}
+						<img class="w-full h-full object-cover" src="{{ user['avatar'] }}" alt="User Avatar">
+					{% else %}
+						<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" class="size-17">
+							<path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"/>
+						</svg>
+					{% endif %}
 				</div>
 			</div>
-			<h1 class="text-2xl font-bold text-gray-900 mt-4">Maalainine Yara</h1>
+			<h1 class="text-2xl font-bold text-darkblue font-unbounded mt-4 ">
+				<span class="capitalize">{{ user["firstName"] }}
+					{{ user["lastName"] }}</span>
+			</h1>
 			<p class="text-gray-600 text-sm">Senior DevOps Engineer</p>
 			<p class="text-gray-700 text-sm mt-2 px-6">
 				Visionary and goal-oriented Director of Infrastructure Engineering with over 16 years of experience.
@@ -29,40 +38,40 @@
 		</div>
 
 		{# <div class="mt-10">
-				    <h2 class="text-2xl font-semibold text-gray-900 text-center">Courses Published</h2>
-				    <div class="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-				      <!-- Course Card -->
-				      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
-				        <a href="../course.php?id=11">
-				          <img src="../../../../uploads/679c09f134d93" alt="" class="w-full h-40 object-cover rounded-lg shadow">
-				        </a>
-				        <h3 class="text-lg font-medium text-gray-900 mt-3">
-				          <a href="../course.php?id=11">Building RESTful APIs with Laravel</a>
-				        </h3>
-				        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
-				      </div>
-				
-				      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
-				        <a href="../course.php?id=13">
-				          <img src="../../../../uploads/679c0a5f29b82" alt="" class="w-full h-40 object-cover rounded-lg shadow">
-				        </a>
-				        <h3 class="text-lg font-medium text-gray-900 mt-3">
-				          <a href="../course.php?id=13">React.js for Beginners</a>
-				        </h3>
-				        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
-				      </div>
-				
-				      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
-				        <a href="../course.php?id=16">
-				          <img src="../../../../uploads/679c0a806c1ae" alt="" class="w-full h-40 object-cover rounded-lg shadow">
-				        </a>
-				        <h3 class="text-lg font-medium text-gray-900 mt-3">
-				          <a href="../course.php?id=16">Cloud Computing Basics</a>
-				        </h3>
-				        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
-				      </div>
-				    </div>
-				  </div> #}
+								    <h2 class="text-2xl font-semibold text-gray-900 text-center">Courses Published</h2>
+								    <div class="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+								      <!-- Course Card -->
+								      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
+								        <a href="../course.php?id=11">
+								          <img src="../../../../uploads/679c09f134d93" alt="" class="w-full h-40 object-cover rounded-lg shadow">
+								        </a>
+								        <h3 class="text-lg font-medium text-gray-900 mt-3">
+								          <a href="../course.php?id=11">Building RESTful APIs with Laravel</a>
+								        </h3>
+								        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
+								      </div>
+								
+								      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
+								        <a href="../course.php?id=13">
+								          <img src="../../../../uploads/679c0a5f29b82" alt="" class="w-full h-40 object-cover rounded-lg shadow">
+								        </a>
+								        <h3 class="text-lg font-medium text-gray-900 mt-3">
+								          <a href="../course.php?id=13">React.js for Beginners</a>
+								        </h3>
+								        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
+								      </div>
+								
+								      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
+								        <a href="../course.php?id=16">
+								          <img src="../../../../uploads/679c0a806c1ae" alt="" class="w-full h-40 object-cover rounded-lg shadow">
+								        </a>
+								        <h3 class="text-lg font-medium text-gray-900 mt-3">
+								          <a href="../course.php?id=16">Cloud Computing Basics</a>
+								        </h3>
+								        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
+								      </div>
+								    </div>
+								  </div> #}
 	</div>
 
 {% endblock %}

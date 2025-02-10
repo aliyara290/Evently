@@ -62,17 +62,18 @@ use Exception;
         $username = $this->username;
         $email = $this->email;
         $password = $this->password;
+
         if($password !== null) {
-            $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+            $password = password_hash($password, PASSWORD_BCRYPT);
         }
         $data = [
             "firstName" => $firstName,
             "lastName" => $lastName,
             "userName" => $username,
             "email" => $email,
-            "password_hash" => $passwordHash,
-            "google_id" => $passwordHash,
-            "avatar" => $passwordHash,
+            "password_hash" => $password,
+            "google_id" => $this->googleId,
+            "avatar" => $this->avatar,
         ];
         try {
             return Models::create("users", $data);
