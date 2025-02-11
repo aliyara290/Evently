@@ -15,8 +15,10 @@ use App\Controllers\Front\OrganizerController;
 use App\controllers\Front\AuthController;
 use App\Controllers\Front\AppController;
 use App\Controllers\Front\AdminController;
-
+use App\controllers\back\AdminControllerBack;
 use App\controllers\back\CategoryController;
+
+
 
 $router = new Router();
 
@@ -48,6 +50,10 @@ $router->post("/Category",CategoryController::class, "create");
 $router->get("/admin/category", CategoryController::class, "afficherCategories");
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
 $router->post("/category/update",CategoryController::class, "updateCategory");
+$router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
+$router->get("/GestionUtilsateur",AdminControllerBack::class, "UpduteStatus");
+
+
 
 
 $router->dispatch();
