@@ -3,9 +3,7 @@
 
 {% block content %}
 
-	<div
-		class="max-w-5xl mx-auto px-6 py-10">
-		<!-- Profile Card -->
+	<div class="max-w-5xl mx-auto px-6 py-10">
 		<div class="bg-white border-2 border-gray-200 shadow-lg rounded-2xl p-8 flex flex-col items-center text-center">
 			<div class="relative">
 				<div class="text-orange bg-gray-200 border-2 border-gray-300 w-28 h-28 rounded-full overflow-hidden shadow-lg flex justify-center items-center">
@@ -32,46 +30,12 @@
 					Joined on 2025-01-17</span>
 
 			</div>
-			<button class="mt-5 bg-blue-500 text-white px-6 py-2 rounded-full shadow-md hover:bg-blue-600 transition-all">
-				Edit Profile
-			</button>
+			<a href="/setting/profile">
+				<button class="mt-5 bg-orange hover:bg-darkOrange text-white px-6 py-2 rounded-full shadow-md transition-all cursor-pointer">
+					Edit Profile
+				</button>
+			</a>
 		</div>
-
-		{# <div class="mt-10">
-								    <h2 class="text-2xl font-semibold text-gray-900 text-center">Courses Published</h2>
-								    <div class="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-								      <!-- Course Card -->
-								      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
-								        <a href="../course.php?id=11">
-								          <img src="../../../../uploads/679c09f134d93" alt="" class="w-full h-40 object-cover rounded-lg shadow">
-								        </a>
-								        <h3 class="text-lg font-medium text-gray-900 mt-3">
-								          <a href="../course.php?id=11">Building RESTful APIs with Laravel</a>
-								        </h3>
-								        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
-								      </div>
-								
-								      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
-								        <a href="../course.php?id=13">
-								          <img src="../../../../uploads/679c0a5f29b82" alt="" class="w-full h-40 object-cover rounded-lg shadow">
-								        </a>
-								        <h3 class="text-lg font-medium text-gray-900 mt-3">
-								          <a href="../course.php?id=13">React.js for Beginners</a>
-								        </h3>
-								        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
-								      </div>
-								
-								      <div class="bg-gray-100 shadow-md rounded-xl p-4 hover:scale-105 transition-all">
-								        <a href="../course.php?id=16">
-								          <img src="../../../../uploads/679c0a806c1ae" alt="" class="w-full h-40 object-cover rounded-lg shadow">
-								        </a>
-								        <h3 class="text-lg font-medium text-gray-900 mt-3">
-								          <a href="../course.php?id=16">Cloud Computing Basics</a>
-								        </h3>
-								        <p class="text-gray-600 text-sm">Published on 2025-01-18</p>
-								      </div>
-								    </div>
-								  </div> #}
 	</div>
 
 {% endblock %}

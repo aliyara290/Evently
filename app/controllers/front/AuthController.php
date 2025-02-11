@@ -10,7 +10,6 @@ use Google\Service\Oauth2;
 
 class AuthController
 {
-
     private $userModel;
     private $client;
 
@@ -72,6 +71,7 @@ class AuthController
     public function register()
     {
         view::render("register");
+        
     }
 
     public function login()
