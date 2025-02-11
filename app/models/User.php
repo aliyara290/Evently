@@ -20,11 +20,6 @@ use PDO;
     protected ?string $googleId = null;
     protected ?string $avatar = null;
 
-    public function __construct(string $role) 
-    {
-        $this->role = $role;
-    }
-
     public function setRole($role): void {
         $this->role = $role;
     }
@@ -97,8 +92,7 @@ use PDO;
             echo "failed to find the email: " . $e->getMessage();
         }
     }
-<<<<<<< HEAD
-
+    
     public function login() {
         try {
             $user =  Models::readByCondition("users", "email", $this->email);
@@ -112,18 +106,7 @@ use PDO;
             return false;
         }
     }
-    
-=======
-    // public function login()
-    // {
-    //     $email = Validator::sanitize($this->email);
-    //     $password = Validator::validatePassword($this->password);
-    //     $role = Validator::sanitize($this->role);
-    //     $data = [
-    //         "email" => $email,
-    //         "password" => $password
-    //     ];
-    // }
+
     public function updateUser($id, $pdo) {
         $is_suspended = false; 
         $sql = 'UPDATE users SET is_suspended = :is_suspended WHERE id = :id';
@@ -163,6 +146,4 @@ use PDO;
                 return false;
             }
     }
-    
->>>>>>> 42347d84639bbfaaa4c0d1ba8f272ed35ea4e582
 }
