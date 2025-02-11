@@ -21,7 +21,7 @@ class AppController
     }
     public function events()
     {
-        View::render("events", ["user" => $this->userData]);
+        View::render("manageEvents", ["user" => $this->userData]);
     }
     public function tags()
     {
@@ -35,7 +35,7 @@ class AppController
     {
         View::render("updateCategory", ["user" => $this->userData]);
     }
-    public function catogories()
+    public function categories()
     {
         View::render("categories", ["user" => $this->userData]);
     }

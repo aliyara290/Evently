@@ -1,9 +1,9 @@
-{% extends  "../../layouts/Base.twig" %}
+{% extends  "/layouts/Base.twig" %}
 
 {% block content %}
-	<main class="w-7/12 mx-auto pt-4 pb-12 flex flex-col gap-10">
+	<main class="lg:w-7/12 md:w-9/12 px-3 md:px-0 mx-auto pt-4 pb-12 flex flex-col gap-10">
 		<input type="file" id="file-upload" class="hidden">
-		<div class="group w-full cursor-pointer border-3 border-transparent hover:border-orange border-dotted rounded-xl p-0.5">
+		<div class="group w-full cursor-pointer border-4 border-transparent hover:border-orange border-dotted rounded-xl p-0.5">
 			<label for="file-upload" class="upload_file-card relative flex justify-center items-center w-full h-[380px] bg-gray-300 border-1 border-gray-400 rounded-xl shadow-lg overflow-hidden">
 				<div class="relative flex justify-center items-center z-3 w-[140px] h-[160px] bg-white rounded-xl shadow-lg cursor-pointer">
 					<div class="flex flex-col justify-center items-center gap-3">
@@ -26,14 +26,7 @@
 			</label>
 		</div>
 
-		{# <div class="relative w-80">
-															<input type="file" id="file-upload" class="hidden">
-															<label for="file-upload" class="flex items-center justify-between border-2 border-dashed border-blue-500 bg-white rounded-lg px-4 py-3 cursor-pointer hover:border-blue-700 transition">
-																<span class="text-white bg-blue-500 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition">Upload File</span>
-																<span id="file-name" class="text-gray-500 text-sm truncate w-40">No file chosen</span>
-															</label>
-														</div> #}
-
+	
 		<div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
 			<div class="">
 				<h4 class="text-2xl text-darkblue font- font-unbounded">Event Overview</h4>
@@ -86,7 +79,7 @@
 				<div class="text-sm text-darkblue font-unbounded">Event location
 					<span class="text-red-500">*</span>
 				</div>
-				<ul class="grid w-full gap-6 md:grid-cols-2">
+				<ul class="grid w-full gap-6 grid-cols-2">
 					<li>
 						<input type="radio" id="hosting-small" name="hosting" value="hosting-small" class="hidden peer" required/>
 						<label for="hosting-small" class="inline-flex items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">
@@ -137,7 +130,7 @@
 			</div>
 
 			<div class="flex flex-col gap-2">
-				<ul class="grid w-full gap-6 md:grid-cols-2">
+				<ul class="grid w-full gap-6 grid-cols-2">
 					<li>
 						<input type="radio" id="price-paid" name="price" class="hidden peer" required/>
 						<label for="price-paid" class="inline-flex items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">

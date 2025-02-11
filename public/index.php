@@ -19,8 +19,6 @@ use App\controllers\back\AdminControllerBack;
 use App\controllers\back\CategoryController;
 use App\controllers\back\AppController as BackController;
 
-
-
 $router = new Router();
 
 $router->get("/", HomeController::class, "home");
@@ -30,22 +28,24 @@ $router->get("/setting/profile", SettingController::class, "profile");
 $router->get("/setting/reset", SettingController::class, "setting");
 $router->get("/account/profile", UserProfileController::class, "page");
 $router->get("/faqs", AppController::class, "faqs");
-$router->get("/register", AuthController::class, "register");
 $router->get("/organizer/dashboard", OrganizerController::class, "page");
 $router->get("/admin/category", AdminController::class, "Category_page");
 $router->get("/admin/Mange_user", AdminController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
-
-$router->get("/login", AuthController::class, "login");
+// Auth
+$router->get("/register", AuthController::class, "registerPage");
+$router->post("/register", AuthController::class, "register");
+$router->get("/login", AuthController::class, "loginPage");
+$router->post("/login", AuthController::class, "login");
+$router->get("/logout", AuthController::class, "logout");
 $router->get("/auth/google", AuthController::class, "googleLogin");
 $router->get("/auth/google-callback", AuthController::class, "googleCallback");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");
 $router->get("/resetPassword", AuthController::class, "resetPassword");
-
+// Status code
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
-
 // organizer router
 $router->post("/Category",CategoryController::class, "create");
 $router->get("/admin/category", CategoryController::class, "afficherCategories");
@@ -55,9 +55,6 @@ $router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
 $router->get("/block",AdminControllerBack::class, "UpduteStatus");
 $router->get("/active",AdminControllerBack::class, "UpduteStatustree");
 $router->get("/delete",AdminControllerBack::class, "deleteUser");
-
-
-
 // Admin routers
 $router->get("/admin/dashboard", BackController::class, "dashboard");
 $router->get("/admin/categories", BackController::class, "categories");
