@@ -122,9 +122,11 @@ class User
     }
 
 
-    public function updateUser($id, $pdo)
+    public function updateUser($id, $pdo,)
     {
+        
         $is_suspended = false;
+
         $sql = 'UPDATE users SET is_suspended = :is_suspended WHERE id = :id';
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':is_suspended', $is_suspended, PDO::PARAM_BOOL);
@@ -144,12 +146,26 @@ class User
     }
     public function getAllUsers($pdo)
     {
-        $sql = "SELECT id,firstName,lastName,email,password_hash,is_suspended,createdAt FROM users";
-        $stmt = $pdo->prepare($sql);
-        if ($stmt->execute()) {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+        $sqlActive = "SELECT id, firstName, lastName, email, password_hash, is_suspended, createdAt 
+                      FROM users";
+        $stmtActive = $pdo->prepare($sqlActive);
+        $stmtActive->execute();
+        $usersActive = $stmtActive->fetchAll(PDO::FETCH_ASSOC);
+    
+        $sqlSuspended = "SELECT id, firstName, lastName, email, password_hash, is_suspended, createdAt 
+                         FROM users 
+                         WHERE is_suspended = FALSE";
+        $stmtSuspended = $pdo->prepare($sqlSuspended);
+        $stmtSuspended->execute();
+        $usersSuspended = $stmtSuspended->fetchAll(PDO::FETCH_ASSOC);
+    
+        return [
+            'active' => $usersActive,
+            'suspended' => $usersSuspended
+        ];
     }
+    
+  
 
     public function deleteUser($pdo, $id)
     {

@@ -23,23 +23,28 @@ class AdminControllerBack {
 
     public function getallUsers(){
         $usersData = $this->get_class->getAllUsers($this->connection);
-        echo  $this->twig->render('back/users.twig', ['users' => $usersData]);
+    
+        echo $this->twig->render('back/users.twig', [
+            'usersActive' => $usersData['active'], 
+            'usersSuspended' => $usersData['suspended']
+        ]);
     }
+    
+
     public function UpduteStatus() {
-        if (isset($_GET['id_active'])) {
-            $id = (int) $_GET['id_active']; 
-            
+        if (isset($_GET['UserId'])) {
+            $id = (int) $_GET['UserId'];
+            var_dump("hello") ;
             $this->get_class->updateUser($id, $this->connection); 
-            
-            header('Location: /admin/Mange_user'); 
+            header('Location: /admin/users'); 
             exit;
         } else {
             echo "no id!";
         }
     }
     public function UpduteStatustree() {
-        if (isset($_GET['id_active'])) {
-            $id = (int) $_GET['id_active']; 
+        if (isset($_GET['UserId'])) {
+            $id = (int) $_GET['UserId']; 
             $this->get_class->updateUserToActive($id, $this->connection); 
             header('Location: /admin/Mange_user'); 
             exit;

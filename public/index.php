@@ -52,7 +52,6 @@ $router->get("/admin/category", CategoryController::class, "afficherCategories")
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
 $router->post("/category/update",CategoryController::class, "updateCategory");
 $router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
-$router->get("/block",AdminControllerBack::class, "UpduteStatus");
 $router->get("/active",AdminControllerBack::class, "UpduteStatustree");
 
 
@@ -66,7 +65,10 @@ $router->get("/admin/tupdateTags", BackController::class, "updateTag");
 $router->get("/admin/users", BackController::class, "users");
 $router->get("/admin/events", BackController::class, "events");
 $router->get("/admin/users", AdminControllerBack::class, "getallUsers");
+
 $router->get("/mange/delete",AdminControllerBack::class, "deleteUser");
+$router->get("/mange/update",AdminControllerBack::class, "UpduteStatus");
+$router->get("/mange/active",AdminControllerBack::class, "UpduteStatustree");
 
 
 
