@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Core\Models;
 use App\Core\Security;
 use App\Core\Validator;
+use PDOException;
 use Exception;
 use PDO;
  class User
@@ -122,6 +123,20 @@ use PDO;
         if($stmt->execute()){
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+    }
+    
+    public function deleteUser ($pdo,$id){
+        $sql = "DELETE FROM users WHERE id = :id";
+        
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+            try {
+                return $stmt->execute();
+            } catch (PDOException $e) {
+                error_log("Erreur : " . $e->getMessage());
+                return false;
+            }
     }
     
 }

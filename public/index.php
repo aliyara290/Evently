@@ -53,8 +53,7 @@ $router->post("/category/update",CategoryController::class, "updateCategory");
 $router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
 $router->get("/block",AdminControllerBack::class, "UpduteStatus");
 $router->get("/active",AdminControllerBack::class, "UpduteStatustree");
-
-
+$router->get("/delete",AdminControllerBack::class, "deleteUser");
 
 
 

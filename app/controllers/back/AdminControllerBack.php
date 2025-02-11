@@ -9,26 +9,26 @@ class AdminControllerBack {
     protected $twig;
     protected $loader;
     private $connection;
-    private $getcass;
+    private $get_class;
     public function __construct(){
         $this->connection = Database::getInstance();
         if (!$this->connection) {
             die("Erreur de connexion à la base de données");
         }
-        $this->getcass = new User();
+        $this->get_class = new User();
         $this->loader = new FilesystemLoader('C:\laragon\www\EVENTLY\app\views');
         $this->twig = new Environment($this->loader);
     }
 
     public function getallUsers(){
-        $usersData = $this->getcass->getAllUsers($this->connection);
+        $usersData = $this->get_class->getAllUsers($this->connection);
         echo  $this->twig->render('front/admin/Mange_user.twig', ['users' => $usersData]);
     }
     public function UpduteStatus() {
         if (isset($_GET['id_active'])) {
             $id = (int) $_GET['id_active']; 
             
-            $this->getcass->updateUser($id, $this->connection); 
+            $this->get_class->updateUser($id, $this->connection); 
             
             header('Location: /admin/Mange_user'); 
             exit;
@@ -39,11 +39,23 @@ class AdminControllerBack {
     public function UpduteStatustree() {
         if (isset($_GET['id_active'])) {
             $id = (int) $_GET['id_active']; 
-            $this->getcass->updateUserToActive($id, $this->connection); 
+            $this->get_class->updateUserToActive($id, $this->connection); 
             header('Location: /admin/Mange_user'); 
             exit;
         } else {
-            echo "no id!";
+            echo "id no courct";
+        }
+    }
+    
+    public function deleteUser(){
+        if(isset($_GET['id_user'])){
+            $id = (int) $_GET['id_user'];
+            var_dump($id);
+            $this->get_class->deleteUser($this->connection,$id);
+            header('Location: /admin/Mange_user'); 
+            exit; 
+        }else{
+            echo "id no corct";
         }
     }
     
