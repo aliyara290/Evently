@@ -97,7 +97,6 @@ use PDO;
             echo "failed to find the email: " . $e->getMessage();
         }
     }
-<<<<<<< HEAD
 
     public function login() {
         try {
@@ -113,56 +112,4 @@ use PDO;
         }
     }
     
-=======
-    // public function login()
-    // {
-    //     $email = Validator::sanitize($this->email);
-    //     $password = Validator::validatePassword($this->password);
-    //     $role = Validator::sanitize($this->role);
-    //     $data = [
-    //         "email" => $email,
-    //         "password" => $password
-    //     ];
-    // }
-    public function updateUser($id, $pdo) {
-        $is_suspended = false; 
-        $sql = 'UPDATE users SET is_suspended = :is_suspended WHERE id = :id';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':is_suspended', $is_suspended, PDO::PARAM_BOOL);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);  
-    
-        $stmt->execute();
-    }
-    public function updateUserToActive($id, $pdo) {
-        $is_suspended = true; 
-        $sql = 'UPDATE users SET is_suspended  = :is_suspended WHERE id = :id';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':is_suspended', $is_suspended, PDO::PARAM_BOOL);
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);  
-    
-        $stmt->execute();
-    }
-    public function getAllUsers ($pdo){
-        $sql = "SELECT id,firstName,lastName,email,password_hash,is_suspended FROM users";
-        $stmt = $pdo->prepare($sql);
-        if($stmt->execute()){
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-    }
-    
-    public function deleteUser ($pdo,$id){
-        $sql = "DELETE FROM users WHERE id = :id";
-        
-            $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        
-            try {
-                return $stmt->execute();
-            } catch (PDOException $e) {
-                error_log("Erreur : " . $e->getMessage());
-                return false;
-            }
-    }
-    
->>>>>>> 42347d84639bbfaaa4c0d1ba8f272ed35ea4e582
 }

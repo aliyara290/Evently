@@ -10,12 +10,13 @@ class AdminControllerBack {
     protected $loader;
     private $connection;
     private $get_class;
+    private $role = 'Participant';
     public function __construct(){
         $this->connection = Database::getInstance();
         if (!$this->connection) {
             die("Erreur de connexion à la base de données");
         }
-        $this->get_class = new User();
+        $this->get_class = new User($this->role);
         $this->loader = new FilesystemLoader('C:\laragon\www\EVENTLY\app\views');
         $this->twig = new Environment($this->loader);
     }
