@@ -16,14 +16,14 @@ class AdminControllerBack {
         if (!$this->connection) {
             die("Erreur de connexion à la base de données");
         }
-        $this->get_class = new User($this->role);
+        $this->get_class = new User();
         $this->loader = new FilesystemLoader('C:\laragon\www\EVENTLY\app\views');
         $this->twig = new Environment($this->loader);
     }
 
     public function getallUsers(){
         $usersData = $this->get_class->getAllUsers($this->connection);
-        echo  $this->twig->render('front/admin/Mange_user.twig', ['users' => $usersData]);
+        echo  $this->twig->render('back/users.twig', ['users' => $usersData]);
     }
     public function UpduteStatus() {
         if (isset($_GET['id_active'])) {
@@ -49,8 +49,8 @@ class AdminControllerBack {
     }
     
     public function deleteUser(){
-        if(isset($_GET['id_user'])){
-            $id = (int) $_GET['id_user'];
+        if(isset($_GET['UserId'])){
+            $id = (int) $_GET['UserId'];
             var_dump($id);
             $this->get_class->deleteUser($this->connection,$id);
             header('Location: /admin/Mange_user'); 

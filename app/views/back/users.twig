@@ -24,20 +24,20 @@
 					<tr class="table-row">
 						<td class="table-data">{{user.id}}</td>
 						<td class="table-data">{{user.firstname}}</td>
+						<td class="table-data">{{user.email}}</td>
 						<td class="table-data">{{user.firstname}}</td>
-						<td class="table-data">{{user.firstname}}</td>
-						<td class="table-data">{{user.firstname}}</td>
-						<td class="table-data">{{user.firstname}}</td>
-						<td class="table-data">{{user.firstname}}</td>
+						<td class="table-data">{{user.createdat}}</td>
+						<td class="table-data">admin</td>
+						<td class="table-data">active</td>
 
 						<td class="manage-col">
 							<span style="background-color: var(--blue);">
-								<a href="./users.php?action=suspendUser&usrId=" class="btn-table">
+								<a href="/mange?UserId={{ user.id }}" class="btn-table">
 									<i class="fa-solid fa-lock"></i>
 								</a>
 							</span>
 							<span style="background-color: red;">
-								<a href="./users.php?action=deleteUser&userID=" class="btn-table">
+								<a href="/mange/delete?UserId={{ user.id }}" class="btn-table">
 									<i class="fa-solid fa-trash"></i>
 								</a>
 							</span>
