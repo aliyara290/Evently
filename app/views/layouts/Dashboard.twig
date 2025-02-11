@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<link rel="stylesheet" href="/assets/css/dashboard/style.css"/>
+		<link rel="stylesheet" href="/assets/css/output.css"/>
+		<script src="https://kit.fontawesome.com/f01941449c.js" crossorigin="anonymous"></script>
+		<title>Dashboard</title>
+	</head>
+
+	<body>
+		<div class="pages__content">
+			<aside class="side__content">
+				<header class="aside__header">
+					<a href="/admin/dashboard">
+						<h1>MyBoard</h1>
+					</a>
+				</header>
+				<div class="pages__links">
+					<ul class="pages_list">
+						<li class="page_item">
+							<a href="/admin/dashboard">
+								<span>
+									<i class="fa-solid fa-chart-simple"></i>
+								</span>
+								<span>Dashboard</span>
+							</a>
+						</li>
+						<li class="page_item">
+							<a href="/admin/users">
+								<span>
+									<i class="fa-solid fa-user"></i>
+								</span>
+								<span>users</span>
+							</a>
+						</li>
+						<li class="page_item">
+							<a href="/admin/events">
+								<span>
+									<i class="fa-solid fa-newspaper"></i>
+								</span>
+								<span>Events</span>
+							</a>
+						</li>
+						<li class="page_item ">
+							<a href="/admin/tags">
+								<span>
+									<i class="fa-solid fa-tag"></i>
+								</span>
+								<span>tags</span>
+							</a>
+						</li>
+						<li class="page_item active">
+							<a href="/admin/categories">
+								<span>
+									<i class="fa-brands fa-dev"></i>
+								</span>
+								<span>categories</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</aside>
+			<main class="main__content">
+				<header class="main__header">
+					<nav class="navbar__content">
+						<a href="/">
+							<span>
+								<i class="fa-solid fa-house"></i>
+							</span>
+						</a>
+						<a href="/logout">
+							<span style="display: flex; gap: 1rem; align-items: center;">
+								<i class="fa-solid fa-right-from-bracket"></i>
+								<p style="font-size: 1.4rem;">Disconnected</p>
+							</span>
+						</a>
+					</nav>
+				</header>
+
+				{% block content %}
+                
+                {% endblock %}
+			</main>
+		</div>
+	</body>
+
+</html>

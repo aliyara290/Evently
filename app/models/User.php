@@ -19,8 +19,16 @@ use Exception;
     protected ?string $googleId = null;
     protected ?string $avatar = null;
 
+    public function __construct(string $role) 
+    {
+        $this->role = $role;
+    }
+
     public function setRole($role): void {
         $this->role = $role;
+    }
+    public function getRole($role) {
+        return $this->role;
     }
 
     public function setIdentifier(string $identifier): void {
@@ -88,14 +96,19 @@ use Exception;
             echo "failed to find the email: " . $e->getMessage();
         }
     }
-    // public function login()
-    // {
-    //     $email = Validator::sanitize($this->email);
-    //     $password = Validator::validatePassword($this->password);
-    //     $role = Validator::sanitize($this->role);
-    //     $data = [
-    //         "email" => $email,
-    //         "password" => $password
-    //     ];
-    // }
+
+    public function login() {
+        try {
+            $user =  Models::readByCondition("users", "email", $this->email);
+            if($user && password_verify($this->password, $user["password"])) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e) {
+            echo "failed to find the email: " . $e->getMessage();
+            return false;
+        }
+    }
+    
 }

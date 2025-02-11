@@ -15,6 +15,7 @@ use App\Controllers\Front\OrganizerController;
 use App\controllers\Front\AuthController;
 use App\Controllers\Front\AppController;
 use App\controllers\back\CategoryController;
+use App\controllers\back\AppController as BackController;
 
 $router = new Router();
 
@@ -41,11 +42,25 @@ $router->get("/resetPassword", AuthController::class, "resetPassword");
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
 
-// backand router
+// organizer router
 $router->post("/Category",CategoryController::class, "create");
 $router->get("/organizer/category", CategoryController::class, "afficherCategories");
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
 $router->post("/category/update",CategoryController::class, "updateCategory");
+
+
+// Admin routers
+$router->get("/admin/dashboard", BackController::class, "dashboard");
+$router->get("/admin/categories", BackController::class, "categories");
+$router->get("/admin/updateCategories", BackController::class, "updateCategory");
+$router->get("/admin/tags", BackController::class, "tags");
+$router->get("/admin/tupdateTags", BackController::class, "updateTag");
+$router->get("/admin/users", BackController::class, "users");
+$router->get("/admin/events", BackController::class, "events");
+
+
+
+
 
 
 $router->dispatch();

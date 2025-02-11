@@ -1,0 +1,47 @@
+
+{% extends  "/layouts/Dashboard.twig" %}
+
+{% block content %}
+<div class="cls__content">
+        <div class="heading">
+          <h1>Add new Category</h1>
+        </div>
+        <div class="add__cls">
+          <form action="../../controllers/CategoryController.php" method="POST" class="form__content">
+            <div class="form__input">
+              <label for="category__name">Category Name</label>
+              <input type="text" name="categoryName" placeholder="Tag name" />
+            </div>
+            <div class="submit_btn">
+              <button type="submit">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <section class="cls__section">
+        <div class="heading">
+          <h1>Categories list (234)</h1>
+        </div>
+        <ul class="cls__list">
+          
+              <li class="cls__card">
+                <div class="cls__name">
+                  <span>Php</span>
+                </div>
+                <div class="cls__management">
+                  <span>
+                    <a href="./updateCategory.php?action=updateCategory&categoryId=">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                  </span>
+                  <span>
+                    <a href="./categories.php?action=deleteCategory&categoryId=">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                  </span>
+                </div>
+              </li>
+            
+        </ul>
+      </section>
+{% endblock %}
