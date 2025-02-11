@@ -51,7 +51,9 @@ $router->get("/admin/category", CategoryController::class, "afficherCategories")
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
 $router->post("/category/update",CategoryController::class, "updateCategory");
 $router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
-$router->get("/GestionUtilsateur",AdminControllerBack::class, "UpduteStatus");
+$router->get("/block",AdminControllerBack::class, "UpduteStatus");
+$router->get("/active",AdminControllerBack::class, "UpduteStatustree");
+
 
 
 

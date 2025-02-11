@@ -30,7 +30,17 @@ class AdminControllerBack {
             
             $this->getcass->updateUser($id, $this->connection); 
             
-            header('Location: /GestionUtilsateur'); 
+            header('Location: /admin/Mange_user'); 
+            exit;
+        } else {
+            echo "no id!";
+        }
+    }
+    public function UpduteStatustree() {
+        if (isset($_GET['id_active'])) {
+            $id = (int) $_GET['id_active']; 
+            $this->getcass->updateUserToActive($id, $this->connection); 
+            header('Location: /admin/Mange_user'); 
             exit;
         } else {
             echo "no id!";
