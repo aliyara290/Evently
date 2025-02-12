@@ -1,4 +1,16 @@
-let Evently;
+// const axios = require('axios');
+
+// Make a request for a user with a given ID
+axios.get('https://jsonplaceholder.typicode.com/users')
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .finally(function () {
+  });
+
 
 function togglePassword(id) {
   const eye_slash = document.getElementById("eye-slash");
@@ -158,34 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const circles = document.querySelectorAll(".circl_nv");
-const menus = document.querySelectorAll(".menu_nv");
-const anchors = document.querySelectorAll(".menu_nv a");
-
-circles.forEach((circle, index) => {
-  circle.addEventListener("click", (event) => {
-    event.stopPropagation();
-    menus[index].classList.toggle("hidden");
-  });
-});
-
-anchors.forEach((anchor) => {
-  anchor.addEventListener("click", () => {
-    menus.forEach((menu) => menu.classList.add("hidden"));
-    console.log("hello world");
-  });
-});
-
-document.addEventListener("click", (event) => {
-  if (
-    ![...circles].some((circle) => circle.contains(event.target)) &&
-    ![...menus].some((menu) => menu.contains(event.target))
-  ) {
-    menus.forEach((menu) => menu.classList.add("hidden"));
-  }
-});
-
-
 
 
 
@@ -202,3 +186,6 @@ fileInputs.forEach((fileInput, index) => {
 
   });
 });
+
+
+

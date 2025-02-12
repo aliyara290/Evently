@@ -1,6 +1,7 @@
 <?php 
 namespace App\Models;
 use PDO;
+
 class Category {
     public static function createCategory($pdo, $name) {
         $sql = "INSERT INTO categories(name) VALUES (:name)";

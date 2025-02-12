@@ -1,0 +1,21 @@
+{% extends  "/layouts/Dashboard.twig" %}
+
+{% block content %}
+<div class="cls__content">
+					<div class="heading">
+						<h1>Update category</h1>
+					</div>
+					<div class="add__cls">
+						<form action="updateCategory.php" method="post" class="form__content">
+							<div class="form__input">
+								<input type="hidden" value="name="categoryId""/>
+								<label for="updateCategoryName">New tag name</label>
+								<input type="text" name="updateCategoryName" value="php" placeholder="New category name"/>
+							</div>
+							<div class="submit_btn">
+								<button type="submit" name="update" style="background-color: green;">Update</button>
+							</div>
+						</form>
+					</div>
+				</div>
+{% endblock %}
