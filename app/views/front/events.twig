@@ -109,186 +109,42 @@
 			<div class="col-span-9 w-full">
 				<div class="relative">
 					<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 grid-rows-1">
-						<li>
-							<article class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg h-full">
-								<img alt="" src="https://images.unsplash.com/photo-1661697522426-84b53a4ce613?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="h-44 w-full object-cover"/>
+						{% for event in records %}
+							<li>
+								<article class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg h-full">
+									<img alt="" src="/assets/upload/{{ event.image }}" class="h-44 w-full object-cover"/>
+									<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
+										<time datetime="{{ event.start_date|date('Y-m-d') }}" class="block text-xs text-gray-500">
+											{{ event.end_date|date('jS M Y') }}
+										</time>
 
-								<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-									<time datetime="2022-10-10" class="block text-xs text-gray-500">
-										10th Oct 2022
-									</time>
+										<a href="{{ event.event_link }}">
+											<h3 class="text-lg text-gray-900">{{ event.title }}</h3>
+										</a>
 
-									<a href="#">
-										<h3 class="text-lg text-gray-900">How to position your furniture for positivity</h3>
-									</a>
+										<p class="line-clamp-3 text-sm/relaxed text-gray-500">{{ event.ville }}, {{ event.region }}</p>
 
-									<p class="line-clamp-3 text-sm/relaxed text-gray-500">Casablanca</p>
-
-									<div class="flex items-center gap-2">
-										<span class="text-green-500 font-medium">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-												<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-											</svg>
-										</span>
-
-										<span class="text-green-500 font-medium">
-											Free
-										</span>
+										<div class="flex items-center gap-2">
+											{% if event.price == 0 %}
+												<span class="text-green-500 font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
+                                        <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+												<span class="text-green-500 font-medium">Free</span>
+											{% else %}
+												<span class="text-blue-500 font-medium">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
+                                        <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+                                    </svg>
+                                </span>
+												<span class="text-blue-500 font-medium">{{ event.price }} DH</span>
+											{% endif %}
+										</div>
 									</div>
-
-
-								</div>
-							</article>
-						</li>
-						<li>
-							<article class="h-full overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
-								<img alt="" src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" class="h-44 w-full object-cover"/>
-
-								<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-									<time datetime="2022-10-10" class="block text-xs text-gray-500">
-										10th Oct 2022
-									</time>
-
-									<a href="#">
-										<h3 class="text-lg text-gray-900">How to position your furniture for positivity</h3>
-									</a>
-
-									<p class="line-clamp-3 text-sm/relaxed text-gray-500">Casablanca</p>
-
-									<div class="flex items-center gap-2">
-										<span class="text-blue-500 font-medium">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-												<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-											</svg>
-										</span>
-
-										<span class="text-blue-500 font-medium">
-											130DH
-										</span>
-									</div>
-
-
-								</div>
-							</article>
-						</li>
-						<li>
-							<article class="h-full overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
-								<img alt="" src="https://plus.unsplash.com/premium_photo-1683121131492-9ae8cdfea4f7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D" class="h-44 w-full object-cover"/>
-
-								<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-									<time datetime="2022-10-10" class="block text-xs text-gray-500">
-										10th Oct 2022
-									</time>
-
-									<a href="#">
-										<h3 class="text-lg text-gray-900">How to position your furniture for positivity</h3>
-									</a>
-
-									<p class="line-clamp-3 text-sm/relaxed text-gray-500">Casablanca</p>
-
-									<div class="flex items-center gap-2">
-										<span class="text-blue-500 font-medium">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-												<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-											</svg>
-										</span>
-
-										<span class="text-blue-500 font-medium">
-											250DH
-										</span>
-									</div>
-
-								</div>
-							</article>
-						</li>
-						<li>
-							<article class="h-full overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
-								<img alt="" src="https://plus.unsplash.com/premium_photo-1661494266874-a18be6bda750?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnVzaW5lc3MlMjBldmVudHxlbnwwfHwwfHx8MA%3D%3D" class="h-44 w-full object-cover"/>
-
-								<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-									<time datetime="2022-10-10" class="block text-xs text-gray-500">
-										10th Oct 2022
-									</time>
-
-									<a href="#">
-										<h3 class="text-lg text-gray-900">How to position your furniture for positivity</h3>
-									</a>
-
-									<p class="line-clamp-3 text-sm/relaxed text-gray-500">Casablanca</p>
-
-									<div class="flex items-center gap-2">
-										<span class="text-green-500 font-medium">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-												<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-											</svg>
-										</span>
-
-										<span class="text-green-500 font-medium">
-											Free
-										</span>
-									</div>
-								</div>
-							</article>
-						</li>
-						<li>
-							<article class="h-full overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
-								<img alt="" src="https://plus.unsplash.com/premium_photo-1661494266874-a18be6bda750?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnVzaW5lc3MlMjBldmVudHxlbnwwfHwwfHx8MA%3D%3D" class="h-44 w-full object-cover"/>
-
-								<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-									<time datetime="2022-10-10" class="block text-xs text-gray-500">
-										10th Oct 2022
-									</time>
-
-									<a href="#">
-										<h3 class="text-lg text-gray-900">How to position your furniture for positivity</h3>
-									</a>
-
-									<p class="line-clamp-3 text-sm/relaxed text-gray-500">Casablanca</p>
-
-									<div class="flex items-center gap-2">
-										<span class="text-green-500 font-medium">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-												<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-											</svg>
-										</span>
-
-										<span class="text-green-500 font-medium">
-											Free
-										</span>
-									</div>
-								</div>
-							</article>
-						</li>
-						<li>
-							<article class="h-full overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
-								<img alt="" src="https://plus.unsplash.com/premium_photo-1661494266874-a18be6bda750?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YnVzaW5lc3MlMjBldmVudHxlbnwwfHwwfHx8MA%3D%3D" class="h-44 w-full object-cover"/>
-
-								<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-									<time datetime="2022-10-10" class="block text-xs text-gray-500">
-										10th Oct 2022
-									</time>
-
-									<a href="#">
-										<h3 class="text-lg text-gray-900">How to position your furniture for positivity</h3>
-									</a>
-
-									<p class="line-clamp-3 text-sm/relaxed text-gray-500">Casablanca</p>
-
-									<div class="flex items-center gap-2">
-										<span class="text-green-500 font-medium">
-											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-												<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-											</svg>
-										</span>
-
-										<span class="text-green-500 font-medium">
-											Free
-										</span>
-									</div>
-								</div>
-							</article>
-						</li>
-
+								</article>
+							</li>
+						{% endfor %}
 					</ul>
 				</div>
 				<div class="w-full flex justify-center pt-8">

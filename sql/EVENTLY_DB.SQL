@@ -172,4 +172,8 @@ CREATE TABLE IF NOT EXISTS notification (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
+alter table event add column content text;
+alter table event add column event_date date;
+alter table event add column event_time time;
+
 select * from users;
