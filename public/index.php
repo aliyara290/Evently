@@ -29,7 +29,6 @@ $router->get("/setting/reset", SettingController::class, "setting");
 $router->get("/account/profile", UserProfileController::class, "page");
 $router->get("/faqs", AppController::class, "faqs");
 $router->get("/organizer/dashboard", OrganizerController::class, "page");
-$router->get("/admin/category", AdminController::class, "Category_page");
 $router->get("/admin/Mange_user", AdminController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
@@ -51,23 +50,29 @@ $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
 // organizer router
 $router->post("/Category",CategoryController::class, "create");
-$router->get("/admin/category", CategoryController::class, "afficherCategories");
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
-$router->post("/category/update",CategoryController::class, "updateCategory");
+$router->post("/Category/update",CategoryController::class, "updateCategory");
 $router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
-$router->get("/block",AdminControllerBack::class, "UpduteStatus");
 $router->get("/active",AdminControllerBack::class, "UpduteStatustree");
+
+
+
 $router->get("/delete",AdminControllerBack::class, "deleteUser");
 // Admin routers
 $router->get("/admin/dashboard", BackController::class, "dashboard");
-$router->get("/admin/categories", BackController::class, "categories");
-$router->get("/admin/updateCategories", BackController::class, "updateCategory");
+// $router->get("/admin/categories", BackController::class, "categories");
+$router->get("/admin/categories", CategoryController::class, "afficherCategories");
+
+// $router->get("/admin/updateCategories", BackController::class, "updateCategory");
 $router->get("/admin/tags", BackController::class, "tags");
 $router->get("/admin/tupdateTags", BackController::class, "updateTag");
 $router->get("/admin/users", BackController::class, "users");
 $router->get("/admin/events", BackController::class, "events");
+$router->get("/admin/users", AdminControllerBack::class, "getallUsers");
 
-
+$router->get("/mange/delete",AdminControllerBack::class, "deleteUser");
+$router->get("/mange/update",AdminControllerBack::class, "UpduteStatus");
+$router->get("/mange/active",AdminControllerBack::class, "UpduteStatustree");
 
 
 
