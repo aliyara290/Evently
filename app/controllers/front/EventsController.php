@@ -30,6 +30,7 @@ class EventsController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
+
                 $this->eventData->setId(11);
                 $this->eventData->setTitle($_POST['event_title']);
                 $this->eventData->setDescription($_POST['description']);
