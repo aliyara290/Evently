@@ -41,7 +41,7 @@ $router->post("/login", AuthController::class, "login");
 $router->get("/logout", AuthController::class, "logout");
 $router->post("/organizer/create", EventsController::class, "create");
 
-$router->get("/login", AuthController::class, "login");
+//$router->get("/login", AuthController::class, "login");
 $router->get("/auth/google", AuthController::class, "googleLogin");
 $router->get("/auth/google-callback", AuthController::class, "googleCallback");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");

@@ -11,7 +11,7 @@ use PDOException;
 
 class Event
 {
-    private string $id;
+    private int $id;
     private $pdo;
 
     private string $image;

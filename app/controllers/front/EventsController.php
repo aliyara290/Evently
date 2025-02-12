@@ -31,7 +31,9 @@ class EventsController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
 
+//                echo $_SESSION['user']['id'];
                 $this->eventData->setId(11);
+
                 $this->eventData->setTitle($_POST['event_title']);
                 $this->eventData->setDescription($_POST['description']);
                 $this->eventData->setContent($_POST['content']);
