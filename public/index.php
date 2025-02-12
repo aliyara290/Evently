@@ -21,6 +21,8 @@ $router = new Router();
 $router->get("/", HomeController::class, "home");
 $router->get("/event", EventController::class, "page");
 $router->get("/events", EventsController::class, "page");
+
+
 $router->get("/setting/profile", SettingController::class, "profile");
 $router->get("/setting/reset", SettingController::class, "setting");
 $router->get("/account/profile", UserProfileController::class, "page");
@@ -31,6 +33,7 @@ $router->get("/organizer/category", OrganizerController::class, "Category_page")
 $router->get("/organizer/Mange_user", OrganizerController::class, "Mange_user_page");
 $router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
+$router->post("/organizer/create", EventsController::class, "create");
 
 $router->get("/login", AuthController::class, "login");
 $router->get("/auth/google", AuthController::class, "googleLogin");
