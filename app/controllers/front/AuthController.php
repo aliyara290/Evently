@@ -57,9 +57,9 @@ class AuthController
             $this->userModel->setAvatar($googleUser->picture);
             $this->userModel->register();
         }
+
         $getUserId = $this->userModel->findByEmail($googleUser->email);
         $id =  $getUserId[0]["id"];
-        
         Session::set("user", [
             "id" => $id,
             "email" => $googleUser->email,

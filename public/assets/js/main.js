@@ -1,16 +1,28 @@
 // const axios = require('axios');
 
 // Make a request for a user with a given ID
-axios.get('https://jsonplaceholder.typicode.com/users')
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .finally(function () {
-  });
+// axios
+//   .get("https://jsonplaceholder.typicode.com/users")
+//   .then(function (response) {
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   })
+//   .finally(function () {});
 
+document.getElementById("file-upload").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          const img = document.getElementById("previewImage");
+          img.src = e.target.result;
+          img.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+  }
+});
 
 function togglePassword(id) {
   const eye_slash = document.getElementById("eye-slash");
@@ -170,22 +182,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
-
-const fileInputs = document.querySelectorAll('.file-input');
-const fileNames = document.querySelectorAll('.file-name');
+const fileInputs = document.querySelectorAll(".file-input");
+const fileNames = document.querySelectorAll(".file-name");
 
 fileInputs.forEach((fileInput, index) => {
-  fileInput.addEventListener('change', function () {
+  fileInput.addEventListener("change", function () {
     if (this.files && this.files[0]) {
       fileNames[index].textContent = this.files[0].name;
     } else {
-      fileNames[index].textContent = 'No file chosen';
+      fileNames[index].textContent = "No file chosen";
     }
-
   });
 });
-
-
-
