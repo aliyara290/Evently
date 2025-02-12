@@ -4,12 +4,12 @@
     <main class="w-7/12 mx-auto pt-4 pb-12 ">
         <form class="flex flex-col gap-10" action="/organizer/create" method="POST" enctype="multipart/form-data">
             <input type="file" id="file-upload" class="hidden" name="image">
-            <div class="w-full cursor-pointer">
+            <div class="group w-full cursor-pointer border-4 border-transparent hover:border-orange border-dotted rounded-xl p-0.5">
                 <label for="file-upload"
                        class="upload_file-card relative flex justify-center items-center w-full h-[380px] bg-gray-300 border-1 border-gray-400 rounded-xl shadow-lg overflow-hidden">
                     <div class="relative flex justify-center items-center z-3 w-[140px] h-[160px] bg-white rounded-xl shadow-lg cursor-pointer">
                         <div class="flex flex-col justify-center items-center gap-3">
-                            <div class="flex justify-center items-center w-10 h-10 rounded-full bg-gray-200 text-blue-600">
+                            <div class="flex justify-center items-center w-10 h-10 rounded-full bg-gray-200 text-blue-600 group-hover:bg-orange group-hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
                                      class="size-5">
                                     <path fill-rule="evenodd"
@@ -17,8 +17,8 @@
                                           clip-rule="evenodd"/>
                                 </svg>
                             </div>
-                            <div class="flex flex-col gap-1 text-blue-600 text-center text-md font-medium">
-							<span>
+                            <div class="flex flex-col gap-1 text-blue-600 group-hover:text-orange text-center text-md font-medium">
+							<span id="seccuess-upload">
 								Upload cover
 							</span>
                                 {# <span id="file-name" class="font-normal text-gray-400">No file chosen</span> #}
@@ -102,14 +102,16 @@
                     </div>
                     <ul class="grid w-full gap-6 md:grid-cols-2">
                         <li>
-                            <input type="radio" id="hosting-small" name="venue" value="hosting-small" class="hidden peer"
+                            <input type="radio" id="hosting-small" name="venue" value="hosting-small"
+                                   class="hidden peer"
                             />
                             <label for="hosting-small"
                                    class="inline-flex items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">
                                 <div class="flex justify-center items-center w-full">
                                     <div class="flex justify-center items-center gap-1">
                                         <div class="text-lg font-semibold">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"
+                                                 fill="currentColor"
                                                  class="size-6">
                                                 <path fill-rule="evenodd"
                                                       d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
@@ -128,7 +130,8 @@
                                 <div class="flex justify-center items-center w-full">
                                     <div class="flex justify-center items-center gap-1">
                                         <div class="text-lg font-semibold">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"
+                                                 fill="currentColor"
                                                  class="size-6">
                                                 <path d="M4.5 4.5a3 3 0 0 0-3 3v9a3 3 0 0 0 3 3h8.25a3 3 0 0 0 3-3v-9a3 3 0 0 0-3-3H4.5ZM19.94 18.75l-2.69-2.69V7.94l2.69-2.69c.944-.945 2.56-.276 2.56 1.06v11.38c0 1.336-1.616 2.005-2.56 1.06Z"/>
                                             </svg>
@@ -140,8 +143,8 @@
                         </li>
                     </ul>
                 </div>
-                <div
-                        class="flex flex-col gap-2">
+                <div id="regionsAndCities"
+                        class="hidden flex flex-col gap-2">
                     </label>
                     <div class="flex  gap-5">
                         <select name="region" type="text"
@@ -152,7 +155,7 @@
                                 <option value="{{ region.id }}">{{ region.region }}</option>
                             {% endfor %}
                         </select>
-                        <select name="city"
+                        <select id="city" name="city"
                                 class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="city"
                                 id="">
                             <option>select city</option>
@@ -162,6 +165,12 @@
                         </select>
                     </div>
                 </div>
+                <div
+                        class="flex flex-col gap-2">
+                    <input id="link" type="text" placeholder="Link"
+                           class="hidden px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="link"
+                           id="">
+                </div>
             </div>
             <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
                 <div class="">
@@ -170,7 +179,7 @@
                 <div class="flex flex-col gap-2">
                     <ul class="grid w-full gap-6 md:grid-cols-2">
                         <li>
-                            <input type="radio" id="price-paid" name="price" class="hidden peer" />
+                            <input type="radio" id="price-paid" name="price" class="hidden peer"/>
                             <label for="price-paid"
                                    class="inline-flex items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">
                                 <div class="flex justify-center items-center w-full">
@@ -206,7 +215,7 @@
                         <label for="price" class="text-sm text-darkblue font-unbounded">Price
                             <span class="text-red-500">*</span>
                         </label>
-                        <input type="number" placeholder="Price in MAD"
+                        <input id="price-input" type="number" placeholder="Price in MAD"
                                class=" px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
                                name="price">
                     </div>
@@ -249,7 +258,8 @@
                 </div>
             </div>
             <div class="">
-                <button type="submit" class="w-full h-[45px] rounded-md bg-orange hover:bg-darkOrange text-white text-md font-unbounded cursor-pointer">
+                <button type="submit"
+                        class="w-full h-[45px] rounded-md bg-orange hover:bg-darkOrange text-white text-md font-unbounded cursor-pointer">
                     Publish
                 </button>
             </div>
@@ -275,9 +285,60 @@
     </script>
     <script>
         document.getElementById('file-upload').addEventListener('change', function () {
+            const fileName = document.getElementById('seccuess-upload');
             if (this.files.length > 0) {
-                document.querySelector(".upload_file-card").style.backgroundColor = "green";
+                fileName.textContent = "Seccuss";
+            } else {
+                fileName.textContent = 'No file chosen';
             }
         });
+    </script>
+
+    <script>
+        const priceFreeRadio = document.getElementById('price-free');
+        const pricePaidRadio = document.getElementById('price-paid');
+        const priceInput = document.getElementById('price-input');
+
+
+        function togglePriceInput() {
+            if (priceFreeRadio.checked) {
+                priceInput.disabled = true;
+            } else {
+                priceInput.disabled = false;
+            }
+        }
+
+
+        priceFreeRadio.addEventListener('change', () => {
+            togglePriceInput();
+            pricePaidRadio.checked = false;
+        });
+
+        pricePaidRadio.addEventListener('change', () => {
+            togglePriceInput();
+            priceFreeRadio.checked = false;
+        });
+
+        togglePriceInput();
+    </script>
+
+    <script>
+        const venue = document.getElementById('hosting-small');
+        const online = document.getElementById('hosting-big');
+        const linkInput = document.getElementById('link');
+        const categoriesAndCities= document.getElementById('regionsAndCities');
+
+        online.addEventListener('change', () => {
+            linkInput.classList.remove('hidden');
+            categoriesAndCities.classList.remove('hidden');
+            venue.checked = false;
+        });
+
+        venue.addEventListener('change', () => {
+            linkInput.classList.add('hidden');
+            categoriesAndCities.classList.remove('hidden');
+            online.checked = false;
+        });
+
     </script>
 {% endblock %}

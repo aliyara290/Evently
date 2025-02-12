@@ -56,7 +56,10 @@ class EventsController
                 $this->eventData->setCityId($_POST['city']);
 
                 $this->eventData->setPlaces($_POST['places']);
-                $this->eventData->setPrice(isset($_POST['free']) ? '0' : $_POST['price']);
+
+                $price = empty($_POST['price']) ? '0' : $_POST['price'];
+
+                $this->eventData->setPrice($price);
 
                 // Format and set sales start period
                 $salesStartDate = $_POST['event_start'];
@@ -72,7 +75,7 @@ class EventsController
                 $this->eventData->setEndDate($formattedSalesEnd);
 
                 $this->eventData->setStatus('pending');
-                $this->eventData->setEventLink('test');
+                $this->eventData->setEventLink($_POST['link']);
 
 
                 $result = $this->eventData->createEvent();
