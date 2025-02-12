@@ -61,6 +61,7 @@ class EventsController
 
                 $this->eventData->setPrice($price);
 
+
                 // Format and set sales start period
                 $salesStartDate = $_POST['event_start'];
                 $salesStartTime = $_POST['event_time'];
