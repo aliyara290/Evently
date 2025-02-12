@@ -35,7 +35,7 @@ class AppController
     {
         View::render("updateCategory", ["user" => $this->userData]);
     }
-    public function catogories()
+    public function categories()
     {
         View::render("categories", ["user" => $this->userData]);
     }
