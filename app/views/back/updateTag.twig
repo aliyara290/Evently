@@ -1,0 +1,22 @@
+
+{% extends  "/layouts/Dashboard.twig" %}
+
+{% block content %}
+<div class="cls__content">
+        <div class="heading">
+          <h1>Update tag</h1>
+        </div>
+        <div class="add__cls">
+          <form action="./updateTag.php" method="POST" class="form__content">
+            <div class="form__input">
+              <input type="hidden" name="tagId" value= />
+              <label for="updateTagName">New tag name</label>
+              <input type="text" name="updateTagName" value= placeholder="New tag name" />
+            </div>
+            <div class="submit_btn">
+              <button type="submit" name="update" style="background-color: green;">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+{% endblock %}

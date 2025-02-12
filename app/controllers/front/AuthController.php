@@ -4,7 +4,9 @@ namespace App\Controllers\Front;
 
 use App\Core\View;
 use App\Core\Session;
+use App\Core\Validator;
 use App\Models\User;
+
 use Google_Client;
 use Google\Service\Oauth2;
 
@@ -55,9 +57,11 @@ class AuthController
             $this->userModel->setAvatar($googleUser->picture);
             $this->userModel->register();
         }
+        $getUserId = $this->userModel->findByEmail($googleUser->email);
+        $id =  $getUserId[0]["id"];
         
         Session::set("user", [
-            "id" => $googleUser->id,
+            "id" => $id,
             "email" => $googleUser->email,
             "firstName" => $googleUser->givenName,
             "lastName" => $googleUser->familyName,
@@ -67,16 +71,55 @@ class AuthController
         exit();
     }
 
-
-    public function register()
+    public function registerPage()
     {
         view::render("register");
-        
     }
 
-    public function login()
+    public function register() {
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            $firstName = Validator::sanitize($_POST["u_firstname"]);
+            $lastName = Validator::sanitize($_POST["u_lastname"]);
+            $email = Validator::validateEmail($_POST["u_email"]);
+            $password = Validator::validatePassword($_POST["u_password"]);
+            $this->userModel->setFirstName($firstName);
+            $this->userModel->setLastName($lastName);
+            $this->userModel->setEmail($email);
+            $this->userModel->setPassword($password);
+            $check = $this->userModel->register();
+            if($check) {
+                header("location: /login");
+            }
+        }
+    }
+
+    public function loginPage()
     {
         view::render("login");
+    }
+    public function login()
+    {
+        if($_SERVER["REQUEST_METHOD"] === "POST") {
+            $email = Validator::validateEmail($_POST["u_email"]);
+            $password = Validator::validatePassword($_POST["u_password"]);
+            echo $email;
+            echo $password;
+            $this->userModel->setEmail($email);
+            $this->userModel->setPassword($password);
+            $check = $this->userModel->login();
+
+            if($check) {
+                Session::set("user", [
+                    "id" => $check[0]["id"],
+                    "email" => $check[0]["email"],
+                    "firstName" => $check[0]["firstname"],
+                    "lastName" => $check[0]["lastname"],
+                    "avatar" => $check[0]["avatar"]
+                ]);
+                header("location: /");
+                exit();
+            }
+        }
     }
     public function forgetPassword()
     {
@@ -86,5 +129,11 @@ class AuthController
     public function resetPassword()
     {
         view::render("resetPassword");
+    }
+
+    public function logout() {
+        Session::destroy();
+        header("location: /login");
+        exit;
     }
 }

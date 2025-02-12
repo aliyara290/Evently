@@ -22,19 +22,17 @@
 
 					<h2 class="text-3xl font-bold text-center">Register</h2>
 
-					<form class="mt-6">
+					<form class="mt-6" method="post">
 						<div class="grid grid-cols-2 gap-4">
-							<input type="text" placeholder="First Name" class="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-[#f05537]">
-							<input type="text" placeholder="Last Name" class="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-[#f05537]">
+							<input type="text" placeholder="First Name" name="u_firstname" class="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-[#f05537]">
+							<input type="text" placeholder="Last Name" name="u_lastname" class="border border-gray-300 p-3 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-[#f05537]">
 						</div>
 						<div class="mt-4">
-							<input type="email" placeholder="Email" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
+							<input type="email" placeholder="Email" name="u_email" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
 						</div>
-						<div class="mt-4">
-							<input type="text" placeholder="Username" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
-						</div>
+						
 						<div class="relative mt-4">
-							<input type="password" id="password" placeholder="Password" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
+							<input type="password" id="password" name="u_password" placeholder="Password" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
 							<span class="absolute inset-y-0 right-4 flex items-center cursor-pointer" onclick="togglePassword('password')">
 								<img id="eye-slash" alt="" src="/assets/icons/eye-slash.svg" width="20" height="20">
 								<img id="eye" alt="" src="/assets/icons/eye.svg" width="20" height="20" class="hidden">

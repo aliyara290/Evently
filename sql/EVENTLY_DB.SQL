@@ -1,4 +1,4 @@
--- Active: 1738852313284@@127.0.0.1@5432@Evently
+-- Active: 1738852313284@@127.0.0.1@5432@evently_db
 CREATE DATABASE evently_db;
 
 CREATE TABLE IF NOT EXISTS role (
@@ -11,12 +11,11 @@ CREATE TABLE IF NOT EXISTS role (
         )
     )
 );
-
+select * from users;
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(50),
     lastName VARCHAR(50),
-    userName VARCHAR(50),
     email VARCHAR(50) UNIQUE,
     password_hash VARCHAR(255),
     bio TEXT,
@@ -27,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users (
     is_deleted BOOLEAN DEFAULT FALSE,
     is_suspended BOOLEAN DEFAULT FALSE
 );
-select * from users;
+
 CREATE TABLE IF NOT EXISTS user_role (
     role_id INT,
     user_id INT,
@@ -172,5 +171,9 @@ CREATE TABLE IF NOT EXISTS notification (
     send_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+alter table event add column content text;
+alter table event add column event_date date;
+alter table event add column event_time time;
 
 select * from users;

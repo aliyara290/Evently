@@ -1,0 +1,47 @@
+{% extends  "/layouts/Dashboard.twig" %}
+
+{% block content %}
+<div class="cls__content">
+        <div class="heading">
+          <h1>Add new tag</h1>
+        </div>
+        <div class="add__cls">
+          <form action="../../controllers/TagController.php" method="POST" class="form__content">
+            <div class="form__input">
+              <label for="tag__name">Tag Name</label>
+              <!-- <input type="hidden" name="tagId" /> -->
+              <input type="text" name="tagName" placeholder="Tag name" />
+            </div>
+            <div class="submit_btn">
+              <button type="submit">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <section class="cls__section">
+        <div class="heading">
+          <h1>Tags list (345)</h1>
+        </div>
+        <ul class="cls__list">
+         
+              <li class="cls__card">
+                <div class="cls__name">
+                  <span><span>#</span><span> </span></span>
+                </div>
+                <div class="cls__management">
+                  <span>
+                    <a href="./updateTag.php?action=updateTag&tagId=">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                  </span>
+                  <span>
+                    <a href="./tags.php?action=deleteTag&tagId=">
+                      <i class="fa-solid fa-trash-can"></i>
+                    </a>
+                  </span>
+                </div>
+              </li>
+           
+        </ul>
+      </section>
+{% endblock %}

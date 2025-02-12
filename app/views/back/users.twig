@@ -1,0 +1,149 @@
+{% extends  "/layouts/Dashboard.twig" %}
+
+{% block content %}
+	<section class="users__table">
+		<div class="heading">
+			<h1>All active users</h1>
+		</div>
+		<div class="table-container">
+			<table class="user-table">
+				<thead class="table-head">
+					<tr>
+						<th class="table-header">Id</th>
+						<th class="table-header">Full name</th>
+						<th class="table-header">Email</th>
+						<th class="table-header">Username</th>
+						<th class="table-header">Date Joined</th>
+						<th class="table-header">Role</th>
+						<th class="table-header">Status</th>
+						<th class="table-header">Manage</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					<tr class="table-row">
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+
+						<td class="manage-col">
+							<span style="background-color: var(--blue);">
+								<a href="./users.php?action=suspendUser&usrId=" class="btn-table">
+									<i class="fa-solid fa-lock"></i>
+								</a>
+							</span>
+							<span style="background-color: red;">
+								<a href="./users.php?action=deleteUser&userID=" class="btn-table">
+									<i class="fa-solid fa-trash"></i>
+								</a>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+	</section>
+	<section class="users__table">
+		<div class="heading">
+			<h1>Pending teachers</h1>
+		</div>
+
+
+		<div class="table-container">
+			<table class="user-table">
+				<thead class="table-head">
+					<tr>
+						<th class="table-header">Id</th>
+						<th class="table-header">Full name</th>
+						<th class="table-header">Email</th>
+						<th class="table-header">Username</th>
+						<th class="table-header">Date Joined</th>
+						<th class="table-header">Role</th>
+						<th class="table-header">Status</th>
+						<th class="table-header">Manage</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					<tr class="table-row">
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="manage-col">
+							<span style="background-color: green;">
+								<a href="./users.php?action=activeUser&identifier=" class="btn-table">
+									<i class="fa-solid fa-square-check"></i>
+								</a>
+							</span>
+							<span style="background-color: red;">
+								<a href="./users.php?action=deleteUser&userID=" class="btn-table">
+									<i class="fa-solid fa-trash"></i>
+								</a>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+		<div class="no__articles-pend">
+			<p>No pending teachers to show!</p>
+		</div>
+	</section>
+
+	<section class="users__table">
+		<div class="heading">
+			<h1>Suspended users</h1>
+		</div>
+
+
+		<div class="table-container">
+			<table class="user-table">
+				<thead class="table-head">
+					<tr>
+						<th class="table-header">Id</th>
+						<th class="table-header">Full name</th>
+						<th class="table-header">Email</th>
+						<th class="table-header">Username</th>
+						<th class="table-header">Date Joined</th>
+						<th class="table-header">Role</th>
+						<th class="table-header">Status</th>
+						<th class="table-header">Manage</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					<tr class="table-row">
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="table-data"></td>
+						<td class="manage-col">
+							<span style="background-color: green;">
+								<a href="./users.php?action=activeUser&identifier=" class="btn-table">
+									<i class="fa-solid fa-lock-open"></i>
+								</a>
+							</span>
+							<span style="background-color: red;">
+								<a href="./users.php?action=deleteUser&userID=" class="btn-table">
+									<i class="fa-solid fa-trash"></i>
+								</a>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+
+	</section>
+{% endblock %}
