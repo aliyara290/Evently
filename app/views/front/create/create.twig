@@ -288,30 +288,27 @@
 {% endblock %}
 
 {% block scripts %}
-	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-	<script>
-		flatpickr(".datePicker", {
-dateFormat: "Y-m-d",
-minDate: "today",
-disableMobile: true
-});
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".datePicker", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            disableMobile: true
+        });
 
-flatpickr(".timePicker", {
-enableTime: true,
-noCalendar: true,
-dateFormat: "H:i",
-time_24hr: true,
-disableMobile: true
-});
-	</script>
-	<script>
-		document.getElementById('file-upload').addEventListener('change', function () {
-      const fileName = document.getElementById('seccuess-upload');
-      if (this.files.length > 0) {
-        fileName.textContent = "Seccuss";
-      } else {
-        fileName.textContent = 'No file chosen';
-      }
-    });
-	</script>
+        flatpickr(".timePicker", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            disableMobile: true
+        });
+    </script>
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function () {
+            if (this.files.length > 0) {
+                document.querySelector(".upload_file-card").style.backgroundColor = "green";
+            }
+        });
+    </script>
 {% endblock %}
