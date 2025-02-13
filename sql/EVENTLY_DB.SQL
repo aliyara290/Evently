@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS event (
     price FLOAT,
     start_date TIMESTAMP,
     end_date TIMESTAMP,
-    isValidate BOOLEAN,
+    isValidate BOOLEAN ,
     event_link VARCHAR(255),
     status VARCHAR(20) DEFAULT 'pending' CHECK (
         status IN (
@@ -171,5 +171,9 @@ CREATE TABLE IF NOT EXISTS notification (
     send_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+alter table event add column content text;
+alter table event add column event_date date;
+alter table event add column event_time time;
 
 select * from users;
