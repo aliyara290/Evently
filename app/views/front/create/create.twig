@@ -144,7 +144,7 @@
                     </ul>
                 </div>
                 <div id="regionsAndCities"
-                        class="hidden flex flex-col gap-2">
+                     class="hidden flex flex-col gap-2">
                     </label>
                     <div class="flex  gap-5">
                         <select name="region" type="text"
@@ -257,6 +257,40 @@
                     </div>
                 </div>
             </div>
+            <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
+                <div class="">
+                    <h4 class="text-2xl text-darkblue font- font-unbounded">Sponsorings</h4>
+                </div>
+
+                <div x-data="{ open: false }" class="flex flex-col gap-2">
+                    <!-- Toggle Button -->
+                    <button
+                            type="button"
+                            @click="open = !open"
+                            class="font-bold text-center items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">
+                        + Add Sponsorings
+                    </button>
+
+
+                    <div x-show="open" x-transition class="mt-4">
+                        {% for sponsoring in sponsorings %}
+                            <div class="mb-2">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="sponsoring_{{ sponsoring.id }}"
+                                       name="sponsorings_id[]"
+                                       value="{{ sponsoring.id }}"
+                                       {% if sponsoring.id in selectedSponsorings %}checked{% endif %}>
+                                <label class="form-check-label" for="sponsoring_{{ sponsoring.id }}">
+                                    {{ sponsoring.logo }}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+            </div>
             <div class="">
                 <button type="submit"
                         class="w-full h-[45px] rounded-md bg-orange hover:bg-darkOrange text-white text-md font-unbounded cursor-pointer">
@@ -268,6 +302,8 @@
 {% endblock %}
 
 {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr(".datePicker", {
@@ -326,7 +362,7 @@
         const venue = document.getElementById('hosting-small');
         const online = document.getElementById('hosting-big');
         const linkInput = document.getElementById('link');
-        const categoriesAndCities= document.getElementById('regionsAndCities');
+        const categoriesAndCities = document.getElementById('regionsAndCities');
 
         online.addEventListener('change', () => {
             linkInput.classList.remove('hidden');

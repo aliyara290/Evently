@@ -79,14 +79,20 @@ class EventsController
                 $this->eventData->setEventLink($_POST['link']);
 
 
-                $result = $this->eventData->createEvent();
+                $this->eventData->createEvent();
+                $getLastEventId = $this->eventData->getLastEventId();
+//                var_dump($getLastEventId);
 
-                if ($result) {
-                    header("location: /events");
-                    exit();
-                } else {
-                    throw new \Exception('Failed to create event');
+                foreach ($_POST['sponsorings_id'] as $sponsoringId) {
+                    $test=$this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
+                    var_dump($test);
                 }
+//                if ($result) {
+//                    header("location: /events");
+//                    exit();
+//                } else {
+//                    throw new \Exception('Failed to create event');
+//                }
             } catch (\Exception $e) {
                 Session::set('error', $e->getMessage());
                 View::render("/events", [

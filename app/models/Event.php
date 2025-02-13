@@ -234,14 +234,14 @@ order by event.id desc
         }
     }
 
-    private function removeSponsoringsFromEvent($id)
+    public function removeSponsoringsFromEvent($id)
     {
         $query = "DELETE FROM event_sponsorings WHERE event_id = :event_id";
         $result = $this->pdo->prepare($query);
         $result->execute([':event_id' => $id]);
     }
 
-    private function addSponsoringToEvent(int $eventId, int $sponsoringId)
+    public function addSponsoringToEvent(int $eventId, int $sponsoringId)
     {
         $query = "INSERT INTO event_sponsorings (event_id, sponsoring_id) VALUES (:event_id, :sponsoring_id)";
         $data = [
@@ -370,6 +370,20 @@ order by event.id desc
         $result = $this->pdo->prepare($query);
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getSponsorings(){
+        $query= "SELECT * FROM sponsorings";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getLastEventId(){
+        $query="SELECT * from event order by created_At desc limit 1";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        return $result->fetch(PDO::FETCH_ASSOC);
     }
 
 

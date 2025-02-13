@@ -22,7 +22,8 @@ class CreateEventController
         $categories = $this->eventData->getCategories();
         $regions = $this->eventData->getRegion();
         $cities = $this->eventData->getCities();
-        View::render("create/create", ["user" => $this->userData, "categories" => $categories, "regions" => $regions, "cities" => $cities]);
+        $sponsorings=$this->eventData->getSponsorings();
+        View::render("create/create", ["user" => $this->userData, "categories" => $categories, "regions" => $regions, "cities" => $cities, "sponsorings" => $sponsorings]);
     }
 
 }
