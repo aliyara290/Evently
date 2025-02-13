@@ -8,7 +8,7 @@
 
 		<div class="pend__articles-content">
 			<ul class="pend__articles-list">
-
+                {% for event in events %}
 				<li class="pending__course">
 					<div class="course__cover">
 						<img src="/assets/images/linkedin.png" alt="">
@@ -16,43 +16,40 @@
 					<div class="courseTeacher">
 						<div class="teacher__picture-c">
 
-							<img src="" alt="">
+							<img src="{{event.image}}" alt="">
 
 						</div>
-						<div class="teacher__name-c">
+						<div class="organiser__name-c">
 							<span>
-								<p>Ali Yara</p>
+								<p>{{event.firstname}}</p>
 							</span>
 						</div>
 					</div>
-					<div class="course__title-c">
+					<div class="event__title-c">
 						<a href="/event?slug=">
-							<h3>How how</h3>
+							<h3>{{event.title}}</h3>
 						</a>
-					</div>
-					<div class="course__skills-c">
-						<p>
-							<strong>Skills you'll gain: php, js</span>
-						</p>
 					</div>
 					<div class="acc_ref-article">
 						<div class="accept_art pend_btn">
-							<a href="/admin/events?action=acceptCourse&courseId=">
+							<a href="/admin/accept?eventId={{ event.id }}">
 								<i class="fa-solid fa-check"></i>
 							</a>
 						</div>
 						<div class="draft_art pend_btn">
-							<a href="/admin/events?action=draftCourse&courseId=">
+							<a href="/admin/refuse">
 								<i class="fa-solid fa-box-archive"></i>
 							</a>
 						</div>
 						<div class="refuse_art pend_btn">
-							<a href="/admin/events?action=deleteCourse&courseId=">
+							<a href="/admin/delete">
 								<i class="fa-solid fa-close"></i>
 							</a>
 						</div>
 					</div>
 				</li>
+				{% endfor %}
+
 			</ul>
 		</div>
 
@@ -83,8 +80,9 @@
 		</div>
 
 		<div class="pend__articles-content">
+		  
 			<ul class="pend__articles-list">
-
+    {% for event in events_active %}
 				<li class="pending__course">
 					<div class="course__cover">
 						<img src="" alt="">
@@ -127,8 +125,10 @@
 					</div>
 				</li>
 
-
+        {% endfor %}
 			</ul>
+			
+
 		</div>
 
 		<div class="pagination-container">

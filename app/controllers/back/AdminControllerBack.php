@@ -5,11 +5,14 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Config\Database;
 use App\Models\User;
+use App\Models\Event;
+
 class AdminControllerBack {
     protected $twig;
     protected $loader;
     private $connection;
     private $get_class;
+    private $classEvent;
     private $role = 'Participant';
     public function __construct(){
         $this->connection = Database::getInstance();
@@ -19,6 +22,7 @@ class AdminControllerBack {
         $this->get_class = new User();
         $this->loader = new FilesystemLoader('C:\laragon\www\EVENTLY\app\views');
         $this->twig = new Environment($this->loader);
+        $this->classEvent = new Event();
     }
 
     public function getallUsers(){
@@ -64,5 +68,41 @@ class AdminControllerBack {
             echo "id no corct";
         }
     }
+
+    public function getAllEvent()
+    {
+        $events = $this->classEvent->redAllEventsPending($this->connection);
+        $eventsActive = $this->classEvent->redAllEventsActive($this->connection); 
+        echo $this->twig->render('back/manageEvents.twig', [
+            'events' => $events,
+            'events_active' => $eventsActive
+        ]);
+
+    }
     
+    public function getAllEventActive (){
+        $usersData = $this->classEvent->redAllEventsActive($this->connection);
+        var_dump($usersData);
+        echo  $this->twig->render('back/manageEvents.twig', ['events_active' => $usersData]);
+    }
+    
+
+    public function updatestatus(){
+        if(isset($_GET['eventId'])) {
+            $this->classEvent->updateStatusEvent($_GET['eventId'],$this->connection);
+            // header('Location: /admin/users'); 
+
+        }else{
+            echo "id no corict";
+        }
+    }
 }
+
+// if (isset($_GET['UserId'])) {
+//     $id = (int) $_GET['UserId'];
+//     var_dump("hello") ;
+//     $this->get_class->updateUser($id, $this->connection); 
+//     exit;
+// } else {
+//     echo "no id!";
+// }

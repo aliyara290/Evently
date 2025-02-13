@@ -74,7 +74,9 @@ $router->get("/mange/delete",AdminControllerBack::class, "deleteUser");
 $router->get("/mange/update",AdminControllerBack::class, "UpduteStatus");
 $router->get("/mange/active",AdminControllerBack::class, "UpduteStatustree");
 
-
+// mange event admin
+$router->get("/admin/events",AdminControllerBack::class,"getAllEvent");
+$router->get("/admin/accept",AdminControllerBack::class,"updatestatus");
 
 
 $router->dispatch();
