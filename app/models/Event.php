@@ -265,6 +265,37 @@ public function updateStatusEvent($id, $pdo,)
 
     $stmt->execute();
 }
+public function deleteEventId($id)
+{
+    try {
+        $query = "DELETE FROM event WHERE id = :id";
+        $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+
+        if ($result->execute()) {
+            return "L'événement a été supprimé avec succès."; // Succès
+        } else {
+            return "Échec de la suppression de l'événement."; // Échec
+        }
+    } catch (PDOException $error) {
+        error_log("Erreur de base de données : " . $error->getMessage());
+        return "Une erreur est survenue lors de la suppression de l'événement.";
+    }
+}
+
+
+public function updateStatusEventRrefuse($id, $pdo,)
+{
+    
+    $status = 'pending';
+
+    $sql = 'UPDATE event SET status = :status WHERE id = :id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_BOOL);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute();
+}
 
 
     public function deleteEvent()

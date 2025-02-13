@@ -37,12 +37,12 @@
 							</a>
 						</div>
 						<div class="draft_art pend_btn">
-							<a href="/admin/refuse">
+							<a href="/admin/delete?eventId={{ event.id}}">
 								<i class="fa-solid fa-box-archive"></i>
 							</a>
 						</div>
 						<div class="refuse_art pend_btn">
-							<a href="/admin/delete">
+							<a href="/admin/refuse">
 								<i class="fa-solid fa-close"></i>
 							</a>
 						</div>
@@ -85,23 +85,19 @@
     {% for event in events_active %}
 				<li class="pending__course">
 					<div class="course__cover">
-						<img src="" alt="">
+						<img src="{{event.image}}" alt="">
 					</div>
 					<div class="courseTeacher">
-						<div class="teacher__picture-c">
 
-							<img src=" " alt="">
-							<span>Ali Yara</span>
-						</div>
 						<div class="teacher__name-c">
 							<span>
-								<p>lorem hhh</p>
+								<p>{{event.firstname}}</p>
 							</span>
 						</div>
 					</div>
-					<div class="course__title-c">
+					<div class="event__title-c">
 						<a href="../front/course.php?slug=">
-							<h3>How to get somthing</h3>
+							<h3>{{event.title}}</h3>
 						</a>
 					</div>
 					<div class="course__skills-c">
@@ -118,7 +114,7 @@
 							</a>
 						</div>
 						<div class="refuse_art pend_btn">
-							<a href="./courses.php?action=deleteCourse&courseId=">
+							<a href="/admin/refuse?eventId={{ event.id }}">
 								<i class="fa-solid fa-close"></i>
 							</a>
 						</div>

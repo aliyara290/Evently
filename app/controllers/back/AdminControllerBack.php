@@ -90,13 +90,35 @@ class AdminControllerBack {
     public function updatestatus(){
         if(isset($_GET['eventId'])) {
             $this->classEvent->updateStatusEvent($_GET['eventId'],$this->connection);
-            // header('Location: /admin/users'); 
+            header('Location: /admin/events'); 
 
         }else{
             echo "id no corict";
         }
     }
+    public function updatestatusRefuse(){
+        if(isset($_GET['eventId'])) {
+            $this->classEvent->updateStatusEventRrefuse($_GET['eventId'],$this->connection);
+            header('Location: /admin/events'); 
+
+        }else{
+            echo "id no corict";
+        }
+    }
+
+    public function deleteEvent(){
+        if(isset($_GET['eventId'])){
+            $id = (int) $_GET['eventId'];
+            var_dump($id);
+            $this->classEvent->deleteEventId($id);
+            header('Location: /admin/events'); 
+            exit; 
+        }else{
+            echo "id no corct";
+        }
+    }
 }
+
 
 // if (isset($_GET['UserId'])) {
 //     $id = (int) $_GET['UserId'];
