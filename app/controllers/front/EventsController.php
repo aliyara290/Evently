@@ -31,8 +31,7 @@ class EventsController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
 
-//                echo $_SESSION['user']['id'];
-                $this->eventData->setId(11);
+                $this->eventData->setId($this->userData['id']);
 
                 $this->eventData->setTitle($_POST['event_title']);
                 $this->eventData->setDescription($_POST['description']);
@@ -81,18 +80,15 @@ class EventsController
 
                 $this->eventData->createEvent();
                 $getLastEventId = $this->eventData->getLastEventId();
-//                var_dump($getLastEventId);
-
+                if ($getLastEventId) {
                 foreach ($_POST['sponsorings_id'] as $sponsoringId) {
-                    $test=$this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
-                    var_dump($test);
+                    $this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
+                    header("location: /events");
+                    exit();
                 }
-//                if ($result) {
-//                    header("location: /events");
-//                    exit();
-//                } else {
-//                    throw new \Exception('Failed to create event');
-//                }
+                } else {
+                    throw new \Exception('Failed to create event');
+                }
             } catch (\Exception $e) {
                 Session::set('error', $e->getMessage());
                 View::render("/events", [
@@ -102,6 +98,7 @@ class EventsController
             }
         }
     }
+
 
 
 }

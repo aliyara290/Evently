@@ -158,7 +158,6 @@ class Event
 
     public function readAllEvents()
     {
-//        echo "work";
         $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
                     from event
                     join users on users.id=event.user_id
@@ -188,11 +187,11 @@ order by event.id desc
 
     }
 
-    public function deleteEvent()
+    public function deleteEvent(string $id): bool
     {
-        $query = "delete from event where id = :id";
+        $query = "DELETE FROM event WHERE id = :id";
         $result = $this->pdo->prepare($query);
-        $check = $result->execute([':id' => $this->id]);
+        $check = $result->execute([':id' => $id]);
         return $check;
     }
 
@@ -384,6 +383,37 @@ order by event.id desc
         $result = $this->pdo->prepare($query);
         $result->execute();
         return $result->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrganizerEvents($id){
+        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name AS category_name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+                    from event
+                    join users on users.id=event.user_id
+                    join categories on categories.id=event.category_id
+                    join region on region.id=event.region_id
+                    join city ON city.id = event.city_id
+                    left join event_sponsorings on event_sponsorings.event_id=event.id
+                    left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
+                    where event.user_id= :id
+                    GROUP BY 
+                         event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                        event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                        event.isValidate, event.event_link, event.status, region.region, city.ville,event_date,event_time
+order by event.id desc
+                  ";
+
+        $data = [
+            ":id" => $this->id
+        ];
+        try {
+            $result = $this->pdo->prepare($query);
+
+            $result->execute($data);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $error) {
+            error_log("Database error: " . $error->getMessage());
+            return false;
+        }
     }
 
 
