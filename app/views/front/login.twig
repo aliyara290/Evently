@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Login</title>
+		<link href="/assets/css/output.css" rel="stylesheet">
+	</head>
+	<body class="flex items-center justify-center bg-white">
+		<div class="w-full grid grid-cols-1 lg:grid-cols-2">
+
+			<div class="p-12 flex flex-col items-center justify-center">
+
+				<div class="w-full bg-white rounded-xl shadow-xl p-8 border-2 border-gray-200">
+					<div class=" flex justify-center text-center mb-5">
+						<a href="/" class="text-2xl font-bold font-unbounded text-orange flex justify-center">
+							<img class="w-14" src="/assets/images/logo-png.png" alt="">
+						</a>
+					</div>
+					<h2 class="text-3xl font-bold text-center">Login</h2>
+
+					<form class="mt-6" method="post">
+						<div class="mt-4">
+							<input type="email" name="u_email" placeholder="Email" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
+						</div>
+						<div class="relative mt-4">
+							<input type="password" id="password" name="u_password" placeholder="Password" class="border border-gray-300 p-3 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f05537]">
+							<span class="absolute inset-y-0 right-4 flex items-center cursor-pointer" onclick="togglePassword('password')">
+								<img id="eye-slash" alt="" src="/assets/icons/eye-slash.svg" width="20" height="20">
+								<img id="eye" alt="" src="/assets/icons/eye.svg" width="20" height="20" class="hidden">
+							</span>
+						</div>
+						<div class=" mt-6 flex flex-wrap items-center justify-between gap-4">
+							<div
+								class="flex items-center">
+								{#                    <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 shrink-0 text-[#f05537] focus:ring-[#f05537] border-gray-300 rounded checked:bg-[#f05537] checked:border-transparent" />#}
+
+								<input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded shadow hover:shadow-md border border-[#f05537] checked:bg-[#f05537] checked:border-[#f05537]" id="check-currently-work"/>
+								<span class="absolute text-white opacity-0 peer-checked:opacity-100 translate-x-1  transform">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewbox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+										<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+									</svg>
+								</span>
+								<label for="remember-me" class="ml-3 block text-sm text-gray-800">
+									Remember me
+								</label>
+							</div>
+							<div class="text-sm">
+								<a href="/forgetPassword" class="text-[#f05537] hover:text-[#d04a2e] hover:underline font-semibold">
+									Forgot your password?
+								</a>
+							</div>
+						</div>
+						<div class="mt-5">
+							<button class="cursor-pointer bg-[#f05537] hover:bg-[#ff7a58] w-full text-center text-white py-3 rounded-lg font-semibold">Log in</button>
+						</div>
+
+						<div class="my-4 flex items-center gap-4">
+							<hr class="w-full border-gray-300"/>
+							<p class="text-sm text-gray-800 text-center">or</p>
+							<hr class="w-full border-gray-300"/>
+						</div>
+						<a href="/auth/google">
+							<button type="button" class="cursor-pointer w-full flex items-center justify-center gap-4 py-3 px-6 text-sm tracking-wide text-gray-800 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 focus:outline-none">
+								<img alt="" src="/assets/icons/google.svg" width="20" height="20">
+								Continue with google
+							</button>
+						</a>
+						<p class="text-center text-sm mt-4">Don't have an account?
+							<a href="/register" class="text-[#f05537] hover:text-[#d04a2e] hover:underline">Register Now</a>
+						</p>
+					</form>
+				</div>
+			</div>
+
+			<div class="relative w-full h-screen hidden md:block">
+				<img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1630450202872-e0829c9d6172?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="">
+			</div>
+		</div>
+
+		<script src="/assets/js/main.js"></script>
+	</body>
+</html>

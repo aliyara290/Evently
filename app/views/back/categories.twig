@@ -1,0 +1,76 @@
+{% extends  "/layouts/Dashboard.twig" %}
+
+{% block content %}
+<div class="cls__content">
+    <div class="heading">
+        <h1>Add new Category</h1>
+    </div>
+    <div class="add__cls">
+        <form action="/Category" method="POST" class="form__content">
+            <div class="form__input">
+                <label for="category__name">Category Name</label>
+                <input type="text" name="categoryName" placeholder="Tag name" required />
+            </div>
+            <div class="submit_btn">
+                <button type="submit">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<section class="cls__section">
+    <div class="heading">
+        <h1>Categories list ({{ categories|length }})</h1>
+    </div>
+    <ul class="cls__list">
+        {% for category in categories %}
+            <li class="cls__card">
+                <div class="cls__name">
+                    <span>{{ category.name }}</span>
+                </div>
+                <div class="cls__management">
+                    <span>
+                        <button type="button" class="editCategoryBtn" 
+                                data-id="{{ category.id }}" data-name="{{ category.name }}">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                    </span>
+                    <span>
+                        <form action="/Category/delete" method="POST">
+                            <input type="hidden" name="category_id" value="{{ category.id }}">
+                            <button type="submit" name="delete_category">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Modal for category update -->
+    <div id="editModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div class="cls__content bg-white p-5 rounded-lg w-200">
+            <div class="heading">
+                <h1>Update Category</h1>
+            </div>
+            <div class="add__cls">
+                <form action="/Category/update" method="POST" class="form__content">
+                    <input type="hidden" id="updateCategoryId" name="categoryId"/>
+                    <div class="form__input">
+                        <label for="updateCategoryName" class="m-auto" style="margin-left:7rem">New Category Name</label>
+                        <input type="text" id="updateCategoryName" name="updateCategoryName" placeholder="New category name" class="w-full m-auto" style="margin:auto" required/>
+                    </div>
+                    <div class="submit_btn flex space-x-2 m-auto" style="margin:auto">
+                        <button type="submit" name="update" class="bg-green-500 text-white px-4 py-2 rounded ml-10" style="margin-right:100px">Update</button>
+                        <button type="button" id="closeModal" class="bg-red-500 text-white px-4 py-2 rounded">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/assets/js/script.js"></script>
+
+{% endblock %}

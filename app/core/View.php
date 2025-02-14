@@ -5,6 +5,7 @@ use Twig\Environment;
 
 class View {
     private static $twig = null;
+    
 
     private static function init() {
         if(self::$twig === null) {

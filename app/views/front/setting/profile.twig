@@ -1,0 +1,62 @@
+{% extends  "/layouts/aside.twig" %}
+
+
+{% block content %}
+
+<form action="/update-profile" method="POST" enctype="multipart/form-data" class="flex flex-col gap-5">
+    <section class="bg-white p-6 rounded-md shadow-sm">
+        <div class="pb-4 mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Account Information</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex flex-col">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                <label for="user__firstname" class="text-sm font-medium text-gray-700">First name</label>
+                <input type="text" name="user__firstname" id="user__firstname" placeholder="First name" value="{{ user.firstname }}" class="bg-white border border-gray-300 text-gray-900 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="user__lastname" class="text-sm font-medium text-gray-700">Last name</label>
+                <input type="text" name="user__lastname" id="user__lastname" placeholder="Last name" value="{{ user.lastname }}" class="bg-white border border-gray-300 text-gray-900 rounded-md px-3 py-2 focus:ring-blue-500 focus:border-blue-500">
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <label for="userPicture" class="text-sm font-medium text-gray-700">Profile image</label>
+            <div class="flex items-center gap-4 mt-2">
+                <div class="w-16 h-16 rounded-full overflow-hidden border border-gray-300">
+                    <img src="{{ user.avatar }}" alt="User Avatar" class="w-full h-full object-cover">
+                </div>
+                <div class="flex flex-col">
+                    <label for="file-upload" class="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition">
+                        Upload File
+                    </label>
+                    <input type="file" id="file-upload" name="userPicture" class="hidden">
+                    <span class="text-sm text-gray-500 mt-1">No file chosen</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white p-6 rounded-md shadow-sm">
+        <div class="pb-4 mb-4">
+            <h2 class="text-xl font-semibold text-gray-800">Basic</h2>
+        </div>
+
+        <div class="mt-6">
+            <label for="user__bio" class="text-sm font-medium text-gray-700">Bio</label>
+            <textarea name="user__bio" id="user__bio" placeholder="Bio..." class="bg-white border border-gray-300 text-gray-900 rounded-md px-3 py-2 w-full h-32 resize-none focus:ring-blue-500 focus:border-blue-500">{{ user.bio }}</textarea>
+        </div>
+    </section>
+
+    <div class="flex justify-end">
+        <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded-md shadow hover:bg-green-600 transition">
+            Update Information
+        </button>
+    </div>
+</form>
+
+
+{% endblock %}

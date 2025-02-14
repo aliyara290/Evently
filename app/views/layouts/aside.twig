@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="/assets/css/output.css" rel="stylesheet">
+		<link rel="icon" type="image/png" href="/assets/icons/favicon.png">
+		<title>Evently</title>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="https://kit.fontawesome.com/029424212f.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<header class="sticky z-52 top-0 left-0 flex items-center justify-between w-full py-2 px-6 shadow-sm bg-white">
+			<div class="flex items-center gap-10">
+				<div class="w-auto">
+					<a href="/" class="text-2xl font-bold font-unbounded text-orange">evently
+					</a>
+				</div>
+				<div class="border border-xs border-[#b2b2b2] rounded-full bg-gray-50 flex items-center gap-2 px-1 py-1 ">
+					<div class="flex items-center gap-2 w-[300px] pl-0.5">
+						<span class="">
+							<svg x="0" y="0" viewbox="0 0 24 24" xml:space="preserve" width="25px" class="fill-gray-600">
+								<path d="M10 14c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm3.5.9c-1 .7-2.2 1.1-3.5 1.1-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6c0 1.3-.4 2.5-1.1 3.4l5.1 5.1-1.5 1.5-5-5.1z"></path>
+							</svg>
+						</span>
+						<div class="w-full">
+							<input type="text" placeholder="Search for events" class="h-[35px] w-full outline-none border-none text-sm/12">
+						</div>
+					</div>
+					<div class="w-[1px] h-[38px] bg-[#B2B2B2]"></div>
+					<div class="flex items-center gap-2 w-[300px]">
+						<span class="">
+							<svg x="0" y="0" viewbox="0 0 24 24" xml:space="preserve" width="25px" class="fill-gray-600">
+								<path d="M11.6 11.6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-7.6C8.5 4 6 6.5 6 9.6 6 13.8 11.6 20 11.6 20s5.6-6.2 5.6-10.4c0-3.1-2.5-5.6-5.6-5.6z"></path>
+							</svg>
+						</span>
+						<div class="w-full">
+							<input type="text" placeholder="Search for events" class="h-[35px] w-full outline-none border-none text-sm/12">
+						</div>
+						<div class="">
+							<button class="w-[38px] h-[38px] bg-[#f05537] rounded-full flex justify-center items-center cursor-pointer hover:bg-[#d63621]">
+								<svg x="0" y="0" viewbox="0 0 24 24" xml:space="preserve" width="25px" class="fill-white">
+									<path d="M10 14c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm3.5.9c-1 .7-2.2 1.1-3.5 1.1-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6c0 1.3-.4 2.5-1.1 3.4l5.1 5.1-1.5 1.5-5-5.1z"></path>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<nav class="flex justify-end">
+				<ul
+					class="flex gap-7 items-center">
+					{# <h1>{{_SESSION["email"]}}</h1> #}
+					{% if user["email"] is defined and user["email"] is not empty %}
+						<li class="group">
+							<a href="/organizer/create" class="flex flex-col items-center">
+								<span class="group-hover:text-orange text-darkblue">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+									</svg>
+
+								</span>
+								{# <span class="group-hover:text-orange text-sm text-darkblue font-medium ">Create event</span> #}
+							</a>
+						</li>
+						<li class="group">
+							<a href="/organizer/create" class="flex flex-col items-center">
+								<span class="group-hover:text-orange text-darkblue">
+									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+										<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z"/>
+									</svg>
+								</span>
+								{# <span class="group-hover:text-orange text-sm text-darkblue font-medium ">Tickets</span> #}
+							</a>
+						</li>
+						<li class="group">
+							<a href="/organizer/create" class="flex flex-col items-center">
+								<span class="group-hover:text-orange text-orange">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-7">
+										<path d="M5.85 3.5a.75.75 0 0 0-1.117-1 9.719 9.719 0 0 0-2.348 4.876.75.75 0 0 0 1.479.248A8.219 8.219 0 0 1 5.85 3.5ZM19.267 2.5a.75.75 0 1 0-1.118 1 8.22 8.22 0 0 1 1.987 4.124.75.75 0 0 0 1.48-.248A9.72 9.72 0 0 0 19.266 2.5Z"/>
+										<path fill-rule="evenodd" d="M12 2.25A6.75 6.75 0 0 0 5.25 9v.75a8.217 8.217 0 0 1-2.119 5.52.75.75 0 0 0 .298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 1 0 7.48 0 24.583 24.583 0 0 0 4.83-1.244.75.75 0 0 0 .298-1.205 8.217 8.217 0 0 1-2.118-5.52V9A6.75 6.75 0 0 0 12 2.25ZM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 0 0 4.496 0l.002.1a2.25 2.25 0 1 1-4.5 0Z" clip-rule="evenodd"/>
+									</svg>
+
+
+								</span>
+								{# <span class="group-hover:text-orange text-sm text-darkblue font-medium ">Tickets</span> #}
+							</a>
+						</li>
+
+						<li>
+							<button class="circl_nv flex justify-center items-center w-[42px] h-[42px] bg-gray-200 hover:bg-gray-300 text-orange rounded-full cursor-pointer overflow-hidden">
+								{% if user["avatar"] is not empty %}
+									<img class="w-full h-full object-cover" src="{{ user['avatar'] }}" alt="User Avatar">
+								{% else %}
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" class="size-5">
+										<path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"/>
+									</svg>
+								{% endif %}
+							</button>
+						</li>
+					{% else %}
+						<li>
+							<a href="/login">
+								<button class="w-max h-[42px] border border-2 border-[#f05537] text-[#f05537] px-7 rounded-full text-md font-medium cursor-pointer hover:bg-[#f05537] hover:text-white">
+									Login
+								</button>
+							</a>
+						</li>
+						<li>
+							<a href="/register">
+								<button class="w-max h-[42px] bg-[#f05537] text-white px-7 rounded-full text-md font-medium cursor-pointer hover:bg-transparent border-2 border-[#f05537] hover:text-[#f05537]">
+									Sign up
+								</button>
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+
+				<div class="menu_nv absolute right-0 top-full bg-white border border-1 border-gray-300 hidden">
+					<ul class="w-60 flex flex-col">
+						<a href="/account/profile">
+							<li class="flex flex-col w-full py-3 px-4 hover:bg-gray-100">
+								<span>{{ user["firstName"] }}
+									{{ user["lastName"] }}</span>
+								<span>{{ user["email"] }}</span>
+							</li>
+						</a>
+						<div class="w-full h-[1.7px] bg-gray-200"></div>
+						<a href="/organizer/events">
+							<li class="w-full py-3 px-4 hover:bg-gray-100">
+								<span>Manage events</span>
+							</li>
+						</a>
+						<a href="/organizer/tickets">
+							<li class="w-full py-3 px-4 hover:bg-gray-100">
+								<span>Tickets (0)</span>
+							</li>
+						</a>
+						<div class="w-full h-[1.7px] bg-gray-200"></div>
+						<a href="/setting/profile">
+							<li class="w-full py-3 px-4 hover:bg-gray-100">
+								<span>Settings</span>
+							</li>
+						</a>
+						<a href="/logout">
+							<li class="w-full py-3 px-4 hover:bg-gray-100">
+								<span>Log out</span>
+							</li>
+						</a>
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<main class="grid grid-cols-1 lg:grid-cols-12">
+			<div class="col-span-3 h-screen">
+				<div class="pt-5">
+					<ul class="space-y-2">
+						<li>
+							<a href="/setting/profile" class="hover:bg-gray-100 flex items-center gap-3 p-3">
+								<span class="text-orange">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+										<path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd"/>
+									</svg>
+								</span>
+								<span class="text-darkblue font-medium">Account Information</span>
+							</a>
+						</li>
+						<li>
+							<a href="/setting/reset" class="hover:bg-gray-100 flex items-center gap-3 p-3">
+								<span class="text-orange">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+										<path fill-rule="evenodd" d="M15.75 1.5a6.75 6.75 0 0 0-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 0 0-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 0 0 .75-.75v-1.5h1.5A.75.75 0 0 0 9 19.5V18h1.5a.75.75 0 0 0 .53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1 0 15.75 1.5Zm0 3a.75.75 0 0 0 0 1.5A2.25 2.25 0 0 1 18 8.25a.75.75 0 0 0 1.5 0 3.75 3.75 0 0 0-3.75-3.75Z" clip-rule="evenodd"/>
+									</svg>
+								</span>
+								<span class="text-darkblue font-medium">Reset Password</span>
+							</a>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+			<div class="col-span-9 bg-gray-100 p-10"> {% block content %}{% endblock %}
+				</div>
+			</main>
+			<footer class="bg-gray-900 text-white py-10 pb-[24px]">
+				<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+					<div>
+						<div class="">
+							<a href="/" class="text-2xl font-bold font-unbounded text-orange">
+								evently
+							</a>
+						</div>
+						<p class="mt-3 text-gray-400">Creating memorable events with ease.</p>
+					</div>
+
+					<div>
+						<h3 class="text-lg font-semibold">Quick Links</h3>
+						<ul class="mt-3 space-y-2 text-gray-400">
+							<li>
+								<a href="/" class="hover:text-[#d63621]">Home</a>
+							</li>
+							<li>
+								<a href="/events" class="hover:text-[#d63621]">Events</a>
+							</li>
+							<li>
+								<a href="/faqs" class="hover:text-[#d63621]">FAQs</a>
+							</li>
+							<li>
+								<a href="/help/support" class="hover:text-[#d63621]">Support</a>
+							</li>
+						</ul>
+					</div>
+
+					<div>
+						<h3 class="text-lg font-semibold">Follow Us</h3>
+						<div class="flex space-x-4 mt-3">
+							<a href="#" class="text-gray-400 hover:text-[#d63621]">
+								<i class="fab fa-facebook-f"></i>
+							</a>
+							<a href="#" class="text-gray-400 hover:text-[#d63621]">
+								<i class="fab fa-twitter"></i>
+							</a>
+							<a href="#" class="text-gray-400 hover:text-[#d63621]">
+								<i class="fab fa-instagram"></i>
+							</a>
+							<a href="#" class="text-gray-400 hover:text-[#d63621]">
+								<i class="fab fa-linkedin"></i>
+							</a>
+						</div>
+					</div>
+
+					<div>
+						<h3 class="text-lg font-semibold">Newsletter</h3>
+						<form class="mt-3">
+							<input type="email" placeholder="Your email" class="w-full p-2 rounded text-white bg-gray-700 outline-none">
+							<button class="mt-3 w-full bg-[#d63621] text-white py-2 rounded hover:bg-[#b32a19]">
+								Subscribe
+							</button>
+						</form>
+					</div>
+				</div>
+
+				<div class="text-center text-gray-400 mt-8 border-t border-gray-700 pt-6">
+					© 2025 Evently. All rights reserved.
+				</div>
+			</footer>
+
+			<script>
+				const circles = document.querySelectorAll(".circl_nv");
+const menus = document.querySelectorAll(".menu_nv");
+const anchors = document.querySelectorAll(".menu_nv a");
+
+circles.forEach((circle, index) => {
+circle.addEventListener("click", (event) => {
+event.stopPropagation();
+menus[index].classList.toggle("hidden");
+});
+});
+
+anchors.forEach((anchor) => {
+anchor.addEventListener("click", () => {
+menus.forEach((menu) => menu.classList.add("hidden"));
+console.log("hello world");
+});
+});
+
+document.addEventListener("click", (event) => {
+if (![... circles].some(circle => circle.contains(event.target)) && ![... menus].some(menu => menu.contains(event.target))) {
+menus.forEach(menu => menu.classList.add("hidden"));
+}
+});
+			</script>
+		</body>
+	</html>

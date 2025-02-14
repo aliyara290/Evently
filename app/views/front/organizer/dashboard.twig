@@ -1,0 +1,39 @@
+{% block content %}
+
+<body class="bg-white text-gray-900">
+    <!-- Sidebar -->
+      {% include 'front/organizer/layout/sidebar.twig' %}
+    <!-- Main Content -->
+    <div class="ml-64">
+        <!-- Header -->
+       {% include 'front/organizer/layout/header.twig' %}
+
+
+        <!-- Content -->
+        <div class="p-6">
+            <div class="bg-white p-4 rounded-xl shadow-lg mb-6 border border-gray-300">
+                <div class="flex flex-wrap gap-4">
+                    <button class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md">
+                        Liste
+                    </button>
+                    <button class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-md">
+                        Calendrier
+                    </button>
+                    <button class="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-md">
+                        Créer événement
+                    </button>
+                    <select class="px-6 py-3 bg-gray-100 text-gray-900 rounded-lg border-gray-300 hover:bg-gray-200 transition-colors cursor-pointer">
+                        <option value="">Trier par...</option>
+                        <option value="date-asc">Date ↑</option>
+                        <option value="date-desc">Date ↓</option>
+                        <option value="title-asc">Titre A-Z</option>
+                        <option value="title-desc">Titre Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   <script src="/public/assets/js/main.js"></script>
+{% endblock %}
+
