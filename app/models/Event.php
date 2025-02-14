@@ -147,7 +147,7 @@ class Event
 
     public function readAllEvents()
     {
-        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
@@ -517,6 +517,35 @@ order by event.id desc
         }
     }
 
+    public function getlastEightEvents(){
+        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+                    from event
+                    join users on users.id=event.user_id
+                    join categories on categories.id=event.category_id
+                    join region on region.id=event.region_id
+                    join city ON city.id = event.city_id
+                    left join event_sponsorings on event_sponsorings.event_id=event.id
+                    left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
+                    GROUP BY 
+                         event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                        event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
+                  order by event.id desc
+                  limit 8
+                  ";
+
+
+        try {
+            $result = $this->pdo->prepare($query);
+
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+            var_dump($result->fetchAll(PDO::FETCH_ASSOC));
+        } catch (PDOException $error) {
+            error_log("Database error: " . $error->getMessage());
+            return false;
+        }
+    }
 
 
 

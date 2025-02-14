@@ -4,14 +4,19 @@ namespace App\Controllers\Front;
 
 use App\Core\View;
 use App\Core\Session;
+use App\Models\Event;
 
 class HomeController {
     private $userData;
+    private $eventData;
 
     public function __construct() {
         $this->userData = Session::get("user");
+        $this->eventData= new Event();
     }
     public function home() {
-        View::render("home", ["user" => $this->userData]);
+        $result=$this->eventData->getlastEightEvents();
+//        var_dump($result);
+        View::render("home", ["user" => $this->userData,"records" => $result]);
     }
 }
