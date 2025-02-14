@@ -33,6 +33,8 @@ $router->get("/admin/manage-user", AdminController::class, "Mange_user_page");
 $router->get("/organizer/manage-events", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
 $router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent");
+$router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent");
+$router->post("/organizer/editEvent", OrganizerController::class, "updateEvent");
 
 // Auth
 $router->get("/register", AuthController::class, "registerPage");

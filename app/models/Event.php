@@ -35,9 +35,6 @@ class Event
 
     private string $price;
 
-    private $eventDate;
-
-    private $eventTime;
 
     private array $sponsorings = [];
 
@@ -146,19 +143,11 @@ class Event
         $this->cityId = $cityId;
     }
 
-    public function setEventDate(string $eventDate): void
-    {
-        $this->eventDate = $eventDate;
-    }
 
-    public function setEventTime(string $eventTime): void
-    {
-        $this->eventTime = $eventTime;
-    }
 
     public function readAllEvents()
     {
-        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
@@ -169,7 +158,7 @@ class Event
                     GROUP BY 
                          event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
-                        event.isValidate, event.event_link, event.status, region.region, city.ville,event_date,event_time
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
 order by event.id desc
                   ";
 
@@ -197,8 +186,8 @@ order by event.id desc
 
     public function createEvent()
     {
-        $columns = "user_id, title, description, image, category_id, event_mode, places, price, start_date, end_date, isValidate, event_link, region_id, city_id, content, event_date, event_time";
-        $values = ":user_id, :title, :description, :image, :category_id, :event_mode, :places, :price, :start_date, :end_date, :isValidate, :event_link, :region_id, :city_id, :content, :event_date, :event_time";
+        $columns = "user_id, title, description, image, category_id, event_mode, places, price, start_date, end_date, isValidate, event_link, region_id, city_id, content";
+        $values = ":user_id, :title, :description, :image, :category_id, :event_mode, :places, :price, :start_date, :end_date, :isValidate, :event_link, :region_id, :city_id, :content";
 
         $query = "INSERT INTO event ($columns) VALUES ($values)";
         $data = [
@@ -216,9 +205,7 @@ order by event.id desc
             ":event_link" => $this->eventLink,
             ":region_id" => $this->regionId,
             ":city_id" => $this->cityId,
-            ":content" => $this->content,
-            ":event_date"=> $this->eventDate,
-            ":event_time"=>$this->eventTime
+            ":content" => $this->content
         ];
         try {
             $result = $this->pdo->prepare($query);
@@ -258,22 +245,22 @@ order by event.id desc
     public function updateEvent(int $id): bool
     {
         $sql = "UPDATE event 
-                SET 
-                    title = :title,
-                    description = :description,
-                    image = :image,
-                    category_id = :category_id,
-                    event_mode = :event_mode,
-                    places = :places,
-                    price = :price,
-                    start_date = :start_date,
-                    end_date = :end_date,
-                    isValidate = :isValidate,
-                    event_link = :event_link,
-                    region_id = :region_id,
-                    city_id = :city_id,
-                    status = :status
-                WHERE id = :id";
+            SET 
+                title = :title,
+                description = :description,
+                image = :image,
+                category_id = :category_id,
+                event_mode = :event_mode,
+                places = :places,
+                price = :price,
+                start_date = :start_date,
+                end_date = :end_date,
+                event_link = :event_link,
+                status = :status,
+                region_id = :region_id,
+                city_id = :city_id,
+                content = :content
+            WHERE id = :id";
 
         $data = [
             ":title" => $this->title,
@@ -285,28 +272,29 @@ order by event.id desc
             ":price" => $this->price,
             ":start_date" => $this->startDate,
             ":end_date" => $this->endDate,
-            ":isValidate" => $this->isValidate,
             ":event_link" => $this->eventLink,
+            ":status" => $this->status,
             ":region_id" => $this->regionId,
             ":city_id" => $this->cityId,
-            ":status" => $this->status,
+            ":content" => $this->content,
             ":id" => $id
         ];
 
         try {
-
             $stmt = $this->pdo->prepare($sql);
             $result = $stmt->execute($data);
 
-            $this->removeSponsoringsFromEvent($id);
-            foreach ($this->sponsorings as $sponsoringId) {
-                $this->addSponsoringToEvent($id, $sponsoringId);
+            if ($result && isset($this->sponsorings)) {
+                $this->removeSponsoringsFromEvent($id);
+                foreach ($this->sponsorings as $sponsoringId) {
+                    $this->addSponsoringToEvent($id, $sponsoringId);
+                }
             }
 
             return $result;
 
         } catch (PDOException $error) {
-            echo "Failed to update event: " . $error->getMessage();
+            error_log("Failed to update event: " . $error->getMessage());
             return false;
         }
     }
@@ -314,7 +302,8 @@ order by event.id desc
 
     public function getEventById(int $id)
     {
-        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select event.*,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date::DATE AS startDate,
+                    start_date::TIME AS startTime,end_date::DATE AS endDate,end_date::TIME AS endTime,region.region,city.ville,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos,array_agg(event_sponsorings.sponsoring_id) AS selected_sponsorings                
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
@@ -324,9 +313,9 @@ order by event.id desc
                     left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
                     where event.id= :id
                     GROUP BY 
-                         users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                       event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
-                        event.isValidate, event.event_link, event.status, region.region, city.ville,event_date,event_time
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
                   ";
         $data = [
             ":id" => $this->id
@@ -386,7 +375,7 @@ order by event.id desc
     }
 
     public function getOrganizerEvents($id){
-        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name AS category_name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select event.*,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name as category_name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
@@ -396,9 +385,9 @@ order by event.id desc
                     left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
                     where event.user_id= :id
                     GROUP BY 
-                         event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                       event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
-                        event.isValidate, event.event_link, event.status, region.region, city.ville,event_date,event_time
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
 order by event.id desc
                   ";
 
