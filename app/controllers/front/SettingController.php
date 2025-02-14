@@ -36,30 +36,11 @@ class SettingController {
             $firstName = $_POST['user__firstname'] ?? null;
             $lastName = $_POST['user__lastname'] ?? null;
             $bio = $_POST['user__bio'] ?? null;
-    
-            $photo = null;
-    
-            if (!empty($_FILES['userPicture']['name'])) {
-                $photoName = basename($_FILES['userPicture']['name']);
-                $tmpName = $_FILES['userPicture']['tmp_name'];
-    
-                $uploadDir = __DIR__ . "/../../../public/uploads/";
-    
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
-                
-                $filePath = $uploadDir . $photoName;
-                
-                if (move_uploaded_file($tmpName, $filePath)) {
-                    $photo = "/uploads/" . $photoName; 
-                } else {
-                    die("Erreur lors du téléchargement du fichier !");
-                }
-            }
+            $photo = $_POST['userPicture'];
     
             if ($userId && $firstName && $lastName) {
-                $this->classprofille->updateProfile($userId, $firstName, $lastName, $photo, $bio);
+                $this->classprofille->updateProfile($userId, $firstName, $lastName, $bio, $photo);
+                header("location: /setting/profile");
             } else {
                 die("Données manquantes !");
             }

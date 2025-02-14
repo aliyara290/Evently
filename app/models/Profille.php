@@ -24,18 +24,7 @@ class Profille {
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':bio', $bio);
-    
-        if ($photo && is_array($photo)) {
-            $targetDir = 'uploads/avatars/';
-            $targetFile = $targetDir . basename($photo['name']);
-    
-            if (move_uploaded_file($photo['tmp_name'], $targetFile)) {
-                $stmt->bindParam(':avatar', $targetFile);
-            } else {
-                echo "Error uploading file.";
-                return false;
-            }
-        }
+   
     
         return $stmt->execute();
     }
@@ -44,7 +33,7 @@ class Profille {
 
     public function getUserById($userId)
     {
-        $sql = "SELECT id, firstName, lastName, email, password_hash, is_suspended, createdAt ,bio
+        $sql = "SELECT id, firstName, lastName, email, password_hash, is_suspended, createdAt ,avatar,bio
                 FROM users 
                 WHERE id = :user_id";
         
