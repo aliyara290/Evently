@@ -10,19 +10,19 @@ class EventsController
 {
     private $userData;
     private $eventData;
-
+    
     public function __construct()
     {
         $this->userData = Session::get("user");
         $this->eventData = new Event();
     }
-
+    
     public function page()
     {
         $events = $this->eventData->readAllEvents();
         $categories = $this->eventData->getCategories();
         $cities = $this->eventData->getCities();
-        View::render("events", ["user" => $this->userData, "records" => $events,"categories" => $categories, "cities" => $cities]);
+        View::render("events", ["user" => $this->userData, "records" => $events, "categories" => $categories, "cities" => $cities]);
     }
 
     public function create()
@@ -30,15 +30,13 @@ class EventsController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-
-//                echo $_SESSION['user']['id'];
-                $this->eventData->setId(1);
+                $this->eventData->setId($this->userData["id"]);
 
                 $this->eventData->setTitle($_POST['event_title']);
                 $this->eventData->setDescription($_POST['description']);
                 $this->eventData->setContent($_POST['content']);
                 $image = null;
-                if(isset($_FILES['image'])) {
+                if (isset($_FILES['image'])) {
                     $image = $_FILES['image']['name'];
                     $temp_file = $_FILES['image']['tmp_name'];
                     $folder = "./assets/upload/" . $image;
@@ -56,8 +54,6 @@ class EventsController
                 $this->eventData->setCityId($_POST['city']);
                 $this->eventData->setPlaces($_POST['places']);
                 $this->eventData->setPrice(isset($_POST['free']) ? '0' : $_POST['price']);
-
-                // Format and set sales start period
                 $salesStartDate = $_POST['event_start'];
                 $salesStartTime = $_POST['event_time'];
                 $formattedSalesStart = date('Y-m-d H:i:s', strtotime("$salesStartDate $salesStartTime"));
@@ -78,11 +74,8 @@ class EventsController
                 if ($result) {
                     header("location: /events");
                     exit();
-                } else {
-                    echo "failde";
                 }
             } catch (\Exception $e) {
-                Session::set('error', $e->getMessage());
                 View::render("/events", [
                     "user" => $this->userData,
                     "error" => $e->getMessage()
@@ -91,5 +84,45 @@ class EventsController
         }
     }
 
+    public function searchForEvents() {
+        if (isset($_GET['q'])) {
+            $query = trim($_GET['q']);
+            $city = trim($_GET['city']);
+            $events = $this->eventData->searchForEvents($query, $city);
+            header('Content-Type: application/json');
+            echo json_encode(["events" => $events]);
+            exit();
+        } else {
+            echo "noooooo";
+        }
 
+    }
+    public function searchForCity() {
+        if (isset($_GET['city'])) {
+            $query = trim($_GET['city']);
+            $cities = $this->eventData->searchForCity($query);
+            header('Content-Type: application/json');
+            echo json_encode(["cities" => $cities]);
+            exit();
+        } else {
+            echo "noooooo";
+        }
+    }
+    public function filter() {
+        if (isset($_GET['category'])) {
+            $category = trim($_GET['category']);
+            // $price = trim($_GET['price']);
+            // echo $price;
+            $date = trim($_GET['date']);
+            $eventsFilter = $this->eventData->filter($category, $date);
+            header('Content-Type: application/json');
+            echo json_encode(["eventsFilter" => $eventsFilter]);
+            exit();
+        } else {
+            echo "noooooo";
+        }
+
+    }
+    
 }
+
