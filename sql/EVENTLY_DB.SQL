@@ -177,3 +177,5 @@ alter table event add column event_date date;
 alter table event add column event_time time;
 
 select * from users;
+CREATE TYPE ticket_status AS ENUM ('pending', 'approved', 'denied');
+ALTER TABLE ticket ADD COLUMN status ticket_status default 'pending' ;
