@@ -29,7 +29,6 @@ class AuthController
     public function googleLogin()
     {
         $authUrl = $this->client->createAuthUrl();
-        echo $authUrl;
         header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
         exit();
     }
