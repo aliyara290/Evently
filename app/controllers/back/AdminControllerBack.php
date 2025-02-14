@@ -117,7 +117,9 @@ class AdminControllerBack {
             echo "id no corct";
         }
     }
-}
+
+   
+}    
 
 
 // if (isset($_GET['UserId'])) {
