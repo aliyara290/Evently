@@ -17,6 +17,7 @@ use App\Controllers\Front\AppController;
 use App\Controllers\Front\AdminController;
 use App\controllers\back\AdminControllerBack;
 use App\controllers\back\CategoryController;
+use App\Controllers\back\StasitickCountroler;
 use App\controllers\back\AppController as BackController;
 
 $router = new Router();
@@ -64,6 +65,13 @@ $router->get("/active",AdminControllerBack::class, "UpduteStatustree");
 $router->get("/delete",AdminControllerBack::class, "deleteUser");
 // Admin routers
 $router->get("/admin/dashboard", BackController::class, "dashboard");
+$router->get("/admin/dashboard", StasitickCountroler::class, "StatistickGlobale");
+
+
+
+
+
+
 // $router->get("/admin/categories", BackController::class, "categories");
 $router->get("/admin/categories", CategoryController::class, "afficherCategories");
 

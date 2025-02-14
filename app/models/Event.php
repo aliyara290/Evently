@@ -500,7 +500,7 @@ public function updateStatusEventRrefuse($id, $pdo,)
                        event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
                         event.isValidate, event.event_link, event.status, region.region, city.ville
-order by event.id desc
+                    order by event.id desc
                   ";
 
         $data = [
@@ -516,6 +516,33 @@ order by event.id desc
             return false;
         }
     }
+
+    public function TotalEvent($pdo){
+        $sql = "SELECT COUNT(*) as total FROM event";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result ? $result['total'] : 0; 
+    }
+
+    public function TotalEventpending($pdo){
+        $sql = "SELECT COUNT(*) as total FROM event WHERE status = 'pending' ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['total'] ?? 0; 
+    }
+    public function TotalEventaccepted($pdo){
+        $sql = "SELECT COUNT(*) as total FROM event WHERE status = 'accepted' ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['total'] ?? 0; 
+    }
+    
 
 
 
