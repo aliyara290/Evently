@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS role (
         )
     )
 );
-select * from users;
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(50),
@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS sponsorings (
     name VARCHAR(50),
     logo VARCHAR(255)
 );
+
+select * from categories;
 
 CREATE TABLE IF NOT EXISTS region (
     id SERIAL PRIMARY KEY,
@@ -97,6 +99,8 @@ CREATE TABLE IF NOT EXISTS event (
     FOREIGN KEY (city_id) REFERENCES city (id) ON DELETE CASCADE
 );
 
+ALTER TABLE event ADD COLUMN havePrice bool DEFAULT false;
+update event set havePrice = true where id = 5;
 CREATE TABLE IF NOT EXISTS event_sponsorings (
     event_id INT,
     sponsoring_id INT,
@@ -172,4 +176,7 @@ CREATE TABLE IF NOT EXISTS notification (
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-select * from users;
+alter table event add column content text;
+alter table event add column event_date date;
+alter table event add column event_time time;
+
