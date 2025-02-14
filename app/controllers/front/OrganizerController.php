@@ -50,7 +50,7 @@ class OrganizerController
         $this->eventData->setId($_GET['id']);
         $event = $this->eventData->getEventById($_GET['id']);
         $selectedSponsorings = $event['selected_sponsorings'];
-        var_dump($event);
+//        var_dump($event);
         View::render("organizer/editEvent", ["user" => $this->userData, "categories" => $categories, "regions" => $regions, "cities" => $cities, "sponsorings" => $sponsorings, "event" => $event,"selectedSponsorings" => $selectedSponsorings]);
     }
 
