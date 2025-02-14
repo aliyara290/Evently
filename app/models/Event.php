@@ -175,6 +175,118 @@ order by event.id desc
         }
 
     }
+    public function redAllEventsActive()
+{
+                $query = "SELECT event.id, users.firstName AS firstName, users.lastName AS lastName, 
+                event.title, event.description, event.image, categories.name AS category, 
+                event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                event.isvalidate, event.event_link, event.status, region.region, city.ville, 
+                event.content, event.event_date, event.event_time, 
+                STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+            FROM event
+            JOIN users ON users.id = event.user_id
+            JOIN categories ON categories.id = event.category_id
+            JOIN region ON region.id = event.region_id
+            JOIN city ON city.id = event.city_id
+            LEFT JOIN event_sponsorings ON event_sponsorings.event_id = event.id
+            LEFT JOIN sponsorings ON event_sponsorings.sponsoring_id = sponsorings.id
+            WHERE event.status = 'accepted' 
+            GROUP BY event.id, users.firstName, users.lastName, event.title, event.content, 
+                event.description, event.image, categories.name, event.event_mode, event.places, 
+                event.price, event.start_date, event.end_date, event.isValidate, event.event_link, 
+                event.status, region.region, city.ville, event.event_date, event.event_time
+            ORDER BY event.id DESC";
+
+            try {
+            $result = $this->pdo->prepare($query);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $error) {
+            error_log("Database error: " . $error->getMessage());
+            return [];
+            }
+}
+
+
+
+
+
+public function redAllEventsPending()
+{
+    $query = "SELECT event.id, users.firstName AS firstName, users.lastName AS lastName, 
+                     event.title, event.description, event.image, categories.name AS category, 
+                     event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                     event.isvalidate, event.event_link, event.status, region.region, city.ville, 
+                     event.content, event.event_date, event.event_time, 
+                     STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+              FROM event
+              JOIN users ON users.id = event.user_id
+              JOIN categories ON categories.id = event.category_id
+              JOIN region ON region.id = event.region_id
+              JOIN city ON city.id = event.city_id
+              LEFT JOIN event_sponsorings ON event_sponsorings.event_id = event.id
+              LEFT JOIN sponsorings ON event_sponsorings.sponsoring_id = sponsorings.id
+              WHERE event.status = 'pending' 
+              GROUP BY event.id, users.firstName, users.lastName, event.title, event.content, 
+                       event.description, event.image, categories.name, event.event_mode, event.places, 
+                       event.price, event.start_date, event.end_date, event.isValidate, event.event_link, 
+                       event.status, region.region, city.ville, event.event_date, event.event_time
+              ORDER BY event.id DESC";
+
+    try {
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $error) {
+        error_log("Database error: " . $error->getMessage());
+        return [];
+    }
+}
+
+public function updateStatusEvent($id, $pdo,)
+{
+
+    $status = 'accepted';
+
+    $sql = 'UPDATE event SET status = :status WHERE id = :id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_BOOL);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute();
+}
+public function deleteEventId($id)
+{
+    try {
+        $query = "DELETE FROM event WHERE id = :id";
+        $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+
+        if ($result->execute()) {
+            return "L'événement a été supprimé avec succès."; // Succès
+        } else {
+            return "Échec de la suppression de l'événement."; // Échec
+        }
+    } catch (PDOException $error) {
+        error_log("Erreur de base de données : " . $error->getMessage());
+        return "Une erreur est survenue lors de la suppression de l'événement.";
+    }
+}
+
+
+public function updateStatusEventRrefuse($id, $pdo,)
+{
+
+    $status = 'pending';
+
+    $sql = 'UPDATE event SET status = :status WHERE id = :id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_BOOL);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute();
+}
+
 
     public function deleteEvent(string $id): bool
     {
