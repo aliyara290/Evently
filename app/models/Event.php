@@ -147,7 +147,7 @@ class Event
 
     public function readAllEvents()
     {
-        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
