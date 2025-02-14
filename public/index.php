@@ -18,6 +18,7 @@ use App\Controllers\Front\AdminController;
 use App\controllers\back\AdminControllerBack;
 use App\controllers\back\CategoryController;
 use App\Controllers\back\StasitickCountroler;
+use App\Controllers\back\TicketController;
 use App\controllers\back\AppController as BackController;
 
 $router = new Router();
@@ -36,6 +37,8 @@ $router->get("/organizer/create", CreateEventController::class, "page");
 $router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent");
 $router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent");
 $router->post("/organizer/editEvent", OrganizerController::class, "updateEvent");
+$router->get("/ticket", TicketController::class, "page");
+
 
 // Auth
 $router->get("/register", AuthController::class, "registerPage");
