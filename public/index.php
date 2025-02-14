@@ -29,9 +29,13 @@ $router->get("/setting/reset", SettingController::class, "setting");
 $router->get("/account/profile", UserProfileController::class, "page");
 $router->get("/faqs", AppController::class, "faqs");
 $router->get("/organizer/dashboard", OrganizerController::class, "page");
-$router->get("/admin/Mange_user", AdminController::class, "Mange_user_page");
-$router->get("/organizer/Event_management", OrganizerController::class, "Event_management_page");
+$router->get("/admin/manage-user", AdminController::class, "Mange_user_page");
+$router->get("/organizer/manage-events", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
+$router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent");
+$router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent");
+$router->post("/organizer/editEvent", OrganizerController::class, "updateEvent");
+
 // Auth
 $router->get("/register", AuthController::class, "registerPage");
 $router->post("/register", AuthController::class, "register");

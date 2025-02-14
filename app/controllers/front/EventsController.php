@@ -31,8 +31,7 @@ class EventsController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
 
-//                echo $_SESSION['user']['id'];
-                $this->eventData->setId(11);
+                $this->eventData->setId($this->userData['id']);
 
                 $this->eventData->setTitle($_POST['event_title']);
                 $this->eventData->setDescription($_POST['description']);
@@ -45,14 +44,10 @@ class EventsController
 
                 $this->eventData->setImage($image);
                 $this->eventData->setCategory($_POST['category']);
-                $eventDate = $_POST['event_date'];
-                $eventTime = $_POST['event_time'];
-                var_dump($eventDate);
-                $this->eventData->setEventDate($eventDate);
-                $this->eventData->setEventTime($eventTime);
+
                 $this->eventData->setEventMode(isset($_POST['venue']) ? 'presentiel' : 'enligne');
                 $this->eventData->setRegionId($_POST['region']);
-                var_dump($_POST['region']);
+//                var_dump($_POST['region']);
                 $this->eventData->setCityId($_POST['city']);
 
                 $this->eventData->setPlaces($_POST['places']);
@@ -79,9 +74,12 @@ class EventsController
                 $this->eventData->setEventLink($_POST['link']);
 
 
-                $result = $this->eventData->createEvent();
-
-                if ($result) {
+                $this->eventData->createEvent();
+                $getLastEventId = $this->eventData->getLastEventId();
+                if ($getLastEventId) {
+                foreach ($_POST['sponsorings_id'] as $sponsoringId) {
+                    $this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
+                }
                     header("location: /events");
                     exit();
                 } else {
@@ -96,6 +94,7 @@ class EventsController
             }
         }
     }
+
 
 
 }

@@ -2,8 +2,11 @@
 
 {% block content %}
     <main class="w-7/12 mx-auto pt-4 pb-12 ">
-        <form class="flex flex-col gap-10" action="/organizer/create" method="POST" enctype="multipart/form-data">
-            <input type="file" id="file-upload" class="hidden" name="image">
+        <form class="flex flex-col gap-10" action="/organizer/editEvent" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="{{ event.id }}">
+            <input type="hidden" name="old_image" value="{{ event.image }}">
+
+            <input type="file" id="file-upload" class="hidden" name="image" value="{{ event.image }}">
             <div class="group w-full cursor-pointer border-4 border-transparent hover:border-orange border-dotted rounded-xl p-0.5">
                 <label for="file-upload"
                        class="upload_file-card relative flex justify-center items-center w-full h-[380px] bg-gray-300 border-1 border-gray-400 rounded-xl shadow-lg overflow-hidden">
@@ -42,7 +45,7 @@
                     </label>
                     <input type="text" placeholder="Event title"
                            class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="event_title"
-                           id="">
+                           value="{{ event.title }}">
                 </div>
                 <div class="flex flex-col gap-2">
                     <label for="event_summary" class="text-sm text-darkblue font-unbounded">Event summary
@@ -50,7 +53,7 @@
                     </label>
                     <textarea type="text" placeholder="Event summary"
                               class="p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[160px]"
-                              name="description" id=""></textarea>
+                              name="description" id="">{{ event.description }}</textarea>
                 </div>
             </div>
             <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
@@ -63,36 +66,21 @@
                     </label>
                     <textarea type="text" placeholder="Event content"
                               class="p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[160px]"
-                              name="content" id=""></textarea>
+                              name="content" id="">{{ event.content }}</textarea>
                 </div>
             </div>
             <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
                 <div class="">
                     <h4 class="text-2xl text-darkblue font- font-unbounded">Event Data & Location</h4>
                 </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label for="event_date" class="text-sm text-darkblue font-unbounded">Event date
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" placeholder="Event date"
-                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="event_date">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="event_time" class="text-sm text-darkblue font-unbounded">Event time
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="time" placeholder="Event time"
-                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="event_time">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-5">
+                <div class="grid ">
                     <select name="category">
-                        <option>select category</option>
+                        <option value="">Select Category</option>
                         {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            <option value="{{ category.id }}"
+                                    {% if category.id == event.category_id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -142,25 +130,29 @@
                             </label>
                         </li>
                     </ul>
+
                 </div>
                 <div id="regionsAndCities"
                      class="hidden flex flex-col gap-2">
                     </label>
                     <div class="flex  gap-5">
-                        <select name="region" type="text"
-                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="region"
-                                id="">
-                            <option>select Region</option>
+                        <select name="region"
+                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]">
+                            <option value="">Select Region</option>
                             {% for region in regions %}
-                                <option value="{{ region.id }}">{{ region.region }}</option>
+                                <option value="{{ region.id }}"
+                                        {% if region.id == event.region_id %}selected{% endif %}>
+                                    {{ region.region }}
+                                </option>
                             {% endfor %}
                         </select>
                         <select id="city" name="city"
-                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="city"
-                                id="">
-                            <option>select city</option>
+                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]">
+                            <option value="">Select City</option>
                             {% for city in cities %}
-                                <option value="{{ city.id }}">{{ city.ville }}</option>
+                                <option value="{{ city.id }}" {% if city.id == event.city_id %}selected{% endif %}>
+                                    {{ city.ville }}
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
@@ -169,7 +161,44 @@
                         class="flex flex-col gap-2">
                     <input id="link" type="text" placeholder="Link"
                            class="hidden px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="link"
-                           id="">
+                           value="{{ event.event_link }}">
+                </div>
+
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sales start
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="date" placeholder="Sales start"
+                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
+                               name="event_start" value="{{ event.startdate }}">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="start_time" class="text-sm text-darkblue font-unbounded">Start time
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="time" placeholder="Start time"
+                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                               name="event_end" value="{{ event.starttime }}">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sale end
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="date" placeholder="Sale end"
+                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
+                               name="event_summary" value="{{ event.enddate }}">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="event_end" class="text-sm text-darkblue font-unbounded">End time
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="time" placeholder="End time"
+                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                               name="event_end" value="{{ event.endtime }}">
+                    </div>
                 </div>
             </div>
             <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
@@ -179,7 +208,7 @@
                 <div class="flex flex-col gap-2">
                     <ul class="grid w-full gap-6 md:grid-cols-2">
                         <li>
-                            <input type="radio" id="price-paid" name="price" class="hidden peer"/>
+                            <input type="radio" id="price-paid" name="free" class="hidden peer"/>
                             <label for="price-paid"
                                    class="inline-flex items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">
                                 <div class="flex justify-center items-center w-full">
@@ -209,7 +238,7 @@
                         </label>
                         <input type="number" placeholder="Number of places"
                                class=" p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="places">
+                               name="places" value="{{ event.places }}">
                     </div>
                     <div class="flex flex-col gap-2">
                         <label for="price" class="text-sm text-darkblue font-unbounded">Price
@@ -217,43 +246,7 @@
                         </label>
                         <input id="price-input" type="number" placeholder="Price in MAD"
                                class=" px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="price">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sales start
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" placeholder="Sales start"
-                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="event_start">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="start_time" class="text-sm text-darkblue font-unbounded">Start time
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="time" placeholder="Start time"
-                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="event_end">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sale end
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" placeholder="Sale end"
-                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="event_summary">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="event_end" class="text-sm text-darkblue font-unbounded">End time
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="time" placeholder="End time"
-                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="event_end">
+                               name="price" value="{{ event.price }}">
                     </div>
                 </div>
             </div>
@@ -262,17 +255,20 @@
                     <h4 class="text-2xl text-darkblue font- font-unbounded">Sponsorings</h4>
                 </div>
 
-                <div x-data="{ open: false }" class="flex flex-col gap-2">
-                    <!-- Toggle Button -->
+                <div x-data="{ open: false, hasChecked: false }"
+                     x-init="
+        hasChecked = [...$refs.sponsoringCheckboxes.querySelectorAll('input[type=checkbox]')]
+            .some(checkbox => checkbox.checked);
+    ">
                     <button
                             type="button"
-                            @click="open = !open"
-                            class="font-bold text-center items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:bg-orange peer-checked:text-white hover:border-orange">
+                            @click="open = true"
+                            x-show="!hasChecked"
+                            class="font-bold text-center items-center justify-between w-full p-4 text-orange bg-white border border-gray-200 rounded-lg cursor-pointer hover:border-orange">
                         + Add Sponsorings
                     </button>
 
-
-                    <div x-show="open" x-transition class="mt-4">
+                    <div x-show="open || hasChecked" x-ref="sponsoringCheckboxes" class="mt-4">
                         {% for sponsoring in sponsorings %}
                             <div class="mb-2">
                                 <input class="form-check-input"
@@ -280,7 +276,13 @@
                                        id="sponsoring_{{ sponsoring.id }}"
                                        name="sponsorings_id[]"
                                        value="{{ sponsoring.id }}"
-                                       {% if sponsoring.id in selectedSponsorings %}checked{% endif %}>
+                                       {% if sponsoring.id in selectedSponsorings %}checked{% endif %}
+                                       @change="
+                            hasChecked = [...$refs.sponsoringCheckboxes.querySelectorAll('input[type=checkbox]')]
+                                .some(checkbox => checkbox.checked);
+                            if (!hasChecked) open = false;
+                        ">
+
                                 <label class="form-check-label" for="sponsoring_{{ sponsoring.id }}">
                                     {{ sponsoring.logo }}
                                 </label>
@@ -294,7 +296,7 @@
             <div class="">
                 <button type="submit"
                         class="w-full h-[45px] rounded-md bg-orange hover:bg-darkOrange text-white text-md font-unbounded cursor-pointer">
-                    Publish
+                    Update
                 </button>
             </div>
         </form>
@@ -331,50 +333,95 @@
     </script>
 
     <script>
-        const priceFreeRadio = document.getElementById('price-free');
-        const pricePaidRadio = document.getElementById('price-paid');
-        const priceInput = document.getElementById('price-input');
+        document.addEventListener('DOMContentLoaded', function () {
+            const priceFreeRadio = document.getElementById('price-free');
+            const pricePaidRadio = document.getElementById('price-paid');
+            const priceInput = document.getElementById('price-input');
 
+            const priceValue = priceInput.value;
 
-        function togglePriceInput() {
-            if (priceFreeRadio.checked) {
-                priceInput.disabled = true;
-            } else {
-                priceInput.disabled = false;
+            function checkPriceAndSetRadio() {
+                if (priceValue === '0' || priceValue === '') {
+                    priceFreeRadio.checked = true;
+                    pricePaidRadio.checked = false;
+                    priceInput.disabled = true;
+                } else {
+                    pricePaidRadio.checked = true;
+                    priceFreeRadio.checked = false;
+                    priceInput.disabled = false;
+                }
             }
-        }
 
+            checkPriceAndSetRadio();
 
-        priceFreeRadio.addEventListener('change', () => {
-            togglePriceInput();
-            pricePaidRadio.checked = false;
+            function togglePriceInput() {
+                if (priceFreeRadio.checked) {
+                    priceInput.value = '0';
+                    priceInput.disabled = true;
+                } else {
+                    priceInput.disabled = false;
+                    if (priceInput.value === '0') {
+                        priceInput.value = '';
+                    }
+                }
+            }
+
+            priceFreeRadio.addEventListener('change', () => {
+                togglePriceInput();
+                pricePaidRadio.checked = false;
+            });
+
+            pricePaidRadio.addEventListener('change', () => {
+                togglePriceInput();
+                priceFreeRadio.checked = false;
+            });
         });
-
-        pricePaidRadio.addEventListener('change', () => {
-            togglePriceInput();
-            priceFreeRadio.checked = false;
-        });
-
-        togglePriceInput();
     </script>
 
+
     <script>
-        const venue = document.getElementById('hosting-small');
-        const online = document.getElementById('hosting-big');
-        const linkInput = document.getElementById('link');
-        const categoriesAndCities = document.getElementById('regionsAndCities');
-
-        online.addEventListener('change', () => {
-            linkInput.classList.remove('hidden');
-            categoriesAndCities.classList.remove('hidden');
-            venue.checked = false;
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('sponsoringComponent', () => ({
+                selected: [],
+                updateSelected() {
+                    this.selected = [...document.querySelectorAll('input[name="sponsorings_id[]"]:checked')].map(el => el.value);
+                }
+            }));
         });
 
-        venue.addEventListener('change', () => {
-            linkInput.classList.add('hidden');
-            categoriesAndCities.classList.remove('hidden');
-            online.checked = false;
-        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const venue = document.getElementById('hosting-small');
+            const online = document.getElementById('hosting-big');
+            const linkInput = document.getElementById('link');
+            const categoriesAndCities = document.getElementById('regionsAndCities');
 
+            function checkLinkAndSetRadio() {
+                if (linkInput.value === '') {
+                    venue.checked = true;
+                    online.checked = false;
+                    linkInput.classList.add('hidden');
+                    categoriesAndCities.classList.remove('hidden');
+                } else {
+                    online.checked = true;
+                    venue.checked = false;
+                    linkInput.classList.remove('hidden');
+                    categoriesAndCities.classList.remove('hidden');
+                }
+            }
+
+            checkLinkAndSetRadio();
+
+            online.addEventListener('change', () => {
+                linkInput.classList.remove('hidden');
+                categoriesAndCities.classList.remove('hidden');
+                venue.checked = false;
+            });
+
+            venue.addEventListener('change', () => {
+                linkInput.classList.add('hidden');
+                categoriesAndCities.classList.remove('hidden');
+                online.checked = false;
+            });
+        });
     </script>
 {% endblock %}
