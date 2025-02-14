@@ -135,7 +135,8 @@ class User
     public function getAllUsers($pdo)
     {
         $sqlActive = "SELECT id, firstName, lastName, email, password_hash, is_suspended, createdAt 
-                      FROM users";
+                      FROM users
+                      WHERE is_suspended = TRUE"; 
         $stmtActive = $pdo->prepare($sqlActive);
         $stmtActive->execute();
         $usersActive = $stmtActive->fetchAll(PDO::FETCH_ASSOC);
