@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation de Tickets</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-4xl">
+        <h1 class="text-3xl font-bold text-center mb-8 text-blue-800 border-b pb-4">Réservation de Tickets</h1>
+        
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Formulaire à gauche -->
+            <div class="md:w-2/3">
+                <form class="space-y-6">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1">
+                            <label class="block text-gray-700 font-semibold mb-2" for="firstname">
+                                Prénom
+                            </label>
+                            <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all" 
+                                   id="firstname" 
+                                   type="text" 
+                                   required>
+                        </div>
+
+                        <div class="flex-1">
+                            <label class="block text-gray-700 font-semibold mb-2" for="lastname">
+                                Nom
+                            </label>
+                            <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all" 
+                                   id="lastname" 
+                                   type="text" 
+                                   required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2" for="email">
+                            Email
+                        </label>
+                        <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all" 
+                               id="email" 
+                               type="email" 
+                               required>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2" for="tickets">
+                            Nombre de tickets
+                        </label>
+                        <input class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all" 
+                               id="tickets" 
+                               type="number" 
+                               min="1" 
+                               required
+                               onchange="calculateTotal()">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Total à droite -->
+            <div class="md:w-1/3 bg-gradient-to-b from-blue-50 to-blue-100 p-6 rounded-xl shadow-inner">
+                <h2 class="text-xl font-bold text-blue-800 mb-4">Résumé</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center border-b border-blue-200 pb-2">
+                        <span class="text-gray-600">Prix par ticket:</span>
+                        <span class="text-blue-600 font-bold text-lg">20€</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center pt-2">
+                        <span class="text-gray-600">Total à payer:</span>
+                        <span id="total" class="text-blue-600 font-bold text-2xl">0€</span>
+                    </div>
+                </div>
+
+                <a href="../../../event/Reserver" class="w-full mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg hover:shadow-xl">
+                        Réserver maintenant
+                    </a>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

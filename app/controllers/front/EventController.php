@@ -21,4 +21,9 @@ class EventController {
 
         View::render("event/page", ["user" => $this->userData,"event" => $event]);
     }
+
+    public function Resererpage() {
+        View::render("event/Réserver");
+    }
+    
 }
