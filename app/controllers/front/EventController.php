@@ -6,7 +6,6 @@ use App\models\Event;
 
 class EventController {
     private $userData;
-
     private $eventData;
 
     public function __construct() {
@@ -25,5 +24,4 @@ class EventController {
     public function Resererpage() {
         View::render("event/Réserver");
     }
-    
 }

@@ -29,9 +29,9 @@ $router->get("/setting/profile", SettingController::class, "profile");
 $router->get("/setting/reset", SettingController::class, "setting");
 $router->get("/account/profile", UserProfileController::class, "page");
 $router->get("/faqs", AppController::class, "faqs");
-$router->get("/organizer/dashboard", OrganizerController::class, "page");
-$router->get("/admin/manage-user", AdminController::class, "Mange_user_page");
-$router->get("/organizer/manage-events", OrganizerController::class, "Event_management_page");
+// $router->get("/organizer/dashboard", OrganizerController::class, "page");
+// $router->get("/admin/manage-user", AdminController::class, "Mange_user_page");
+// $router->get("/organizer/manage-events", OrganizerController::class, "Event_management_page");
 $router->get("/organizer/create", CreateEventController::class, "page");
 $router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent");
 $router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent");
@@ -87,6 +87,12 @@ $router->get("/admin/refuse",AdminControllerBack::class,"updatestatusRefuse");
 $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
+$router->get("/event/Reserver",EventController::class,"Resererpage");
+
+$router->get("/organizer/sponsoring",OrganizerController::class,"pageSponsoring");
+
+
+
 
 
 

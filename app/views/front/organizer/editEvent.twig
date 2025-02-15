@@ -257,9 +257,9 @@
 
                 <div x-data="{ open: false, hasChecked: false }"
                      x-init="
-        hasChecked = [...$refs.sponsoringCheckboxes.querySelectorAll('input[type=checkbox]')]
-            .some(checkbox => checkbox.checked);
-    ">
+                        hasChecked = [...$refs.sponsoringCheckboxes.querySelectorAll('input[type=checkbox]')]
+                            .some(checkbox => checkbox.checked);
+                    ">
                     <button
                             type="button"
                             @click="open = true"
