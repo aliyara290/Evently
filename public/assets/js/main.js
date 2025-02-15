@@ -222,20 +222,7 @@ filterSubmitBtn.addEventListener("click", (e) => {
   }
 });
 
-document
-  .getElementById("file-upload")
-  .addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const img = document.getElementById("previewImage");
-        img.src = e.target.result;
-        img.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+
 
 function togglePassword(id) {
   const eye_slash = document.getElementById("eye-slash");

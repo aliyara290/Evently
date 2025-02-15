@@ -29,6 +29,16 @@ class Category {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function TotalCategories($pdo) {
+        $sql = "SELECT COUNT(*) as total FROM categories";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result ? $result['total'] : 0; 
+    }
+    
     
 }
     

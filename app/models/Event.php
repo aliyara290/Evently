@@ -26,12 +26,14 @@ class Event
 
     private string $eventMode;
     private string $places;
-    private string $region;
-    private string $city;
+    private string $regionId;
+    private string $cityId;
     private string $type;
     private string $startDate;
+    private string $city;
+    private string $region;
     private string $endDate;
-    private string $link;
+    private string $eventLink;
     private string $status;
 
     private string $price;
@@ -114,7 +116,7 @@ class Event
 
     public function setLink(string $link): void
     {
-        $this->link = $link;
+        $this->eventLink = $link;
     }
 
     public function setStatus(string $status): void
@@ -134,33 +136,24 @@ class Event
 
     public function setEventLink(string $eventLink): void
     {
-        $this->link = $eventLink;
+        $this->eventLink = $eventLink;
     }
 
     public function setRegionId(int $regionId): void
     {
-        $this->region = $regionId;
+        $this->regionId = $regionId;
     }
 
     public function setCityId(int $cityId): void
     {
-        $this->city = $cityId;
+        $this->cityId = $cityId;
     }
 
-    public function setEventDate(string $eventDate): void
-    {
-        $this->eventDate = $eventDate;
-    }
 
-    public function setEventTime(string $eventTime): void
-    {
-        $this->eventTime = $eventTime;
-    }
 
     public function readAllEvents()
     {
-        //        echo "work";
-        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
@@ -171,8 +164,8 @@ class Event
                     GROUP BY 
                          event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
-                        event.isValidate, event.event_link, event.status, region.region, city.ville,event_date,event_time
-                        order by event.id desc
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
+                    order by event.id desc
                   ";
 
 
@@ -181,6 +174,7 @@ class Event
 
             $result->execute();
             return $result->fetchAll(PDO::FETCH_ASSOC);
+            var_dump($result->fetchAll(PDO::FETCH_ASSOC));
         } catch (PDOException $error) {
             error_log("Database error: " . $error->getMessage());
             return false;
@@ -192,13 +186,127 @@ class Event
         $query = "delete from event where id = :id";
         $result = $this->pdo->prepare($query);
         $check = $result->execute([':id' => $this->id]);
-        return $check;
+
     }
+    public function redAllEventsActive()
+{
+                $query = "SELECT event.id, users.firstName AS firstName, users.lastName AS lastName, 
+                event.title, event.description, event.image, categories.name AS category, 
+                event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                event.isvalidate, event.event_link, event.status, region.region, city.ville, 
+                event.content, event.event_date, event.event_time, 
+                STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+            FROM event
+            JOIN users ON users.id = event.user_id
+            JOIN categories ON categories.id = event.category_id
+            JOIN region ON region.id = event.region_id
+            JOIN city ON city.id = event.city_id
+            LEFT JOIN event_sponsorings ON event_sponsorings.event_id = event.id
+            LEFT JOIN sponsorings ON event_sponsorings.sponsoring_id = sponsorings.id
+            WHERE event.status = 'accepted' 
+            GROUP BY event.id, users.firstName, users.lastName, event.title, event.content, 
+                event.description, event.image, categories.name, event.event_mode, event.places, 
+                event.price, event.start_date, event.end_date, event.isValidate, event.event_link, 
+                event.status, region.region, city.ville, event.event_date, event.event_time
+            ORDER BY event.id DESC";
+
+            try {
+            $result = $this->pdo->prepare($query);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+            } catch (PDOException $error) {
+            error_log("Database error: " . $error->getMessage());
+            return [];
+            }
+}
+
+
+
+
+
+public function redAllEventsPending()
+{
+    $query = "SELECT event.id, users.firstName AS firstName, users.lastName AS lastName, 
+                     event.title, event.description, event.image, categories.name AS category, 
+                     event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                     event.isvalidate, event.event_link, event.status, region.region, city.ville, 
+                     event.content, event.event_date, event.event_time, 
+                     STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+              FROM event
+              JOIN users ON users.id = event.user_id
+              JOIN categories ON categories.id = event.category_id
+              JOIN region ON region.id = event.region_id
+              JOIN city ON city.id = event.city_id
+              LEFT JOIN event_sponsorings ON event_sponsorings.event_id = event.id
+              LEFT JOIN sponsorings ON event_sponsorings.sponsoring_id = sponsorings.id
+              WHERE event.status = 'pending' 
+              GROUP BY event.id, users.firstName, users.lastName, event.title, event.content, 
+                       event.description, event.image, categories.name, event.event_mode, event.places, 
+                       event.price, event.start_date, event.end_date, event.isValidate, event.event_link, 
+                       event.status, region.region, city.ville, event.event_date, event.event_time
+              ORDER BY event.id DESC";
+
+    try {
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $error) {
+        error_log("Database error: " . $error->getMessage());
+        return [];
+    }
+}
+
+public function updateStatusEvent($id, $pdo,)
+{
+
+    $status = 'accepted';
+
+    $sql = 'UPDATE event SET status = :status WHERE id = :id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_BOOL);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute();
+}
+public function deleteEventId($id)
+{
+    try {
+        $query = "DELETE FROM event WHERE id = :id";
+        $result = $this->pdo->prepare($query);
+        $result->bindValue(':id', $id, PDO::PARAM_INT);
+
+        if ($result->execute()) {
+            return "L'événement a été supprimé avec succès."; // Succès
+        } else {
+            return "Échec de la suppression de l'événement."; // Échec
+        }
+    } catch (PDOException $error) {
+        error_log("Erreur de base de données : " . $error->getMessage());
+        return "Une erreur est survenue lors de la suppression de l'événement.";
+    }
+}
+
+
+public function updateStatusEventRrefuse($id, $pdo,)
+{
+
+    $status = 'pending';
+
+    $sql = 'UPDATE event SET status = :status WHERE id = :id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':status', $status, PDO::PARAM_BOOL);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $stmt->execute();
+}
+
+
+   
 
     public function createEvent()
     {
-        $columns = "user_id, title, description, image, category_id, event_mode, places, price, start_date, end_date, isValidate, event_link, region_id, city_id, content, event_date, event_time";
-        $values = ":user_id, :title, :description, :image, :category_id, :event_mode, :places, :price, :start_date, :end_date, :isValidate, :event_link, :region_id, :city_id, :content, :event_date, :event_time";
+        $columns = "user_id, title, description, image, category_id, event_mode, places, price, start_date, end_date, isValidate, event_link, region_id, city_id, content";
+        $values = ":user_id, :title, :description, :image, :category_id, :event_mode, :places, :price, :start_date, :end_date, :isValidate, :event_link, :region_id, :city_id, :content";
 
         $query = "INSERT INTO event ($columns) VALUES ($values)";
         $data = [
@@ -213,34 +321,32 @@ class Event
             ":start_date" => $this->startDate,
             ":end_date" => $this->endDate,
             ":isValidate" => 1,
-            ":event_link" => $this->link,
-            ":region_id" => $this->region,
-            ":city_id" => $this->city,
-            ":content" => $this->content,
-            ":event_date" => $this->eventDate,
-            ":event_time" => $this->eventTime
+            ":event_link" => $this->eventLink,
+            ":region_id" => $this->regionId,
+            ":city_id" => $this->cityId,
+            ":content" => $this->content
         ];
         try {
             $result = $this->pdo->prepare($query);
+            $eventId = $this->pdo->lastInsertId();
+            foreach ($this->sponsorings as $sponsoringId) {
+                $this->addSponsoringToEvent($eventId, $sponsoringId);
+            }
             return $result->execute($data);
         } catch (PDOException $error) {
             echo "Failed to add course: " . $error->getMessage();
             return false;
         }
-        $eventId = $this->pdo->lastInsertId();
-        foreach ($this->sponsorings as $sponsoringId) {
-            $this->addSponsoringToEvent($eventId, $sponsoringId);
-        }
     }
 
-    private function removeSponsoringsFromEvent($id)
+    public function removeSponsoringsFromEvent($id)
     {
         $query = "DELETE FROM event_sponsorings WHERE event_id = :event_id";
         $result = $this->pdo->prepare($query);
         $result->execute([':event_id' => $id]);
     }
 
-    private function addSponsoringToEvent(int $eventId, int $sponsoringId)
+    public function addSponsoringToEvent(int $eventId, int $sponsoringId)
     {
         $query = "INSERT INTO event_sponsorings (event_id, sponsoring_id) VALUES (:event_id, :sponsoring_id)";
         $data = [
@@ -258,22 +364,22 @@ class Event
     public function updateEvent(int $id): bool
     {
         $sql = "UPDATE event 
-                SET 
-                    title = :title,
-                    description = :description,
-                    image = :image,
-                    category_id = :category_id,
-                    event_mode = :event_mode,
-                    places = :places,
-                    price = :price,
-                    start_date = :start_date,
-                    end_date = :end_date,
-                    isValidate = :isValidate,
-                    event_link = :event_link,
-                    region_id = :region_id,
-                    city_id = :city_id,
-                    status = :status
-                WHERE id = :id";
+            SET 
+                title = :title,
+                description = :description,
+                image = :image,
+                category_id = :category_id,
+                event_mode = :event_mode,
+                places = :places,
+                price = :price,
+                start_date = :start_date,
+                end_date = :end_date,
+                event_link = :event_link,
+                status = :status,
+                region_id = :region_id,
+                city_id = :city_id,
+                content = :content
+            WHERE id = :id";
 
         $data = [
             ":title" => $this->title,
@@ -285,27 +391,29 @@ class Event
             ":price" => $this->price,
             ":start_date" => $this->startDate,
             ":end_date" => $this->endDate,
-            ":isValidate" => $this->isValidate,
-            ":event_link" => $this->link,
-            ":region_id" => $this->region,
-            ":city_id" => $this->city,
+            ":event_link" => $this->eventLink,
             ":status" => $this->status,
+            ":region_id" => $this->regionId,
+            ":city_id" => $this->cityId,
+            ":content" => $this->content,
             ":id" => $id
         ];
 
         try {
-
             $stmt = $this->pdo->prepare($sql);
             $result = $stmt->execute($data);
 
-            $this->removeSponsoringsFromEvent($id);
-            foreach ($this->sponsorings as $sponsoringId) {
-                $this->addSponsoringToEvent($id, $sponsoringId);
+            if ($result && isset($this->sponsorings)) {
+                $this->removeSponsoringsFromEvent($id);
+                foreach ($this->sponsorings as $sponsoringId) {
+                    $this->addSponsoringToEvent($id, $sponsoringId);
+                }
             }
 
             return $result;
+
         } catch (PDOException $error) {
-            echo "Failed to update event: " . $error->getMessage();
+            error_log("Failed to update event: " . $error->getMessage());
             return false;
         }
     }
@@ -313,7 +421,8 @@ class Event
 
     public function getEventById(int $id)
     {
-        $query = "select users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,event_date,event_time,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+        $query = "select event.*,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date::DATE AS startDate,
+                    start_date::TIME AS startTime,end_date::DATE AS endDate,end_date::TIME AS endTime,region.region,city.ville,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos,array_agg(event_sponsorings.sponsoring_id) AS selected_sponsorings                
                     from event
                     join users on users.id=event.user_id
                     join categories on categories.id=event.category_id
@@ -323,9 +432,9 @@ class Event
                     left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
                     where event.id= :id
                     GROUP BY 
-                         users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                       event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
-                        event.isValidate, event.event_link, event.status, region.region, city.ville,event_date,event_time
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
                   ";
         $data = [
             ":id" => $this->id
@@ -339,35 +448,32 @@ class Event
             error_log("Database error: " . $error->getMessage());
             return false;
         }
+
     }
 
-    public function countAllEvents()
-    {
-        $query = "SELECT COUNT(*) as total FROM event";
+    public function countAllEvents(){
+        $query="SELECT COUNT(*) as total FROM event";
         $result = $this->pdo->prepare($query);
         $result->execute();
         return $result->fetch(PDO::FETCH_ASSOC)['total'];
     }
 
-    public function getCategories()
-    {
-        $query = "SELECT * FROM categories";
+    public function getCategories(){
+        $query= "SELECT * FROM categories";
         $result = $this->pdo->prepare($query);
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getRegion()
-    {
-        $query = "SELECT * FROM region";
+    public function getRegion(){
+        $query= "SELECT * FROM region";
         $result = $this->pdo->prepare($query);
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getCities()
-    {
-        $query = "SELECT * FROM city";
+    public function getCities(){
+        $query= "SELECT * FROM city";
         $result = $this->pdo->prepare($query);
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
@@ -459,6 +565,106 @@ GROUP BY
     
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result ?: false;
+    }
+    
+    public function getSponsorings(){
+        $query= "SELECT * FROM sponsorings";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getLastEventId(){
+        $query="SELECT * from event order by created_At desc limit 1";
+        $result = $this->pdo->prepare($query);
+        $result->execute();
+        return $result->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrganizerEvents($id){
+        $query = "select event.*,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name as category_name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+                    from event
+                    join users on users.id=event.user_id
+                    join categories on categories.id=event.category_id
+                    join region on region.id=event.region_id
+                    join city ON city.id = event.city_id
+                    left join event_sponsorings on event_sponsorings.event_id=event.id
+                    left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
+                    where event.user_id= :id
+                    GROUP BY 
+                       event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                        event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
+                    order by event.id desc
+                  ";
+
+        $data = [
+            ":id" => $this->id
+        ];
+        try {
+            $result = $this->pdo->prepare($query);
+
+            $result->execute($data);
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $error) {
+            error_log("Database error: " . $error->getMessage());
+            return false;
+        }
+    }
+
+    public function getlastEightEvents(){
+        $query = "select event.id,users.firstName as firstName,users.lastName as lastName,title,description,image ,categories.name,event_mode,places,price,start_date,end_date,isvalidate,event_link,status,region.region,city.ville,content,STRING_AGG(sponsorings.logo, ', ') AS sponsor_logos
+                    from event
+                    join users on users.id=event.user_id
+                    join categories on categories.id=event.category_id
+                    join region on region.id=event.region_id
+                    join city ON city.id = event.city_id
+                    left join event_sponsorings on event_sponsorings.event_id=event.id
+                    left join sponsorings on event_sponsorings.sponsoring_id=sponsorings.id
+                    GROUP BY 
+                         event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
+                        event.event_mode, event.places, event.price, event.start_date, event.end_date, 
+                        event.isValidate, event.event_link, event.status, region.region, city.ville
+                  order by event.id desc
+                  limit 8
+                  ";
+
+
+        try {
+            $result = $this->pdo->prepare($query);
+
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+            var_dump($result->fetchAll(PDO::FETCH_ASSOC));
+        } catch (PDOException $error) {
+            error_log("Database error: " . $error->getMessage());
+            return false;
+        }
+    }
+    public function TotalEvent($pdo){
+        $sql = "SELECT COUNT(*) as total FROM event";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result ? $result['total'] : 0; 
+    }
+
+    public function TotalEventpending($pdo){
+        $sql = "SELECT COUNT(*) as total FROM event WHERE status = 'pending' ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['total'] ?? 0; 
+    }
+    public function TotalEventaccepted($pdo){
+        $sql = "SELECT COUNT(*) as total FROM event WHERE status = 'accepted' ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result['total'] ?? 0; 
     }
     
 }

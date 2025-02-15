@@ -23,18 +23,18 @@ class CategoryController {
 
     public function create() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_POST['category_name']) || empty(trim($_POST['category_name']))) {
+            if (!isset($_POST['categoryName']) || empty(trim($_POST['categoryName']))) {
                 die("Le nom de la catégorie ne peut pas être vide.");
             }
-            $categoryValue = htmlspecialchars(trim($_POST['category_name']));
+            $categoryValue = htmlspecialchars(trim($_POST['categoryName']));
           
             $this->categoryClass->createCategory($this->connection, $categoryValue);
-            header('location: /admin/category');
+            header('location: /admin/categories');
         }
     }
     public function afficherCategories() {
         $categoryData = $this->categoryClass->afficherCategories($this->connection);
-        echo  $this->twig->render('front/admin/Category.twig', ['categories' => $categoryData]);
+        echo  $this->twig->render('back/categories.twig', ['categories' => $categoryData]);
     }
 
     public function deleteCategory(){
@@ -43,7 +43,7 @@ class CategoryController {
                 $id = intval($_POST['category_id']); 
                
                 $this->categoryClass->deleteCategory($this->connection, $id);
-                header("Location: /admin/category"); 
+                header("Location: /admin/categories"); 
                 exit();
             } else {
                 die("ID invalide ou manquant.");
@@ -55,27 +55,26 @@ class CategoryController {
 
     public function updateCategory() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!isset($_POST['category_id']) || !isset($_POST['category_name'])) {
+            if (!isset($_POST['categoryId']) || !isset($_POST['updateCategoryName'])) {
+                var_dump($_POST['categoryId']);
                 die("Données invalides.");
             }
     
-            $id = intval($_POST['category_id']); 
-            $newName = htmlspecialchars(trim($_POST['category_name'])); 
+            $id = intval($_POST['categoryId']); 
+            $newName = htmlspecialchars(trim($_POST['updateCategoryName'])); 
     
             if (empty($newName)) {
                 die("Le nom de la catégorie ne peut pas être vide.");
             }
-    
-            
             $this->categoryClass->updateCategory($this->connection, $id, $newName);
-            header('Location: /admin/category');
+            header('Location: /admin/categories');
             exit();
         }
     }
 
     
     
-    
 
-   
+    
+    
 }
