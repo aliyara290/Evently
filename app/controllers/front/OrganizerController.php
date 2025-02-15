@@ -23,6 +23,11 @@ class OrganizerController
         View::render("organizer/dashboard");
     }
 
+    public function PageSponser()
+    {
+        View::render("organizer/sponser");
+    }
+
 
     public function Event_management_page()
     {

@@ -96,6 +96,7 @@ $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
 
 
+$router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
 
 //$router->get("/getTicket",MailController::class,"get");
 $router->post("/getMail",MailController::class,"sendApprovedMail");
