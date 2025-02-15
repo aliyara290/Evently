@@ -66,12 +66,6 @@ $router->get("/delete",AdminControllerBack::class, "deleteUser");
 // Admin routers
 $router->get("/admin/dashboard", BackController::class, "dashboard");
 $router->get("/admin/dashboard", StasitickCountroler::class, "StatistickGlobale");
-
-
-
-
-
-
 // $router->get("/admin/categories", BackController::class, "categories");
 $router->get("/admin/categories", CategoryController::class, "afficherCategories");
 
