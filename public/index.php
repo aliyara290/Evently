@@ -19,6 +19,7 @@ use App\controllers\back\AdminControllerBack;
 use App\controllers\back\CategoryController;
 use App\Controllers\back\StasitickCountroler;
 use App\controllers\back\AppController as BackController;
+use App\Controllers\Mail\MailController;
 
 $router = new Router();
 
@@ -70,12 +71,6 @@ $router->get("/delete",AdminControllerBack::class, "deleteUser");
 // Admin routers
 $router->get("/admin/dashboard", BackController::class, "dashboard");
 $router->get("/admin/dashboard", StasitickCountroler::class, "StatistickGlobale");
-
-
-
-
-
-
 // $router->get("/admin/categories", BackController::class, "categories");
 $router->get("/admin/categories", CategoryController::class, "afficherCategories");
 
@@ -96,6 +91,13 @@ $router->get("/admin/accept",AdminControllerBack::class,"updatestatus");
 $router->get("/admin/refuse",AdminControllerBack::class,"updatestatusRefuse");
 $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
+$router->get("/event/Reserver",EventController::class,"Resererpage");
+
+
+
+//$router->get("/getTicket",MailController::class,"get");
+$router->post("/getMail",MailController::class,"sendApprovedMail");
+
 
 
 
