@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers\Front;
+use App\Models\Sponsoring;
+use Config\Database;
 
 use App\Core\Session;
 use App\Core\View;
@@ -11,16 +13,40 @@ class OrganizerController
 
     private $userData;
     private $eventData;
+    private $sponsoringclass;
+    private $connection;
+
 
     public function __construct()
     {
+        $this->connection = Database::getInstance();
+
         $this->userData = Session::get("user");
         $this->eventData = new Event();
+        $this->sponsoringclass = new Sponsoring();
+
     }
 
     public function page()
     {
         View::render("organizer/dashboard");
+    }
+    
+    public function updatesponsoringpage()
+{
+    $sponsorId = $_POST['sponsor_id'];
+    $sponsor = $this->sponsoringclass->affichersponsoringsById($this->connection,$sponsorId); 
+    View::render("organizer/updateSponsour", ['sponsor' => $sponsor]);
+}
+
+
+    public function PageSponser()
+    {
+        View::render("organizer/sponsoringMangmebt");
+    }
+    public function PageCreteSponser()
+    {
+        View::render("organizer/sponsoringcerate");
     }
 
 
@@ -122,5 +148,7 @@ class OrganizerController
             }
         }
     }
+
+
 
 }
