@@ -19,7 +19,7 @@ abstract class Payment {
         $this->eventId = $eventId;
     }
 
-    abstract public function createCheckoutSession($amount, $currency);
+    abstract public function createCheckoutSession($amount, $currency, $event, $places);
     abstract public function processPayment($paymentData);
 
     public function getPaymentByTransactionId($transactionId) {
@@ -45,12 +45,5 @@ abstract class Payment {
         ];
         return $stmt->execute($data);
     }
-    public function insertTicket($amount) {
-        $data = [
-            "user_id" => $this->userId,
-            "event_id" => $this->eventId,
-            "price" => $amount
-        ];
-        return Models::create("ticket", $data);
-    }
+    
 }

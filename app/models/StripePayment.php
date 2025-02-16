@@ -19,7 +19,7 @@ class StripePayment extends Payment
         $this->stripeSecretKey = $_ENV["STRIPE_SECRET_KEY"];
     }
 
-    public function createCheckoutSession($amount, $currency)
+    public function createCheckoutSession($amount, $currency, $event, $places)
     {
         Stripe::setApiKey($this->stripeSecretKey);
 
@@ -31,11 +31,11 @@ class StripePayment extends Payment
                         'price_data' => [
                             'currency' => $currency,
                             'product_data' => [
-                                'name' => 'Event Ticket',
+                                'name' => $event,
                             ],
                             'unit_amount' => $amount * 100,
                         ],
-                        'quantity' => 1,
+                        'quantity' => $places,
                     ],
                 ],
                 'mode' => 'payment', 
@@ -48,7 +48,7 @@ class StripePayment extends Payment
                 'session_id' => $checkoutSession->id,
                 'checkout_url' => $checkoutSession->url, 
             ];
-        } catch (\Stripe\Exception\ApiErrorException $e) {
+        } catch (ApiErrorException $e) {
             return [
                 'status' => 'error',
                 'message' => $e->getMessage(),
@@ -67,18 +67,16 @@ class StripePayment extends Payment
                 // Save payment details in the database
                 $this->savePayment(
                     "stripe",
-                    $session->id, // Use session_id as transaction ID
+                    $session->id,
                     $session->amount_total / 100,
                     $session->currency,
                     "completed"
                 );
-                header("Location: /payment/success");
-                exit();
+                return true;
             } else {
-                header("Location: /payment/failed");
-                exit();
+                return false;
             }
-        } catch (\Stripe\Exception\ApiErrorException $e) {
+        } catch (ApiErrorException $e) {
             die("Stripe API error: " . $e->getMessage());
         }
     }

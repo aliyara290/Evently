@@ -3,41 +3,45 @@
 namespace App\Controllers\Front;
 
 use App\Models\StripePayment;
-
+use App\Models\Ticket;
+use App\Core\Session;
 
 class PaymentController
 {
     private $stripModel;
+    private $ticketModel;
     private $paypalModel;
     private $eventId;
+    private $ticketId;
+    // private int $places = 0;
 
     public function __construct()
     {
         $this->stripModel = new StripePayment($_SESSION["user"]["id"], 1, $this->eventId);
-        // $this->stripModel = ;
+        $this->ticketModel = new Ticket();
     }
 
     // Handle Stripe payment creation
     public function createStripePayment()
     {
-        $amount = $_POST['amount']; // Amount from form submission
-        $this->eventId = $_POST['event_id']; // Event ID from form submission
-        $currency = 'USD'; // Currency (adjust if needed)
-        $ticket = $this->stripModel->insertTicket($amount);
-        if ($ticket) {
-            
-        } else {
+        $amount = $_POST['prix'];
+        Session::set("places", $_POST['nombre']);
+        $event_name = $_POST['event_name'];
+        Session::set("eventId", $_POST['event_id']);
+        $currency = 'mad';
+        $this->ticketModel->setEventId(Session::get("eventId"));
+        $this->ticketModel->setUserId($_SESSION["user"]["id"]);
+        $inserting = $this->ticketModel->insertTicket($amount);
+        if (!$inserting) { 
             echo "failed to insert ticket";
+            return false;
         }
-        // Create Stripe Checkout Session
-        $checkoutSessionResponse = $this->stripModel->createCheckoutSession($amount, $currency);
+        $checkoutSessionResponse = $this->stripModel->createCheckoutSession($amount, $currency, $event_name, Session::get("places"));
 
         if ($checkoutSessionResponse['status'] == 'success') {
-            // Redirect the user to the Stripe Checkout page
             header('Location: ' . $checkoutSessionResponse['checkout_url']);
             exit();
         } else {
-            // Handle error (e.g., unable to create the checkout session)
             echo "Error: " . $checkoutSessionResponse['message'];
         }
     }
@@ -67,6 +71,20 @@ class PaymentController
         }
 
         $sessionId = $_GET['session_id'];
-        $this->stripModel->confirmation($sessionId);
+        $check = $this->stripModel->confirmation($sessionId);
+        if ($check) {
+            echo 'event:' . Session::get("eventId");
+            echo 'plc:' . Session::get("places");
+            $isDescrement = $this->ticketModel->decrementAvailableTickets(Session::get("eventId"), Session::get("places"));
+            if ($isDescrement) {
+                echo "good";
+            }
+
+            header("Location: /payment/success");
+            exit();
+        } else {
+            header("Location: /payment/failed");
+            exit();
+        }
     }
 }

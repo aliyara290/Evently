@@ -19,6 +19,7 @@ use App\Controllers\Front\AdminController;
 use App\controllers\back\AdminControllerBack;
 use App\controllers\back\CategoryController;
 use App\Controllers\back\StasitickCountroler;
+use App\Controllers\back\TicketController;
 use App\controllers\back\AppController as BackController;
 use App\Controllers\Mail\MailController;
 use App\Controllers\Front\PaymentController;
@@ -44,6 +45,8 @@ $router->get("/organizer/create", CreateEventController::class, "page");
 $router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent");
 $router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent");
 $router->post("/organizer/editEvent", OrganizerController::class, "updateEvent");
+$router->get("/ticket", TicketController::class, "page");
+
 
 // Auth
 $router->get("/register", AuthController::class, "registerPage");
@@ -102,13 +105,17 @@ $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
 
+//$router->get("/getTicket",MailController::class,"get");
+$router->get("/getMail",MailController::class,"sendApprovedMail");
 
 $router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
 $router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
 
 
 //$router->get("/getTicket",MailController::class,"get");
-$router->post("/getMail",MailController::class,"sendApprovedMail");
+$router->post("/getMail",TicketController::class,"bookFree");
+//$router->get("/getMail",MailController::class,"sendApprovedMail");
+
 $router->post("/Sponsoring",SponseurController::class, "create");
 
 
