@@ -21,3 +21,5 @@ function calculateTotal() {
     const total = ticketPrice * (ticketInput ? parseInt(ticketInput) : 0);
     totalDisplay.textContent = total + "€";
 }
+
+

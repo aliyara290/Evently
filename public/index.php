@@ -7,6 +7,8 @@ use App\Middleware\AuthMiddleware;
 use App\Controllers\Front\EventController;
 use App\Controllers\Front\EventsController;
 use App\Controllers\Front\SettingController;
+use App\Controllers\Front\SponseurController;
+
 use App\Controllers\Front\UserProfileController;
 use App\Controllers\Front\CreateEventController;
 use App\Controllers\Front\HomeController;
@@ -19,6 +21,7 @@ use App\controllers\back\CategoryController;
 use App\Controllers\back\StasitickCountroler;
 use App\controllers\back\AppController as BackController;
 use App\Controllers\Mail\MailController;
+
 
 $router = new Router();
 
@@ -92,7 +95,24 @@ $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
 
+<<<<<<< HEAD
 //$router->get("/getTicket",MailController::class,"get");
 $router->get("/getMail",MailController::class,"sendApprovedMail");
+=======
+
+$router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
+$router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
+
+
+//$router->get("/getTicket",MailController::class,"get");
+$router->post("/getMail",MailController::class,"sendApprovedMail");
+$router->post("/Sponsoring",SponseurController::class, "create");
+
+
+$router->get("/organizer/sponser", SponseurController::class, "affichersponsorings");
+$router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
+$router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
+$router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
+>>>>>>> 091f797e0cae03f03b02729c6bbb58d635798829
 
 $router->dispatch();    
