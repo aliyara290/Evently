@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de Réservation</title>
+    
+ <link rel="stylesheet" href="/assets/css/output.css">
+ </head>
+<body class="bg-gray-100 min-h-screen w-max flex justify-center">
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <!-- En-tête avec confirmation -->
+        <div class="bg-green-100 rounded-lg p-4 mb-6 text-center">
+            <div class="text-green-600 text-xl mb-2">✓ Réservation Confirmée</div>
+            <div class="text-green-700">Numéro de commande: #2025-0789</div>
+        </div>
+
+        <!-- Carte principale -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <!-- En-tête de la carte -->
+            <div class="bg-blue-600 text-white p-6">
+                <h1 class="text-2xl font-bold mb-2">Festival de Musique 2025</h1>
+                <p>15-17 Juillet 2025 • Paris, France</p>
+            </div>
+
+            <!-- Informations du client -->
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-lg font-semibold mb-4">Informations du client</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-gray-600">Nom complet</p>
+                        <p class="font-medium">Jean Dupont</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600">Email</p>
+                        <p class="font-medium">jean.dupont@email.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Détails de la commande -->
+            <div class="p-6">
+                <h2 class="text-lg font-semibold mb-4">Détails de la commande</h2>
+                <div class="space-y-4">
+                    <!-- Billets -->
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="font-medium">Pass 3 jours</p>
+                            <p class="text-gray-600 text-sm">Quantité: 2</p>
+                        </div>
+                        <p class="font-medium">400.00 €</p>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="font-medium">Parking VIP</p>
+                            <p class="text-gray-600 text-sm">Option supplémentaire</p>
+                        </div>
+                        <p class="font-medium">30.00 €</p>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="pt-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <p class="font-semibold">Total</p>
+                            <p class="text-xl font-bold">430.00 €</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="p-6 bg-gray-50 space-y-4">
+                <h2 class="text-lg font-semibold">Prochaines étapes</h2>
+                <ul class="space-y-2 text-gray-700">
+                    <li>• Vous recevrez vos billets par email dans les prochaines minutes</li>
+                    <li>• Présentez votre billet (imprimé ou sur mobile) et une pièce d'identité à l'entrée</li>
+                    <li>• Pour toute question, contactez notre support: support@festival.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="mt-6 flex gap-4 justify-center">
+            <button class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700">
+                Télécharger PDF
+            </button>
+            <button class="bg-gray-600 text-white py-2 px-6 rounded-lg hover:bg-gray-700">
+                Imprimer
+            </button>
+        </div>
+    </div>
+</body>
+</html>
