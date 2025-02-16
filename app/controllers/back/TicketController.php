@@ -27,12 +27,12 @@ class TicketController
 //        var_dump($_GET['id']);
         $this->ticketData->setUserId($this->userData['id']);
         $this->ticketData->setPrice(0);
-        $this->ticketData->setStatus('approuved');
+        $this->ticketData->setStatus('approved');
 
-        $events = $this->ticketData->createTicket();
+
+         $this->ticketData->createTicket();
         $this->ticketData->decrementAvailableTickets($_GET['id']);
         $this->mail->sendApprovedMail();
-//        View::render("buy");
 
     }
 
