@@ -1,6 +1,5 @@
 <?php 
-session_start();
-// session_destroy();   
+session_start(); 
 require __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . "/../config/Database.php";
 use App\Core\Router;
@@ -93,13 +92,7 @@ $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
 
-
-
 //$router->get("/getTicket",MailController::class,"get");
-$router->post("/getMail",MailController::class,"sendApprovedMail");
+$router->get("/getMail",MailController::class,"sendApprovedMail");
 
-
-
-
-
-$router->dispatch();
+$router->dispatch();    
