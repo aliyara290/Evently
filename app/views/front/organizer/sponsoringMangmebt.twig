@@ -29,9 +29,7 @@
                     <div class="flex justify-between items-start mb-4">
                         <img src="/public/uploads/{{ sponsor.logo }}" alt="Logo sponsor" class="w-20 h-20 object-cover rounded">
                         <div class="flex gap-2">
-                            <button class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg" onclick="toggleUpdateForm({{ sponsor.id }})">
-                                <i class="fas fa-pencil-alt"></i>
-                            </button>
+                          
 
                             <form action="/sponsor/delete" method="POST">
                                 <input type="hidden" name="sponsor_id" value="{{ sponsor.id }}">
@@ -42,8 +40,8 @@
 
                             <form action="/sponsor/updatepage" method="POST">
                                 <input type="hidden" name="sponsor_id" value="{{ sponsor.id }}">
-                                <button class="p-2 text-green-600 hover:bg-green-50 rounded-lg">
-                                    <i class="fas fa-eye"></i>
+                                <button class="p-2 text-blue-600 hover:bg-green-50 rounded-lg">
+                                   <i class="fas fa-pencil-alt"></i>
                                 </button>
                             </form>
                         </div>
