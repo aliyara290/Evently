@@ -100,5 +100,7 @@ $router->get("/event/Reserver",EventController::class,"Resererpage");
 
 //$router->get("/getTicket",MailController::class,"get");
 $router->get("/getMail",MailController::class,"sendApprovedMail");
+$router->get("/event/teckte",EventController::class,"tecktepage");
 
-$router->dispatch();    
+
+$router->dispatch();
