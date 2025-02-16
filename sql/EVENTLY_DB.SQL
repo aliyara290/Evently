@@ -97,6 +97,8 @@ CREATE TABLE IF NOT EXISTS event (
     FOREIGN KEY (city_id) REFERENCES city (id) ON DELETE CASCADE
 );
 
+ALTER TABLE event ADD COLUMN havePrice bool DEFAULT false;
+update event set havePrice = true where id = 5;
 CREATE TABLE IF NOT EXISTS event_sponsorings (
     event_id INT,
     sponsoring_id INT,

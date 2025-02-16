@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="absolute top-0 left-0 w-full h-full overflow-hidden cursor-pointer">
-                        <img class="w-full h-full object-cover brightness-40"
+                        <img id="previewImage" class="w-full h-full object-cover brightness-40"
                              src="https://images.pexels.com/photos/245132/pexels-photo-245132.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                              alt="">
                     </div>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-5">
-                    <select name="category">
+                    <select name="category" class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]">
                         <option>select category</option>
                         {% for category in categories %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
@@ -377,4 +377,30 @@
         });
 
     </script>
+    <script>
+    document.getElementById('file-upload').addEventListener('change', function () {
+    const fileName = document.getElementById('seccuess-upload');
+    if (this.files.length > 0) {
+    fileName.textContent = "Seccuss";
+    } else {
+    fileName.textContent = 'No file chosen';
+    }
+    });
+</script>
+<script>
+document
+  .getElementById("file-upload")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.getElementById("previewImage");
+        img.src = e.target.result;
+        img.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
 {% endblock %}

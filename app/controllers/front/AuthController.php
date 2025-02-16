@@ -29,7 +29,6 @@ class AuthController
     public function googleLogin()
     {
         $authUrl = $this->client->createAuthUrl();
-        echo $authUrl;
         header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
         exit();
     }
@@ -57,9 +56,9 @@ class AuthController
             $this->userModel->setAvatar($googleUser->picture);
             $this->userModel->register();
         }
+
         $getUserId = $this->userModel->findByEmail($googleUser->email);
         $id =  $getUserId[0]["id"];
-        
         Session::set("user", [
             "id" => $id,
             "email" => $googleUser->email,

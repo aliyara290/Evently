@@ -10,16 +10,15 @@ use PHPMailer\PHPMailer\PHPMailer;
 //use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-use Dotenv\Dotenv;
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../../../');
-$dotenv->load();
-
+// use Dotenv\Dotenv;
+// $dotenv = Dotenv::createImmutable(__DIR__ . '/../../../');
+// $dotenv->load();
 
 
 class MailController
 {
-//    private $userData;
-//    private $eventData;
+   private $userData;
+   private $eventData;
     private $mailer;
 
     public function __construct()
@@ -59,10 +58,10 @@ class MailController
 
 
 
-        $this->mailer->addAddress('aminalina908@gmail.com');
+        $this->mailer->addAddress('ali.yara.cc@gmail.com');
         $this->mailer->isHTML(true);
         $this->mailer->Subject = $subject;
-        $this->mailer->Body    = "<h2 >$subject</h2>
+        $this->mailer->Body = "<h2 >$subject</h2>
                                     <div >Welcome!</div>
                                     <p>Thank you for your reservation. We look forward to seeing you at the event!</p>
                                     <p >$body</p>

@@ -18,6 +18,7 @@ class Event
     private string $title;
     private string $description;
     private string $content;
+    private bool $isValidate = true;
 
 
     private string $category;
@@ -25,16 +26,21 @@ class Event
 
     private string $eventMode;
     private string $places;
-    private string $region;
-    private string $city;
+    private string $regionId;
+    private string $cityId;
     private string $type;
     private string $startDate;
+    private string $city;
+    private string $region;
     private string $endDate;
-    private string $link;
+    private string $eventLink;
     private string $status;
 
     private string $price;
 
+    private $eventDate;
+
+    private $eventTime;
 
     private array $sponsorings = [];
 
@@ -110,7 +116,7 @@ class Event
 
     public function setLink(string $link): void
     {
-        $this->link = $link;
+        $this->eventLink = $link;
     }
 
     public function setStatus(string $status): void
@@ -159,7 +165,7 @@ class Event
                          event.id,users.firstName, users.lastName, event.title,event.content, event.description, event.image, categories.name, 
                         event.event_mode, event.places, event.price, event.start_date, event.end_date, 
                         event.isValidate, event.event_link, event.status, region.region, city.ville
-order by event.id desc
+                    order by event.id desc
                   ";
 
 
@@ -173,6 +179,13 @@ order by event.id desc
             error_log("Database error: " . $error->getMessage());
             return false;
         }
+    }
+
+    public function deleteEvent()
+    {
+        $query = "delete from event where id = :id";
+        $result = $this->pdo->prepare($query);
+        $check = $result->execute([':id' => $this->id]);
 
     }
     public function redAllEventsActive()
@@ -288,13 +301,7 @@ public function updateStatusEventRrefuse($id, $pdo,)
 }
 
 
-    public function deleteEvent(string $id): bool
-    {
-        $query = "DELETE FROM event WHERE id = :id";
-        $result = $this->pdo->prepare($query);
-        $check = $result->execute([':id' => $id]);
-        return $check;
-    }
+   
 
     public function createEvent()
     {
@@ -321,14 +328,14 @@ public function updateStatusEventRrefuse($id, $pdo,)
         ];
         try {
             $result = $this->pdo->prepare($query);
+            $eventId = $this->pdo->lastInsertId();
+            foreach ($this->sponsorings as $sponsoringId) {
+                $this->addSponsoringToEvent($eventId, $sponsoringId);
+            }
             return $result->execute($data);
         } catch (PDOException $error) {
             echo "Failed to add course: " . $error->getMessage();
             return false;
-        }
-        $eventId = $this->pdo->lastInsertId();
-        foreach ($this->sponsorings as $sponsoringId) {
-            $this->addSponsoringToEvent($eventId, $sponsoringId);
         }
     }
 
@@ -471,7 +478,95 @@ public function updateStatusEventRrefuse($id, $pdo,)
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function searchForCity($query)
+    {
+        $sql = "SELECT * FROM city WHERE ville ILIKE ? ORDER BY ville ASC LIMIT 5";
+        $stmt = $this->pdo->prepare($sql);
+        $searchTerm = "%$query%";
+        $stmt->execute([$searchTerm]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result ?: false;
+    }
 
+    public function searchForEvents($eventTerm, $city)
+    {
+        $sql = "SELECT 
+    event.image,
+    event.title,  
+    event.event_date,  
+    event.description,  
+    city.ville,  
+    event.price  
+FROM event
+JOIN city ON city.id = event.city_id
+WHERE 
+    (COALESCE(:eventTerm, '') = '' OR event.title ILIKE :eventTerm OR event.description ILIKE :eventTerm)
+    AND (COALESCE(:city, '') = '' OR city.ville ILIKE :city)
+GROUP BY 
+    event.id, 
+    event.image, 
+    event.title, 
+    event.event_date, 
+    event.description, 
+    city.ville, 
+    event.price;
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $searchTerm = !empty($eventTerm) ? "%$eventTerm%" : null;
+        $searchCity = !empty($city) ? "%$city%" : null;
+
+        $stmt->bindValue(':eventTerm', $searchTerm, $searchTerm !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        $stmt->bindValue(':city', $searchCity, $searchCity !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result ?: false;
+    }
+
+    public function filter(string $category, $date)
+    {
+      
+        $sql = "SELECT 
+                event.image,
+                event.title,  
+                event.event_date,  
+                event.description,  
+                city.ville,  
+                event.price  
+                FROM event
+                JOIN city ON city.id = event.city_id
+                JOIN categories ON categories.id = event.category_id
+                WHERE 
+                (COALESCE(:categoryName, '') = '' OR categories.name ILIKE :categoryName)
+                -- AND (event.havePrice IS false OR event.havePrice = CAST(:price AS BOOLEAN)) 
+                AND (COALESCE(:eventDate, '') = '' OR event.event_date = CAST(:eventDate AS DATE))
+                GROUP BY 
+                event.id, 
+                event.image, 
+                event.title, 
+                event.event_date, 
+                event.description, 
+                city.ville, 
+                event.price;";
+    
+        $stmt = $this->pdo->prepare($sql);
+    
+        $category = !empty($category) ? "%$category%" : null;
+        // $price = ($price !== '') ? (bool) $price : null;
+        $date = !empty($date) ? $date : null;
+    
+        $stmt->bindValue(':categoryName', $category, $category !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+        // $stmt->bindValue(':price', $price);
+        $stmt->bindValue(':eventDate', $date, $date !== null ? PDO::PARAM_STR : PDO::PARAM_NULL);
+    
+        $stmt->execute();
+    
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result ?: false;
+    }
+    
     public function getSponsorings(){
         $query= "SELECT * FROM sponsorings";
         $result = $this->pdo->prepare($query);
@@ -572,8 +667,4 @@ public function updateStatusEventRrefuse($id, $pdo,)
         return $result['total'] ?? 0; 
     }
     
-
-
-
-
 }

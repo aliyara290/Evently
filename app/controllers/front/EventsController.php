@@ -11,6 +11,7 @@ class EventsController
     private $userData;
     private $eventData;
 
+
     public function __construct()
     {
         $this->userData = Session::get("user");
@@ -20,9 +21,9 @@ class EventsController
     public function page()
     {
         $events = $this->eventData->readAllEvents();
-//        var_dump($events);
-        View::render("events", ["user" => $this->userData, "records" => $events]);
-
+        $categories = $this->eventData->getCategories();
+        $cities = $this->eventData->getCities();
+        View::render("events", ["user" => $this->userData, "records" => $events, "inpValue" => isset($_GET["city"]) ? $_GET["city"] : null, "categories" => $categories, "cities" => $cities]);
     }
 
     public function create()
@@ -47,7 +48,7 @@ class EventsController
 
                 $this->eventData->setEventMode(isset($_POST['venue']) ? 'presentiel' : 'enligne');
                 $this->eventData->setRegionId($_POST['region']);
-//                var_dump($_POST['region']);
+                //                var_dump($_POST['region']);
                 $this->eventData->setCityId($_POST['city']);
 
                 $this->eventData->setPlaces($_POST['places']);
@@ -74,16 +75,16 @@ class EventsController
                 $this->eventData->setEventLink($_POST['link']);
 
 
-                $this->eventData->createEvent();
+                $check = $this->eventData->createEvent();
                 $getLastEventId = $this->eventData->getLastEventId();
                 if ($getLastEventId) {
-                foreach ($_POST['sponsorings_id'] as $sponsoringId) {
-                    $this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
+                    foreach ($_POST['sponsorings_id'] as $sponsoringId) {
+                        $this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
+                    }
                 }
+                if($check) {
                     header("location: /events");
                     exit();
-                } else {
-                    throw new \Exception('Failed to create event');
                 }
             } catch (\Exception $e) {
                 Session::set('error', $e->getMessage());
@@ -95,6 +96,44 @@ class EventsController
         }
     }
 
-
-
+    public function searchForEvents()
+    {
+        if (isset($_GET['q'])) {
+            $query = trim($_GET['q']);
+            $city = trim($_GET['city']);
+            $events = $this->eventData->searchForEvents($query, $city);
+            header('Content-Type: application/json');
+            echo json_encode(["events" => $events]);
+            exit();
+        } else {
+            echo "noooooo";
+        }
+    }
+    public function searchForCity()
+    {
+        if (isset($_GET['city'])) {
+            $query = trim($_GET['city']);
+            $cities = $this->eventData->searchForCity($query);
+            header('Content-Type: application/json');
+            echo json_encode(["cities" => $cities]);
+            exit();
+        } else {
+            echo "noooooo";
+        }
+    }
+    public function filter()
+    {
+        if (isset($_GET['category'])) {
+            $category = trim($_GET['category']);
+            // $price = trim($_GET['price']);
+            // echo $price;
+            $date = trim($_GET['date']);
+            $eventsFilter = $this->eventData->filter($category, $date);
+            header('Content-Type: application/json');
+            echo json_encode(["eventsFilter" => $eventsFilter]);
+            exit();
+        } else {
+            echo "noooooo";
+        }
+    }
 }

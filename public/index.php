@@ -1,6 +1,5 @@
 <?php 
-session_start();
-// session_destroy();   
+session_start(); 
 require __DIR__ . "/../vendor/autoload.php";
 require __DIR__ . "/../config/Database.php";
 use App\Core\Router;
@@ -30,6 +29,10 @@ $router = new Router();
 $router->get("/", HomeController::class, "home");
 $router->get("/event", EventController::class, "page");
 $router->get("/events", EventsController::class, "page");
+$router->get("/events/search", EventsController::class, "searchForEvents");
+$router->get("/events/city", EventsController::class, "searchForCity");
+$router->get("/events/filter", EventsController::class, "filter");
+// $router->get("/events", EventsController::class, "page");
 $router->get("/setting/profile", SettingController::class, "profile");
 $router->get("/setting/reset", SettingController::class, "setting");
 $router->get("/account/profile", UserProfileController::class, "page");
@@ -95,6 +98,10 @@ $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
 
+<<<<<<< HEAD
+//$router->get("/getTicket",MailController::class,"get");
+$router->get("/getMail",MailController::class,"sendApprovedMail");
+=======
 
 $router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
 $router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
@@ -111,9 +118,6 @@ $router->get("/organizer/sponser", SponseurController::class, "affichersponsorin
 $router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
 $router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
 $router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
+>>>>>>> 091f797e0cae03f03b02729c6bbb58d635798829
 
-
-
-
-
-$router->dispatch();
+$router->dispatch();    

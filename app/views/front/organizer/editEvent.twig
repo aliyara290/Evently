@@ -29,8 +29,8 @@
                         </div>
                     </div>
                     <div class="absolute top-0 left-0 w-full h-full overflow-hidden cursor-pointer">
-                        <img class="w-full h-full object-cover brightness-40"
-                             src="https://images.pexels.com/photos/245132/pexels-photo-245132.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                        <img id="previewImage" class="w-full h-full object-cover brightness-40"
+                             src="/assets/upload/{{ event.image }}">"
                              alt="">
                     </div>
                 </label>
@@ -424,4 +424,20 @@
             });
         });
     </script>
+    <script>
+document
+  .getElementById("file-upload")
+  .addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.getElementById("previewImage");
+        img.src = e.target.result;
+        img.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
 {% endblock %}
