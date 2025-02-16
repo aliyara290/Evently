@@ -21,6 +21,7 @@ use App\controllers\back\CategoryController;
 use App\Controllers\back\StasitickCountroler;
 use App\controllers\back\AppController as BackController;
 use App\Controllers\Mail\MailController;
+use App\Controllers\Front\PaymentController;
 
 
 $router = new Router();
@@ -57,9 +58,15 @@ $router->get("/auth/google", AuthController::class, "googleLogin");
 $router->get("/auth/google-callback", AuthController::class, "googleCallback");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");
 $router->get("/resetPassword", AuthController::class, "resetPassword");
+// payments
+$router->post("/payment/stripe", PaymentController::class, "createStripePayment");  // Handle Stripe payment
+// $router->post("/payment/paypal", PaymentController::class, "createPayPalPayment");  // Handle PayPal payment
+$router->get("/payment/confirm", PaymentController::class, "confirmPayment");
 // Status code
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
+$router->get("/payment/success", AppController::class, "seccussPayment");
+$router->get("/payment/failed", AppController::class, "paymentFailed");
 // organizer router
 $router->post("/Category",CategoryController::class, "create");
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
@@ -95,10 +102,6 @@ $router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
 $router->post("/update-profile",SettingController::class,"updateProfile");
 $router->get("/event/Reserver",EventController::class,"Resererpage");
 
-<<<<<<< HEAD
-//$router->get("/getTicket",MailController::class,"get");
-$router->get("/getMail",MailController::class,"sendApprovedMail");
-=======
 
 $router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
 $router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
@@ -113,6 +116,5 @@ $router->get("/organizer/sponser", SponseurController::class, "affichersponsorin
 $router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
 $router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
 $router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
->>>>>>> 091f797e0cae03f03b02729c6bbb58d635798829
 
 $router->dispatch();    

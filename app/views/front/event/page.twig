@@ -1,148 +1,144 @@
-
 {% extends  "/layouts/Base.twig" %}
 {% block content %}
-    <main class="w-11/12 mx-auto pt-4 pb-12 flex flex-col gap-10">
+	<main class="w-11/12 mx-auto pt-4 pb-12 flex flex-col gap-10">
 
-        <section class="relative overflow-hidden bg-gray-900 rounded-3xl h-[480px]">
-            <div class="absolute top-0 left-0 w-full h-full">
-                <img class="object-cover w-full h-full" src="/assets/upload/{{ event.image }}" alt="">
-            </div>
-        </section>
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <div class="col-span-8 h-full flex flex-col gap-10">
-                <div class="">
-                    <div class=" flex items-center gap-2">
+		<section class="relative overflow-hidden bg-gray-900 rounded-3xl h-[480px]">
+			<div class="absolute top-0 left-0 w-full h-full">
+				<img class="object-cover w-full h-full" src="/assets/upload/{{ event.image }}" alt="">
+			</div>
+		</section>
+		<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+			<div class="col-span-8 h-full flex flex-col gap-10">
+				<div class="">
+					<div class=" flex items-center gap-2">
 						<span class="text-xl font-medium text-orange">
-							<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                 class="size-6">
-								<path fill-rule="evenodd"
-                                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
-                                      clip-rule="evenodd"/>
+							<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
+								<path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd"/>
 							</svg>
 						</span>
-                        <span class="text-xl font-medium text-orange">{{ event.created_at|date("l, F d") }}</span>
-                    </div>
-                </div>
-                <div class="">
-                    <h1 class="text-5xl/15 font-unbounded font-bold text-darkblue">{{ event.title }}</h1>
-                </div>
-                <div class="w-4/6">
-                    <p class="text-xl/6 font-medium">{{ event.description }}</p>
-                </div>
-                <div class="pt-5">
-                    <div class="pb-5">
-                        <h4 class="text-xl font-medium font-unbounded text-darkblue">About this event</h4>
-                    </div>
-                    <div class="w-4/5">
-                        <p class="text-md text-darkblue">{{ event.content }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-4">
-                <div class="sticky top-20 flex flex-col gap-5">
-                    <div class="">
-                        <h4 class="text-xl font-medium font-unbounded text-darkblue">Organized by</h4>
-                    </div>
-                    <div class="flex items-center gap-5 p-6 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
-                        <div class="relative w-16 h-16 bg-darkblue rounded-full overflow-hidden shadow-md">
-                            <img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F471036159%2F246897696989%2F1%2Foriginal.20230316-212255?w=512&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C324%2C1068%2C1068&s=e956794fdd057a3435666ea6c789b1a4"
-                                 alt="">
-                        </div>
-                        <div class="flex flex-col">
+						<span class="text-xl font-medium text-orange">{{ event.created_at|date("l, F d") }}</span>
+					</div>
+				</div>
+				<div class="">
+					<h1 class="text-5xl/15 font-unbounded font-bold text-darkblue">{{ event.title }}</h1>
+				</div>
+				<div class="w-4/6">
+					<p class="text-xl/6 font-medium">{{ event.description }}</p>
+				</div>
+				<div class="pt-5">
+					<div class="pb-5">
+						<h4 class="text-xl font-medium font-unbounded text-darkblue">About this event</h4>
+					</div>
+					<div class="w-4/5">
+						<p class="text-md text-darkblue">{{ event.content }}</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-span-4">
+				<div class="sticky top-20 flex flex-col gap-5">
+					<div class="">
+						<h4 class="text-xl font-medium font-unbounded text-darkblue">Organized by</h4>
+					</div>
+					<div class="flex items-center gap-5 p-6 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
+						<div class="relative w-16 h-16 bg-darkblue rounded-full overflow-hidden shadow-md">
+							<img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F471036159%2F246897696989%2F1%2Foriginal.20230316-212255?w=512&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C324%2C1068%2C1068&s=e956794fdd057a3435666ea6c789b1a4" alt="">
+						</div>
+						<div class="flex flex-col">
 							<span class="text-lg font-medium font-unbounded text-orange">
-								{{ event.firstname }} {{ event.lastname }}
+								{{ event.firstname }}
+								{{ event.lastname }}
 							</span>
-                        </div>
-                    </div>
+						</div>
+					</div>
 
-                    <div class="flex flex-col gap-5 p-6 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
-                        <div class="flex flex-col gap-1">
-                            <span class="text-md font-unbounded font-medium text-darkblue">from</span>
-                            <div class="flex items-center gap-2">
+					<div class="flex flex-col gap-5 p-6 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
+						<div class="flex flex-col gap-1">
+							<span class="text-md font-unbounded font-medium text-darkblue">from</span>
+							<div class="flex items-center gap-2">
 								<span class="text-md text-darkblue">
-									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                         class="size-6">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
 										<path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
-										<path fill-rule="evenodd"
-                                              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
-                                              clip-rule="evenodd"/>
+										<path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd"/>
 									</svg>
 
 								</span>
 
-                                <span class="text-md text-darkblue">{{ event.start_date|date("l, F d") }} · {{ event.start_date|date("g:i a") }} GMT+1</span>
-                            </div>
-                        </div>
-                        <span class="text-md font-unbounded font-medium text-darkblue">To</span>
+								<span class="text-md text-darkblue">{{ event.start_date|date("l, F d") }}
+									·
+									{{ event.start_date|date("g:i a") }}
+									GMT+1</span>
+							</div>
+						</div>
+						<span class="text-md font-unbounded font-medium text-darkblue">To</span>
 
-                        <div class="flex items-center gap-2">
+						<div class="flex items-center gap-2">
+							<span class="text-md text-darkblue">
+								<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
+									<path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
+									<path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd"/>
+								</svg>
+
+							</span>
+							<span class="text-md text-darkblue">{{ event.end_date|date("l, F d") }}
+								·
+								{{ event.end_date|date("g:i a") }}
+								GMT+1</span>
+						</div>
+
+						<div class="flex flex-col gap-1">
+							<span class="text-md font-unbounded font-medium text-darkblue">Location</span>
+							<div class="flex items-start gap-2">
 								<span class="text-md text-darkblue">
-									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                         class="size-6">
-										<path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
-										<path fill-rule="evenodd"
-                                              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
-                                              clip-rule="evenodd"/>
-									</svg>
-
-								</span>
-                            <span class="text-md text-darkblue">{{ event.end_date|date("l, F d") }} · {{ event.end_date|date("g:i a") }} GMT+1</span>
-                        </div>
-
-                        <div class="flex flex-col gap-1">
-                            <span class="text-md font-unbounded font-medium text-darkblue">Location</span>
-                            <div class="flex items-start gap-2">
-								<span class="text-md text-darkblue">
-									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                         class="size-6">
-										<path fill-rule="evenodd"
-                                              d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-                                              clip-rule="evenodd"/>
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
+										<path fill-rule="evenodd" d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/>
 									</svg>
 								</span>
-                                <div class="flex flex-col">
-                                    <span class="text-md text-darkblue">{{ event.ville }}, {{ event.region }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center gap-5 p-4 py-8 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
-                        {% if event.price == 0 %}
-                            <div class="flex items-center gap-2">
-                              <span class="text-xl text-green-600 font-unbounded">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                   class="size-6">
-                                  <path fill-rule="evenodd"
-                                        d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"
-                                        clip-rule="evenodd"/>
-                              </svg>
-                             </span>
-                                <span class="text-xl text-green-600 font-unbounded">Free</span>
-                            </div>
-                        {% else %}
-                        <div class="flex items-center gap-2">
-                            <span class="text-blue-500 font-medium">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
-                                <path fill-rule="evenodd"
-                                    d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"
-                                    clip-rule="evenodd"/>
-                            </svg>
-                        </span>
-                            <span class="text-blue-500 font-medium">{{ event.price }} DH</span>
-                        </div>
-                        {% endif %}
+								<div class="flex flex-col">
+									<span class="text-md text-darkblue">{{ event.ville }},
+										{{ event.region }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="flex flex-col items-center gap-5 p-4 py-8 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
+						{% if event.price == 0 %}
+							<div class="flex items-center gap-2">
+								<span class="text-xl text-green-600 font-unbounded">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
+										<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+									</svg>
+								</span>
+								<span class="text-xl text-green-600 font-unbounded">Free</span>
+							</div>
+						{% else %}
+							<div class="flex items-center gap-2">
+								<span class="text-blue-500 font-medium">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
+										<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+									</svg>
+								</span>
+								<span class="text-blue-500 font-medium">{{ event.price }}
+									DH</span>
+							</div>
+						{% endif %}
 
-                        <div class="w-full">
-                            <a href="/event/Reserver"  class="w-full h-12 bg-orange text-white text-md font-unbounded font-medium hover:bg-darkOrange rounded-xl">
-                                Get ticket
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+						<div class="w-full">
+							<a href="/event/Reserver" class="w-full h-12 bg-orange text-white text-md font-unbounded font-medium hover:bg-darkOrange rounded-xl">
+								Get ticket
+							</a>
+						</div>
+						<form action="/payment/stripe" method="POST">
+							<label for="amount">Amount:</label>
+							<input type="text" name="amount" required>
+							<input type="hidden" name="event_id" value="{{ event.id }}" required>
+
+							<button type="submit">Pay with Stripe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+    
 
 {% endblock %}
-
-

@@ -21,4 +21,11 @@ class AppController {
     public function faqs() {
         View::render("faqs", ["user" => $this->userData]);
     }
+
+    public function seccussPayment() {
+        View::render("payment/seccuss");
+    }
+    public function paymentFailed() {
+        View::render("payment/failed");
+    }
 }

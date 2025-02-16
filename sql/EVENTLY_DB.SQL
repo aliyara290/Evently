@@ -100,7 +100,9 @@ CREATE TABLE IF NOT EXISTS event (
 );
 
 ALTER TABLE event ADD COLUMN havePrice bool DEFAULT false;
+
 update event set havePrice = true where id = 5;
+
 CREATE TABLE IF NOT EXISTS event_sponsorings (
     event_id INT,
     sponsoring_id INT,
@@ -177,6 +179,45 @@ CREATE TABLE IF NOT EXISTS notification (
 );
 
 alter table event add column content text;
+
 alter table event add column event_date date;
+
 alter table event add column event_time time;
 
+ALTER TABLE payment RENAME TO payments;
+
+
+
+
+
+ALTER TABLE payments 
+    ADD COLUMN IF NOT EXISTS user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    ADD COLUMN IF NOT EXISTS transaction_id VARCHAR(255) UNIQUE,
+    ADD COLUMN IF NOT EXISTS currency VARCHAR(10) DEFAULT 'USD',
+    ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE payments 
+    ALTER COLUMN amount TYPE DECIMAL(10,2),
+    ALTER COLUMN payment_method TYPE VARCHAR(50),
+    ALTER COLUMN status TYPE VARCHAR(50);
+
+select * from payments;
+
+CREATE TABLE IF NOT EXISTS payments (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    ticket_id INT REFERENCES ticket(id) ON DELETE CASCADE,
+    transaction_id VARCHAR(255) UNIQUE,
+    amount DECIMAL(10,2) NOT NULL,
+    currency VARCHAR(10) DEFAULT 'USD',
+    status VARCHAR(50) CHECK (status IN ('pending', 'completed', 'failed', 'refunded')) DEFAULT 'pending',
+    payment_method VARCHAR(50) CHECK (payment_method IN ('stripe', 'paypal')) NOT NULL,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+select * from ticket;
+
+ALTER TABLE payments 
+DROP CONSTRAINT payment_payment_method_check,
+ADD CONSTRAINT payment_payment_method_check CHECK (payment_method IN ('stripe', 'paypal'));

@@ -328,10 +328,10 @@ public function updateStatusEventRrefuse($id, $pdo,)
         ];
         try {
             $result = $this->pdo->prepare($query);
-            $eventId = $this->pdo->lastInsertId();
-            foreach ($this->sponsorings as $sponsoringId) {
-                $this->addSponsoringToEvent($eventId, $sponsoringId);
-            }
+            // $eventId = $this->pdo->lastInsertId();
+            // foreach ($this->sponsorings as $sponsoringId) {
+            //     $this->addSponsoringToEvent($eventId, $sponsoringId);
+            // }
             return $result->execute($data);
         } catch (PDOException $error) {
             echo "Failed to add course: " . $error->getMessage();
