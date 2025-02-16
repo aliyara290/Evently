@@ -132,16 +132,71 @@
                         </div>
                         {% endif %}
 
+                        {% if event.price == 0 %}
+                            <div class="w-full">
+                                <form action="/getMail?id={{ event.id }}" method="POST">
+                                    <button type="submit" class="cursor-pointer w-full h-12 bg-orange text-white text-md font-unbounded font-medium hover:bg-darkOrange rounded-xl">
+                                        Get ticket
+                                    </button>
+                                </form>
+                            </div>
+
+                        {% else %}
                         <div class="w-full">
-                            <a href="/event/Reserver"  class="w-full h-12 bg-orange text-white text-md font-unbounded font-medium hover:bg-darkOrange rounded-xl">
+                            <button id="getTicketButton" class="cursor-pointer w-full h-12 bg-orange text-white text-md font-unbounded font-medium hover:bg-darkOrange rounded-xl">
                                 Get ticket
-                            </a>
+                            </button>
+                        </div>
+                        {% endif %}
+
+                        <div id="ticketForm" class="hidden w-full p-6 mt-6 bg-white rounded-xl border border-1 border-gray-300 shadow-md">
+                            <form action="/submit-ticket" method="POST">
+                                <div class="flex flex-col gap-4">
+                                    <!-- Prix par ticket -->
+                                    <div class="flex flex-col">
+                                        <label for="prix" class="text-md text-darkblue">Prix par ticket</label>
+                                        <input type="text" id="prix" name="prix" value="{{ event.price }} DH" class="border p-2 rounded-xl" readonly>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="nombre" class="text-md text-darkblue">Nombre de tickets</label>
+                                        <input type="number" id="nombre" name="nombre" min="1" value="1" class="border p-2 rounded-xl">
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <label for="total" class="text-md text-darkblue">Total à payer</label>
+                                        <input type="text" id="total" name="total" value="{{ event.price }}" class="border p-2 rounded-xl" readonly>
+                                    </div>
+
+
+                                    <div class="w-full">
+                                        <button type="submit" class="cursor-pointer w-full h-12 bg-orange text-white text-md font-unbounded font-medium hover:bg-darkOrange rounded-xl">
+                                            Book now
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <script>
+        document.getElementById('getTicketButton').addEventListener('click', function() {
+            let ticketForm = document.getElementById('ticketForm');
+            ticketForm.classList.toggle('hidden');
+        });
+
+        document.getElementById('nombre').addEventListener('input', function() {
+            var prix = parseFloat(document.getElementById('prix').value.replace(' DH', ''));
+            var nombre = parseInt(document.getElementById('nombre').value);
+            var total = prix * nombre;
+            document.getElementById('total').value = total + ' DH';
+        });
+
+    </script>
 
 {% endblock %}
 
