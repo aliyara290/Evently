@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS role (
         )
     )
 );
-
+select * from users;
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(50),
@@ -45,8 +45,6 @@ CREATE TABLE IF NOT EXISTS sponsorings (
     name VARCHAR(50),
     logo VARCHAR(255)
 );
-
-select * from categories;
 
 CREATE TABLE IF NOT EXISTS region (
     id SERIAL PRIMARY KEY,
@@ -180,3 +178,6 @@ alter table event add column content text;
 alter table event add column event_date date;
 alter table event add column event_time time;
 
+select * from users;
+CREATE TYPE ticket_status AS ENUM ('pending', 'approved', 'denied');
+ALTER TABLE ticket ADD COLUMN status ticket_status default 'pending' ;
