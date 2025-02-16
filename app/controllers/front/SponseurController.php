@@ -29,8 +29,7 @@ class SponseurController {
             }
             $sponserName = htmlspecialchars(trim($_POST['nameSponser']));
             $sponserlogo = htmlspecialchars(trim($_POST['logo']));
-
-          
+            
             $this->sponsorings->createsponsorings($this->connection,$sponserName,$sponserlogo);
             header('location: /organizer/sponser');
         }
