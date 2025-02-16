@@ -101,7 +101,9 @@ $router->get("/organizer/createsponser", OrganizerController::class, "PageCreteS
 
 
 //$router->get("/getTicket",MailController::class,"get");
-$router->post("/getMail",MailController::class,"sendApprovedMail");
+$router->post("/getMail",TicketController::class,"bookFree");
+//$router->get("/getMail",MailController::class,"sendApprovedMail");
+
 $router->post("/Sponsoring",SponseurController::class, "create");
 
 
