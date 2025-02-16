@@ -32,7 +32,7 @@ class SponseurController {
 
           
             $this->sponsorings->createsponsorings($this->connection,$sponserName,$sponserlogo);
-            // header('location: /admin/categories');
+            header('location: /organizer/sponser');
         }
     }
     public function affichersponsorings() {
@@ -46,7 +46,7 @@ class SponseurController {
                 $id = intval($_POST['sponsor_id']); 
                
                 $this->sponsorings->deletesponsorings($this->connection, $id);
-                // header("Location: /admin/categories"); 
+                header("Location: /organizer/sponser"); 
                 exit();
             } else {
                 die("ID invalide ou manquant.");
@@ -62,14 +62,15 @@ class SponseurController {
                 die("Données invalides.");
             }
     
-            $id = intval($_POST['categoryId']); 
-            $newName = htmlspecialchars(trim($_POST['updateCategoryName'])); 
+            $id = intval($_POST['sponsor_id']); 
+            $newName = htmlspecialchars(trim($_POST['nameSponser']));
+            $newLogo = htmlspecialchars(trim($_POST['logo'])); ; 
     
             if (empty($newName)) {
                 die("Le nom de la catégorie ne peut pas être vide.");
             }
-            $this->sponsorings->updateCategory($this->connection, $id, $newName);
-            header('Location: /admin/categories');
+            $this->sponsorings->updatesponsorings($this->connection, $id, $newName,$newLogo);
+            header('Location: /organizer/sponser');
             exit();
         }
     }

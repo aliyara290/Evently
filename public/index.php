@@ -111,6 +111,8 @@ $router->post("/Sponsoring",SponseurController::class, "create");
 $router->get("/organizer/sponser", SponseurController::class, "affichersponsorings");
 $router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
 $router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
+$router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
+
 
 
 

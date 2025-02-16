@@ -14,8 +14,9 @@
                     Devenez Sponsor
                 </h1>
                 
-                <form class="space-y-6" action="/Sponsoring" method="POST" >
+                <form class="space-y-6" action="/Sponsoring/updte" method="POST" >
                     <!-- Logo Upload Section -->
+                    <input type="hidden" name="sponsor_id" value="{{ sponsor.id }}">
                     <div class="space-y-4">
                         <label class="block text-gray-700 text-lg font-medium mb-2">
                             Logo de votre entreprise
@@ -56,7 +57,7 @@
                         type="submit" 
                         class="w-full bg-blue-600 text-white rounded-lg px-6 py-3 text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform transition-all duration-200 hover:scale-[1.02]"
                     >
-                        Soumettre votre demande
+                       Mettre à jour le sponsor
                     </button>
                 </form>
             </div>
