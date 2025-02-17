@@ -45,7 +45,7 @@ class AuthController
 
         $oauth = new Oauth2($this->client);
         $googleUser = $oauth->userinfo->get();
-        
+
         $user = $this->userModel->findByEmail($googleUser->email);
 
         if (!$user) {
@@ -163,3 +163,6 @@ class AuthController
 
 
 }
+
+
+
