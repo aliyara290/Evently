@@ -32,6 +32,7 @@ class TicketController
 
          $this->ticketData->createTicket();
         $this->ticketData->decrementAvailableTickets($_GET['id']);
+
         $this->mail->sendApprovedMail();
 
     }

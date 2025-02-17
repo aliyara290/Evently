@@ -5,9 +5,11 @@ namespace App\Models;
 use App\Core\Models;
 use App\Core\Security;
 use App\Core\Validator;
-use PDOException;
+use App\Core\Session;
 use Exception;
+use Config\Database;
 use PDO;
+use PDOException;
 
 class User
 {
@@ -18,6 +20,13 @@ class User
     protected ?string $password = null;
     protected ?string $googleId = null;
     protected ?string $avatar = null;
+
+    private $pdo;
+
+    public function __construct()
+    {
+        $this->pdo = Database::getInstance();
+    }
 
     public function setRole($role): void
     {
@@ -78,6 +87,20 @@ class User
         ];
         try {
             Models::create("users", $data);
+            $userId=$this->pdo->lastInsertId();
+            $roleStmt = $this->pdo->prepare("INSERT INTO user_role (role_id, user_id) VALUES 
+                                 ((SELECT id FROM role WHERE name = 'Organizer'), :user_id),
+                                 ((SELECT id FROM role WHERE name = 'Participant'), :user_id)");
+            $roleStmt->execute(["user_id" => $userId]);
+
+//            $rolesStmt = $this->pdo->prepare("SELECT r.name FROM role r
+//                                          INNER JOIN user_role ur ON r.id = ur.role_id
+//                                          WHERE ur.user_id = :user_id");
+//            $rolesStmt->execute(["user_id" => $userId]);
+//            $roles = $rolesStmt->fetchAll(PDO::FETCH_COLUMN);
+//
+//            Session::set("roles", $roles);
+//            Session::set("active_role", $roles[0]);
             return true;
 
         } catch (Exception $e) {
@@ -98,11 +121,15 @@ class User
     {
         try {
             $user =  Models::readByCondition("users", "email", $this->email);
-            if($user && password_verify($this->password, $user["password"])) {
-                return true;
-            } else {
-                return false;
+            if ($user && is_array($user) && count($user) > 0) {
+                $user = $user[0];
+
+                if (password_verify($this->password, $user["password_hash"])) {
+                    return $user;
+                }
             }
+
+            return false;
         } catch (Exception $e) {
             echo "failed to find the email: " . $e->getMessage();
             return false;
@@ -178,5 +205,15 @@ class User
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         
         return $result ? $result['total'] : 0; 
+    }
+
+    public function findRole($id){
+        $query="SELECT r.name FROM role r
+                INNER JOIN user_role ur ON r.id = ur.role_id
+                WHERE ur.user_id = :user_id";
+        $stm=$this->pdo->prepare($query);
+//        var_dump($result=$this->pdo->prepare($query));
+         $stm->execute([':user_id'=>$id]);
+         return $stm->fetchAll(PDO::FETCH_ASSOC);
     }
 }

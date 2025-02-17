@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS role (
         )
     )
 );
-select * from users;
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(50),
