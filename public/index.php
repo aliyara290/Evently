@@ -118,6 +118,7 @@ $router->get("/organizer/sponser", SponseurController::class, "affichersponsorin
 $router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
 $router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
 $router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
+$router->post("/switch-role", AuthController::class, "switchRole");
 
 
 $router->dispatch();    

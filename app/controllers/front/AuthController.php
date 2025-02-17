@@ -101,21 +101,29 @@ class AuthController
         if($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = Validator::validateEmail($_POST["u_email"]);
             $password = Validator::validatePassword($_POST["u_password"]);
-            echo $email;
-            echo $password;
             $this->userModel->setEmail($email);
             $this->userModel->setPassword($password);
             $check = $this->userModel->login();
+            $this->userModel->findByEmail($_POST["u_email"]);
 
             if($check) {
+                $roles=$this->userModel->findRole($_SESSION['user']['id']);
                 Session::set("user", [
-                    "id" => $check[0]["id"],
-                    "email" => $check[0]["email"],
-                    "firstName" => $check[0]["firstname"],
-                    "lastName" => $check[0]["lastname"],
-                    "avatar" => $check[0]["avatar"]
+                    "id" => $check["id"],
+                    "email" => $check["email"],
+                    "firstName" => $check["firstname"],
+                    "lastName" => $check["lastname"],
+                    "avatar" => $check["avatar"],
+                    "roles" => $roles,
+                    "active_role" => $roles[0]
                 ]);
+
+//                var_dump($roles);
+//                Session::set("roles", $roles);
+//                Session::set("active_role", $roles[0]);
+
                 header("location: /");
+
                 exit();
             }
         }
@@ -135,4 +143,23 @@ class AuthController
         header("location: /login");
         exit;
     }
+    public function switchRole()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["role"])) {
+            $newRole = $_POST["role"];
+            $roles = Session::get("user")["roles"];
+
+            foreach ($roles as $role) {
+                if ($role["name"] === $newRole) {
+                    $_SESSION["user"]["active_role"] = $role;
+                    break;
+                }
+            }
+        }
+
+        header("Location: /");
+        exit();
+    }
+
+
 }
