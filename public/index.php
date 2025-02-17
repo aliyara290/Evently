@@ -121,7 +121,7 @@ $router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring")
 $router->post("/switch-role", AuthController::class, "switchRole");
 $router->get("/event/teckte",EventController::class,"tecktepage");
 
-$router->get('/get-cities-by-region', EventController::class, 'getCitiesByRegion');
+$router->get('/get-cities-by-region', CreateEventController::class, 'getCitiesByRegion');
 
 
 $router->dispatch();

@@ -104,10 +104,12 @@ class AuthController
             $this->userModel->setEmail($email);
             $this->userModel->setPassword($password);
             $check = $this->userModel->login();
-            $this->userModel->findByEmail($_POST["u_email"]);
+            $userData =$this->userModel->findByEmail($_POST["u_email"]);
+//var_dump($email);
+            $email = $userData[0];
 
             if($check) {
-                $roles=$this->userModel->findRole($_SESSION['user']['id']);
+                $roles = $this->userModel->findRole($email["id"]);
                 Session::set("user", [
                     "id" => $check["id"],
                     "email" => $check["email"],

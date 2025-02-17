@@ -70,25 +70,7 @@
                 <div class="">
                     <h4 class="text-2xl text-darkblue font- font-unbounded">Event Data & Location</h4>
                 </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label for="event_date" class="text-sm text-darkblue font-unbounded">Event date
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" placeholder="Event date"
-                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="event_date">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="event_time" class="text-sm text-darkblue font-unbounded">Event time
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="time" placeholder="Event time"
-                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="event_time">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-5">
+                <div class="grid ">
                     <select name="category" class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]">
                         <option>select category</option>
                         {% for category in categories %}
@@ -147,22 +129,20 @@
                      class="hidden flex flex-col gap-2">
                     </label>
                     <div class="flex  gap-5">
-                        <div class="flex gap-5">
-                            <select name="region"
-                                    class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                                    id="region-select">
-                                <option>select Region</option>
-                                {% for region in regions %}
-                                    <option value="{{ region.id }}">{{ region.region }}</option>
-                                {% endfor %}
-                            </select>
+                        <select name="region"
+                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                                id="region-select">
+                            <option>select Region</option>
+                            {% for region in regions %}
+                                <option value="{{ region.id }}">{{ region.region }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="city"
+                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                                id="city-select">
+                            <option>select city</option>
 
-                            <select name="city"
-                                    class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                                    id="city-select">
-                                <option>select city</option>
-                            </select>
-                        </div>
+                        </select>
                     </div>
                 </div>
                 <div
@@ -170,6 +150,42 @@
                     <input id="link" type="text" placeholder="Link"
                            class="hidden px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="link"
                            id="">
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sales start
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="date" placeholder="Sales start"
+                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
+                               name="event_start">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="start_time" class="text-sm text-darkblue font-unbounded">Start time
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="time" placeholder="Start time"
+                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                               name="event_end">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-2">
+                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sale end
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="date" placeholder="Sale end"
+                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
+                               name="event_summary">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label for="event_end" class="text-sm text-darkblue font-unbounded">End time
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="time" placeholder="End time"
+                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                               name="event_end">
+                    </div>
                 </div>
             </div>
             <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
@@ -220,42 +236,7 @@
                                name="price">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sales start
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" placeholder="Sales start"
-                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="event_start">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="start_time" class="text-sm text-darkblue font-unbounded">Start time
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="time" placeholder="Start time"
-                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="event_end">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-5">
-                    <div class="flex flex-col gap-2">
-                        <label for="event_summary" class="text-sm text-darkblue font-unbounded">Sale end
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="date" placeholder="Sale end"
-                               class="datePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]"
-                               name="event_summary">
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <label for="event_end" class="text-sm text-darkblue font-unbounded">End time
-                            <span class="text-red-500">*</span>
-                        </label>
-                        <input type="time" placeholder="End time"
-                               class="timePicker px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
-                               name="event_end">
-                    </div>
-                </div>
+
             </div>
             <div class="p-7 bg-white rounded-lg shadow-xl flex flex-col gap-5 border-1 border-gray-200">
                 <div class="">
@@ -403,12 +384,12 @@ document
     }
   });
 </script>
+
     <script>
         document.getElementById('region-select').addEventListener('change', function() {
             const regionId = this.value;
             const citySelect = document.getElementById('city-select');
 
-            // Clear current cities
             citySelect.innerHTML = '<option>select city</option>';
 
             if (regionId) {
