@@ -19,7 +19,6 @@ class SettingController {
         
             $id =  $this->userData['id'];
             $user = $this->classprofille->getUserById($id);
-            var_dump($user);
             if ($user) {
                 View::render("setting/profile", ["user" => $user]);
             } else {
