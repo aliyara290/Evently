@@ -60,7 +60,6 @@ class AdminControllerBack {
     public function deleteUser(){
         if(isset($_GET['UserId'])){
             $id = (int) $_GET['UserId'];
-            var_dump($id);
             $this->get_class->deleteUser($this->connection,$id);
             header('Location: /admin/Mange_user'); 
             exit; 
@@ -82,7 +81,6 @@ class AdminControllerBack {
     
     public function getAllEventActive (){
         $usersData = $this->classEvent->redAllEventsActive($this->connection);
-        var_dump($usersData);
         echo  $this->twig->render('back/manageEvents.twig', ['events_active' => $usersData]);
     }
     

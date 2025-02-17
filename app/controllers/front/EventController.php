@@ -25,5 +25,9 @@ class EventController {
     public function Resererpage() {
         View::render("event/Réserver");
     }
+
+    public function tecktepage() {
+        View::render("event/tecket");
+    }
     
 }

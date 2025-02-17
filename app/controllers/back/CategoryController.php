@@ -56,7 +56,6 @@ class CategoryController {
     public function updateCategory() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_POST['categoryId']) || !isset($_POST['updateCategoryName'])) {
-                var_dump($_POST['categoryId']);
                 die("Données invalides.");
             }
     
