@@ -22,6 +22,7 @@ use App\Controllers\back\StasitickCountroler;
 use App\Controllers\back\TicketController;
 use App\controllers\back\AppController as BackController;
 use App\Controllers\Mail\MailController;
+use App\Controllers\Front\PaymentController;
 
 
 $router = new Router();
@@ -60,9 +61,15 @@ $router->get("/auth/google", AuthController::class, "googleLogin");
 $router->get("/auth/google-callback", AuthController::class, "googleCallback");
 $router->get("/forgetPassword", AuthController::class, "forgetPassword");
 $router->get("/resetPassword", AuthController::class, "resetPassword");
+// payments
+$router->post("/payment/stripe", PaymentController::class, "createStripePayment");  // Handle Stripe payment
+// $router->post("/payment/paypal", PaymentController::class, "createPayPalPayment");  // Handle PayPal payment
+$router->get("/payment/confirm", PaymentController::class, "confirmPayment");
 // Status code
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
+$router->get("/payment/success", TicketController::class, "seccussPayment");
+$router->get("/payment/failed", AppController::class, "paymentFailed");
 // organizer router
 $router->post("/Category",CategoryController::class, "create");
 $router->post("/Category/delete",CategoryController::class, "deleteCategory");
@@ -121,6 +128,21 @@ $router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring")
 $router->post("/switch-role", AuthController::class, "switchRole");
 $router->get("/event/teckte",EventController::class,"tecktepage");
 
+$router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
+$router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
+
+
+//$router->get("/getTicket",MailController::class,"get");
+$router->post("/getMail",TicketController::class,"bookFree");
+//$router->get("/getMail",MailController::class,"sendApprovedMail");
+
+$router->post("/Sponsoring",SponseurController::class, "create");
+
+
+$router->get("/organizer/sponser", SponseurController::class, "affichersponsorings");
+$router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
+$router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
+$router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
 $router->get('/get-cities-by-region', CreateEventController::class, 'getCitiesByRegion');
 
 

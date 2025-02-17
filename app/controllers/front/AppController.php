@@ -21,4 +21,7 @@ class AppController {
     public function faqs() {
         View::render("faqs", ["user" => $this->userData]);
     }
+    public function paymentFailed() {
+        View::render("payment/failed");
+    }
 }

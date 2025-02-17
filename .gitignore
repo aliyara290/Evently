@@ -1,5 +1,5 @@
 /vendor/
 /node_modules/
 .env
-/public/upload/
+/public/uploads/
 /public/assets/css/output.css
