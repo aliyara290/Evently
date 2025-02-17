@@ -102,5 +102,7 @@ $router->get("/event/Reserver",EventController::class,"Resererpage");
 $router->get("/getMail",MailController::class,"sendApprovedMail");
 $router->get("/event/teckte",EventController::class,"tecktepage");
 
+$router->get('/get-cities-by-region', EventController::class, 'getCitiesByRegion');
+
 
 $router->dispatch();

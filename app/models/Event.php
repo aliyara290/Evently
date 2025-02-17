@@ -666,5 +666,12 @@ GROUP BY
     
         return $result['total'] ?? 0; 
     }
+
+    public function getCitiesByRegion($regionId) {
+        $query = "SELECT * FROM city WHERE region_id = :region_id";
+        $result = $this->pdo->prepare($query);
+        $result->execute(['region_id' => $regionId]);
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
     
 }

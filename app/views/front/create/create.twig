@@ -147,22 +147,22 @@
                      class="hidden flex flex-col gap-2">
                     </label>
                     <div class="flex  gap-5">
-                        <select name="region" type="text"
-                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="region"
-                                id="">
-                            <option>select Region</option>
-                            {% for region in regions %}
-                                <option value="{{ region.id }}">{{ region.region }}</option>
-                            {% endfor %}
-                        </select>
-                        <select id="city" name="city"
-                                class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]" name="city"
-                                id="">
-                            <option>select city</option>
-                            {% for city in cities %}
-                                <option value="{{ city.id }}">{{ city.ville }}</option>
-                            {% endfor %}
-                        </select>
+                        <div class="flex gap-5">
+                            <select name="region"
+                                    class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                                    id="region-select">
+                                <option>select Region</option>
+                                {% for region in regions %}
+                                    <option value="{{ region.id }}">{{ region.region }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <select name="city"
+                                    class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]"
+                                    id="city-select">
+                                <option>select city</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -403,4 +403,27 @@ document
     }
   });
 </script>
+    <script>
+        document.getElementById('region-select').addEventListener('change', function() {
+            const regionId = this.value;
+            const citySelect = document.getElementById('city-select');
+
+            // Clear current cities
+            citySelect.innerHTML = '<option>select city</option>';
+
+            if (regionId) {
+                fetch(`/get-cities-by-region?id=${regionId}`)
+                    .then(response => response.json())
+                    .then(cities => {
+                        cities.forEach(city => {
+                            const option = document.createElement('option');
+                            option.value = city.id;
+                            option.textContent = city.ville;
+                            citySelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
 {% endblock %}
