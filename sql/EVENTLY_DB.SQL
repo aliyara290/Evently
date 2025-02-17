@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS role (
         )
     )
 );
-select * from users;
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     firstName VARCHAR(50),
@@ -227,3 +227,8 @@ ALTER TABLE ticket ADD COLUMN status ticket_status default 'pending' ;
 select * from payments;
 ALTER TABLE ticket ADD COLUMN places INT;
 ALTER TABLE ticket ADD COLUMN total_price INT;
+
+INSERT INTO role (name) VALUES 
+('admin'), 
+('Participant'),
+('Organizer');

@@ -24,16 +24,21 @@
 					class="flex gap-7 items-center">
 					{# <h1>{{_SESSION["email"]}}</h1> #}
 					{% if user["email"] is defined and user["email"] is not empty %}
-						<li class="group">
-							<a href="/organizer/create" class="flex flex-col items-center">
-								<span class="group-hover:text-orange text-darkblue">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-									</svg>
 
-								</span>
-								{# <span class="group-hover:text-orange text-sm text-darkblue font-medium ">Create event</span> #}
-							</a>
+						<li class="group">
+							{% for role in user.roles %}
+								{% if role.name != user.active_role.name and user.active_role.name == "Organizer" %}
+									<a href="/organizer/create" class="flex flex-col items-center">
+										<span class="group-hover:text-orange text-darkblue">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+												<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+											</svg>
+										</span>
+										{# <span class="group-hover:text-orange text-sm text-darkblue font-medium ">Create event</span> #}
+									</a>
+								{% endif %}
+							{% endfor %}
+
 						</li>
 						<li class="group">
 							<a href="/organizer/create" class="flex flex-col items-center">
@@ -97,6 +102,17 @@
 								<span>{{ user["email"] }}</span>
 							</li>
 						</a>
+
+						<form action="/switch-role" method="POST" class="flex flex-col w-full py-3 px-4 hover:bg-gray-100 cursor-pointer">
+							{% for role in user.roles %}
+								{% if role.name != user.active_role.name %}
+									<button type="submit" name="role" value="{{ role.name }}">
+										Switch to
+										{{ role.name }}
+									</button>
+								{% endif %}
+							{% endfor %}
+						</form>
 						<div class="w-full h-[1.7px] bg-gray-200"></div>
 						<a href="/organizer/manage-events">
 							<li class="w-full py-3 px-4 hover:bg-gray-100">

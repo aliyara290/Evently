@@ -16,7 +16,7 @@ class HomeController {
     }
     public function home() {
         $result=$this->eventData->getlastEightEvents();
-//        var_dump($result);
+//        var_dump($this->userData);
         View::render("home", ["user" => $this->userData,"records" => $result]);
     }
 }
