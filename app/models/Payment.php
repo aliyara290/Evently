@@ -2,6 +2,7 @@
 namespace App\Models;
 use Config\Database;
 use App\Core\Models;
+use App\Core\Session;
 
 abstract class Payment {
     protected $pdo;
@@ -12,11 +13,9 @@ abstract class Payment {
     protected $ticketId;
     protected $eventId;
 
-    public function __construct($userId, $ticketId, $eventId) {
+    public function __construct($userId) {
         $this->pdo = Database::getInstance();
         $this->userId = $userId;
-        $this->ticketId = $ticketId;
-        $this->eventId = $eventId;
     }
 
     abstract public function createCheckoutSession($amount, $currency, $event, $places);
@@ -36,7 +35,7 @@ abstract class Payment {
         $stmt = $this->pdo->prepare($query);
         $data = [
             ':user_id' => $this->userId,
-            ':ticket_id' => $this->ticketId,
+            ':ticket_id' => Session::get("ticketId"),
             ':transaction_id' => $transactionId,
             ':amount' => $amount,
             ':currency' => $currency,

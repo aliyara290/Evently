@@ -5,6 +5,7 @@ namespace App\Controllers\Front;
 use App\Core\View;
 use App\Core\Session;
 use App\Models\Event;
+use App\Core\Validator;
 
 class EventsController
 {
@@ -47,8 +48,9 @@ class EventsController
                 $this->eventData->setCategory($_POST['category']);
 
                 $this->eventData->setEventMode(isset($_POST['venue']) ? 'presentiel' : 'enligne');
+                var_dump($_POST['region']);
                 $this->eventData->setRegionId($_POST['region']);
-                //                var_dump($_POST['region']);
+                            
                 $this->eventData->setCityId($_POST['city']);
 
                 $this->eventData->setPlaces($_POST['places']);
@@ -59,13 +61,13 @@ class EventsController
 
 
                 // Format and set sales start period
-                $salesStartDate = $_POST['event_start'];
-                $salesStartTime = $_POST['event_time'];
+                $salesStartDate = Validator::validateDate($_POST['event_start']);
+                $salesStartTime = Validator::validateDate($_POST['event_time']);
                 $formattedSalesStart = date('Y-m-d H:i:s', strtotime("$salesStartDate $salesStartTime"));
 
                 // Format and set sales end period
-                $salesEndDate = $_POST['event_end'];
-                $salesEndTime = $_POST['event_time'];
+                $salesEndDate = Validator::validateDate($_POST['event_end']);
+                $salesEndTime = Validator::validateDate($_POST['event_time']);
                 $formattedSalesEnd = date('Y-m-d H:i:s', strtotime("$salesEndDate $salesEndTime"));
 
                 $this->eventData->setStartDate($formattedSalesStart);

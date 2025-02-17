@@ -13,9 +13,9 @@ class StripePayment extends Payment
 {
     private $stripeSecretKey;
 
-    public function __construct($userId, $ticketId, $eventId)
+    public function __construct($userId)
     {
-        parent::__construct($userId, $ticketId, $eventId);
+        parent::__construct($userId);
         $this->stripeSecretKey = $_ENV["STRIPE_SECRET_KEY"];
     }
 

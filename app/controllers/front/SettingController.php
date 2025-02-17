@@ -4,7 +4,7 @@ namespace App\Controllers\Front;
 use App\Core\View;
 use App\Core\Session;
 use App\Models\Profille;
-
+use APP\Core\Validator;
 
 class SettingController {
     private $userData;
@@ -32,10 +32,10 @@ class SettingController {
 
     public function updateProfile() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userId = $_POST['user_id'] ?? null;
-            $firstName = $_POST['user__firstname'] ?? null;
-            $lastName = $_POST['user__lastname'] ?? null;
-            $bio = $_POST['user__bio'] ?? null;
+            $userId = Validator::sanitize($_POST['user_id']) ?? null;
+            $firstName = Validator::sanitize($_POST['user__firstname']) ?? null;
+            $lastName = Validator::sanitize($_POST['user__lastname']) ?? null;
+            $bio = Validator::sanitize($_POST['user__bio'] ?? null);
             $photo = $_POST['userPicture'];
     
             if ($userId && $firstName && $lastName) {

@@ -68,7 +68,7 @@ $router->get("/payment/confirm", PaymentController::class, "confirmPayment");
 // Status code
 $router->get("/forbidden", AppController::class, "forbidden");
 $router->get("/404", AppController::class, "notFound");
-$router->get("/payment/success", AppController::class, "seccussPayment");
+$router->get("/payment/success", TicketController::class, "seccussPayment");
 $router->get("/payment/failed", AppController::class, "paymentFailed");
 // organizer router
 $router->post("/Category",CategoryController::class, "create");
@@ -107,6 +107,7 @@ $router->get("/event/Reserver",EventController::class,"Resererpage");
 
 //$router->get("/getTicket",MailController::class,"get");
 $router->get("/getMail",MailController::class,"sendApprovedMail");
+$router->get("/event/teckte",EventController::class,"tecktepage");
 
 $router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
 $router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");

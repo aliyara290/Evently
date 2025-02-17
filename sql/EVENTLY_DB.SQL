@@ -224,4 +224,6 @@ CREATE TYPE ticket_status AS ENUM ('pending', 'approved', 'denied');
 ALTER TABLE ticket ADD COLUMN status ticket_status default 'pending' ;
 
 
-select * from event;
+select * from payments;
+ALTER TABLE ticket ADD COLUMN places INT;
+ALTER TABLE ticket ADD COLUMN total_price INT;

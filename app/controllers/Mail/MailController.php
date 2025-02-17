@@ -33,12 +33,12 @@ class MailController
         $this->mailer = new PHPMailer(true);
 
         $this->mailer->isSMTP();
-        $this->mailer->Host       = $_ENV['MAIL_HOST']; // Replace with your SMTP host
+        $this->mailer->Host       = $_ENV['MAIL_HOST']; 
         $this->mailer->SMTPAuth   = true;
-        $this->mailer->Username   = $_ENV['MAIL_USERNAME']; // Replace with your SMTP username
-        $this->mailer->Password   = $_ENV['MAIL_PASSWORD']; // Replace with your SMTP password
+        $this->mailer->Username   = $_ENV['MAIL_USERNAME']; 
+        $this->mailer->Password   = $_ENV['MAIL_PASSWORD']; 
         $this->mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $this->mailer->Port       = $_ENV['MAIL_PORT']; // Replace with your SMTP port
+        $this->mailer->Port       = $_ENV['MAIL_PORT'];
 
         $this->mailer->setFrom('no-reply@gmail.com', 'Evently');
     }
@@ -58,7 +58,7 @@ class MailController
 
 
 
-        $this->mailer->addAddress('ali.yara.cc@gmail.com');
+        $this->mailer->addAddress($_SESSION["user"]["email"]);
         $this->mailer->isHTML(true);
         $this->mailer->Subject = $subject;
         $this->mailer->Body = "<h2 >$subject</h2>

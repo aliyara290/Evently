@@ -5,39 +5,39 @@ namespace App\Controllers\Front;
 use App\Models\StripePayment;
 use App\Models\Ticket;
 use App\Core\Session;
+use App\Controllers\Mail\MailController;
 
 class PaymentController
 {
     private $stripModel;
     private $ticketModel;
-    private $paypalModel;
-    private $eventId;
-    private $ticketId;
+    private $mail;
     // private int $places = 0;
 
     public function __construct()
     {
-        $this->stripModel = new StripePayment($_SESSION["user"]["id"], 1, $this->eventId);
+        $this->stripModel = new StripePayment($_SESSION["user"]["id"]);
         $this->ticketModel = new Ticket();
+        $this->mail = new MailController();
     }
 
-    // Handle Stripe payment creation
     public function createStripePayment()
     {
         $amount = $_POST['prix'];
+        $total = $_POST['total'];
         Session::set("places", $_POST['nombre']);
         $event_name = $_POST['event_name'];
         Session::set("eventId", $_POST['event_id']);
         $currency = 'mad';
         $this->ticketModel->setEventId(Session::get("eventId"));
         $this->ticketModel->setUserId($_SESSION["user"]["id"]);
-        $inserting = $this->ticketModel->insertTicket($amount);
-        if (!$inserting) { 
-            echo "failed to insert ticket";
+        $ticketId = $this->ticketModel->insertTicket($amount, Session::get("places"), $total);
+        if ($ticketId) {
+            Session::set("ticketId", $ticketId);
+        } else {
             return false;
         }
         $checkoutSessionResponse = $this->stripModel->createCheckoutSession($amount, $currency, $event_name, Session::get("places"));
-
         if ($checkoutSessionResponse['status'] == 'success') {
             header('Location: ' . $checkoutSessionResponse['checkout_url']);
             exit();
@@ -46,24 +46,6 @@ class PaymentController
         }
     }
 
-    // Handle PayPal payment creation
-    // public function createPayPalPayment() {
-    //     $userId = $_SESSION['user_id'];
-    //     $ticketId = $_SESSION['ticket_id'];
-    //     $amount = $_POST['amount'];
-    //     $currency = 'USD';
-
-    //     $payment = new PayPalPayment($this->db, $userId, $ticketId);
-    //     $paymentIntent = $payment->createPaymentIntent($amount, $currency);
-
-    //     if (isset($paymentIntent['id'])) {
-    //         header('Location: ' . $paymentIntent['links'][1]['href']);
-    //     } else {
-    //         echo "Error: " . $paymentIntent['message'];
-    //     }
-    // }
-
-    // Confirm payment after redirect from Stripe or PayPal
     public function confirmPayment()
     {
         if (!isset($_GET['session_id'])) {
@@ -73,13 +55,12 @@ class PaymentController
         $sessionId = $_GET['session_id'];
         $check = $this->stripModel->confirmation($sessionId);
         if ($check) {
-            echo 'event:' . Session::get("eventId");
-            echo 'plc:' . Session::get("places");
+            
             $isDescrement = $this->ticketModel->decrementAvailableTickets(Session::get("eventId"), Session::get("places"));
             if ($isDescrement) {
                 echo "good";
             }
-
+            $this->mail->sendApprovedMail();
             header("Location: /payment/success");
             exit();
         } else {
