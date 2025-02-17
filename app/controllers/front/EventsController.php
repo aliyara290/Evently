@@ -48,7 +48,6 @@ class EventsController
                 $this->eventData->setCategory($_POST['category']);
 
                 $this->eventData->setEventMode(isset($_POST['venue']) ? 'presentiel' : 'enligne');
-                var_dump($_POST['region']);
                 $this->eventData->setRegionId($_POST['region']);
                             
                 $this->eventData->setCityId($_POST['city']);
@@ -76,7 +75,7 @@ class EventsController
                 $this->eventData->setStatus('pending');
                 $this->eventData->setEventLink($_POST['link']);
 
-
+                
                 $check = $this->eventData->createEvent();
                 $getLastEventId = $this->eventData->getLastEventId();
                 if ($getLastEventId) {
@@ -90,10 +89,7 @@ class EventsController
                 }
             } catch (\Exception $e) {
                 Session::set('error', $e->getMessage());
-                View::render("/events", [
-                    "user" => $this->userData,
-                    "error" => $e->getMessage()
-                ]);
+               
             }
         }
     }

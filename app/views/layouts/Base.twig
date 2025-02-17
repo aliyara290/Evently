@@ -14,7 +14,7 @@
 		<header class="sticky z-52 top-0 left-0 flex items-center justify-between w-full py-2 px-6 shadow-sm bg-white">
 			<div class="flex items-center gap-10">
 				<div class="w-auto">
-					<a href="/" class="text-2xl font-bold font-unbounded text-orange">evently
+					<a href="/" class="text-2xl font-bold font-unbounded text-orange"> evently
 					</a>
 				</div>
 				{% block header %}{% endblock %}
@@ -27,7 +27,7 @@
 
 						<li class="group">
 							{% for role in user.roles %}
-								{% if role.name != user.active_role.name and user.active_role.name == "Organizer" %}
+								{% if role.name != user.active_role and user.active_role == "Organizer" %}
 									<a href="/organizer/create" class="flex flex-col items-center">
 										<span class="group-hover:text-orange text-darkblue">
 											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
@@ -102,23 +102,34 @@
 								<span>{{ user["email"] }}</span>
 							</li>
 						</a>
-
-						<form action="/switch-role" method="POST" class="flex flex-col w-full py-3 px-4 hover:bg-gray-100 cursor-pointer">
+						<div class="w-full h-[1.7px] bg-gray-200"></div>
+						<form action="/switch-role" method="POST" class="flex flex-col w-full cursor-pointer py-3 px-4 hover:bg-gray-100 cursor-pointer">
 							{% for role in user.roles %}
-								{% if role.name != user.active_role.name %}
-									<button type="submit" name="role" value="{{ role.name }}">
-										Switch to
-										{{ role.name }}
+								{% if role.name != user.active_role %}
+									<button type="submit" class="flex items-center gap-2" name="role" value="{{ role.name }}">
+										<span>
+											<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
+												<path fill-rule="evenodd" d="M15.97 2.47a.75.75 0 0 1 1.06 0l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 1 1-1.06-1.06l3.22-3.22H7.5a.75.75 0 0 1 0-1.5h11.69l-3.22-3.22a.75.75 0 0 1 0-1.06Zm-7.94 9a.75.75 0 0 1 0 1.06l-3.22 3.22H16.5a.75.75 0 0 1 0 1.5H4.81l3.22 3.22a.75.75 0 1 1-1.06 1.06l-4.5-4.5a.75.75 0 0 1 0-1.06l4.5-4.5a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/>
+											</svg>
+										</span>
+										<span>
+											Switch to
+											{{ role.name }}
+										</span>
 									</button>
 								{% endif %}
 							{% endfor %}
 						</form>
+						{% if role.name != user.active_role and user.active_role == "Organizer" %}
 						<div class="w-full h-[1.7px] bg-gray-200"></div>
 						<a href="/organizer/manage-events">
 							<li class="w-full py-3 px-4 hover:bg-gray-100">
 								<span>Manage events</span>
 							</li>
 						</a>
+						{% endif %}
+						<div class="w-full h-[1.7px] bg-gray-200"></div>
+
 						<a href="/organizer/tickets">
 							<li class="w-full py-3 px-4 hover:bg-gray-100">
 								<span>Tickets (0)</span>
@@ -130,6 +141,8 @@
 								<span>Settings</span>
 							</li>
 						</a>
+						<div class="w-full h-[1.7px] bg-gray-200"></div>
+
 						<a href="/logout">
 							<li class="w-full py-3 px-4 hover:bg-gray-100">
 								<span>Log out</span>

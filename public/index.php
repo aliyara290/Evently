@@ -34,33 +34,33 @@ $router->get("/events/search", EventsController::class, "searchForEvents");
 $router->get("/events/city", EventsController::class, "searchForCity");
 $router->get("/events/filter", EventsController::class, "filter");
 // $router->get("/events", EventsController::class, "page");
-$router->get("/setting/profile", SettingController::class, "profile");
-$router->get("/setting/reset", SettingController::class, "setting");
-$router->get("/account/profile", UserProfileController::class, "page");
+$router->get("/setting/profile", SettingController::class, "profile", AuthMiddleware::class, ["Organizer", "Participant"]);
+$router->get("/setting/reset", SettingController::class, "setting", AuthMiddleware::class, ["Organizer", "Participant"]);
+$router->get("/account/profile", UserProfileController::class, "page", AuthMiddleware::class, ["Organizer", "Participant"]);
 $router->get("/faqs", AppController::class, "faqs");
-$router->get("/organizer/dashboard", OrganizerController::class, "page");
-$router->get("/admin/manage-user", AdminController::class, "Mange_user_page");
-$router->get("/organizer/manage-events", OrganizerController::class, "Event_management_page");
-$router->get("/organizer/create", CreateEventController::class, "page");
-$router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent");
-$router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent");
-$router->post("/organizer/editEvent", OrganizerController::class, "updateEvent");
+// $router->get("/organizer/dashboard", OrganizerController::class, "page");
+$router->get("/admin/manage-user", AdminController::class, "Mange_user_page", AuthMiddleware::class, ["Admin"]);
+$router->get("/organizer/manage-events", OrganizerController::class, "Event_management_page", AuthMiddleware::class, ["Organizer"]);
+$router->get("/organizer/create", CreateEventController::class, "page", AuthMiddleware::class, ["Organizer"]);
+$router->get("/organizer/deleteEvent", OrganizerController::class, "deleteOrganizerEvent", AuthMiddleware::class, ["Organizer"]);
+$router->get("/organizer/editEvent", OrganizerController::class, "editOrganizerEvent", AuthMiddleware::class, ["Organizer"]);
+$router->post("/organizer/editEvent", OrganizerController::class, "updateEvent", AuthMiddleware::class, ["Organizer"]);
 $router->get("/ticket", TicketController::class, "page");
 
 
 // Auth
-$router->get("/register", AuthController::class, "registerPage");
+$router->get("/register", AuthController::class, "registerPage", AuthMiddleware::class, ["guest"]);
 $router->post("/register", AuthController::class, "register");
-$router->get("/login", AuthController::class, "loginPage");
+$router->get("/login", AuthController::class, "loginPage", AuthMiddleware::class, ["guest"]);
 $router->post("/login", AuthController::class, "login");
 $router->get("/logout", AuthController::class, "logout");
-$router->post("/organizer/create", EventsController::class, "create");
+$router->post("/organizer/create", EventsController::class, "create", AuthMiddleware::class, ["Organizer"]);
 
 //$router->get("/login", AuthController::class, "login");
 $router->get("/auth/google", AuthController::class, "googleLogin");
 $router->get("/auth/google-callback", AuthController::class, "googleCallback");
-$router->get("/forgetPassword", AuthController::class, "forgetPassword");
-$router->get("/resetPassword", AuthController::class, "resetPassword");
+$router->get("/forgetPassword", AuthController::class, "forgetPassword", AuthMiddleware::class, ["Geust"]);
+$router->get("/resetPassword", AuthController::class, "resetPassword", AuthMiddleware::class, ["Geust"]);
 // payments
 $router->post("/payment/stripe", PaymentController::class, "createStripePayment");  // Handle Stripe payment
 // $router->post("/payment/paypal", PaymentController::class, "createPayPalPayment");  // Handle PayPal payment
@@ -71,75 +71,52 @@ $router->get("/404", AppController::class, "notFound");
 $router->get("/payment/success", TicketController::class, "seccussPayment");
 $router->get("/payment/failed", AppController::class, "paymentFailed");
 // organizer router
-$router->post("/Category",CategoryController::class, "create");
-$router->post("/Category/delete",CategoryController::class, "deleteCategory");
-$router->post("/Category/update",CategoryController::class, "updateCategory");
-$router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers");
+$router->post("/Category",CategoryController::class, "create", AuthMiddleware::class, ["Admin"]);
+$router->post("/Category/delete",CategoryController::class, "deleteCategory", AuthMiddleware::class, ["Admin"]);
+$router->post("/Category/update",CategoryController::class, "updateCategory", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/Mange_user",AdminControllerBack::class, "getallUsers", AuthMiddleware::class, ["Admin"]);
 $router->get("/active",AdminControllerBack::class, "UpduteStatustree");
 
 
 
 $router->get("/delete",AdminControllerBack::class, "deleteUser");
 // Admin routers
-$router->get("/admin/dashboard", BackController::class, "dashboard");
-$router->get("/admin/dashboard", StasitickCountroler::class, "StatistickGlobale");
+$router->get("/admin/dashboard", StasitickCountroler::class, "StatistickGlobale", AuthMiddleware::class, ["Admin"]);
 // $router->get("/admin/categories", BackController::class, "categories");
-$router->get("/admin/categories", CategoryController::class, "afficherCategories");
+$router->get("/admin/categories", CategoryController::class, "afficherCategories", AuthMiddleware::class, ["Admin"]);
 
 // $router->get("/admin/updateCategories", BackController::class, "updateCategory");
-$router->get("/admin/tags", BackController::class, "tags");
-$router->get("/admin/tupdateTags", BackController::class, "updateTag");
-$router->get("/admin/users", BackController::class, "users");
-$router->get("/admin/events", BackController::class, "events");
-$router->get("/admin/users", AdminControllerBack::class, "getallUsers");
+$router->get("/admin/tags", BackController::class, "tags", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/tupdateTags", BackController::class, "updateTag", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/users", BackController::class, "users", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/events", BackController::class, "events", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/users", AdminControllerBack::class, "getallUsers", AuthMiddleware::class, ["Admin"]);
 
-$router->get("/mange/delete",AdminControllerBack::class, "deleteUser");
-$router->get("/mange/update",AdminControllerBack::class, "UpduteStatus");
-$router->get("/mange/active",AdminControllerBack::class, "UpduteStatustree");
+$router->get("/mange/delete",AdminControllerBack::class, "deleteUser", AuthMiddleware::class, ["Admin"]);
+$router->get("/mange/update",AdminControllerBack::class, "UpduteStatus", AuthMiddleware::class, ["Admin"]);
+$router->get("/mange/active",AdminControllerBack::class, "UpduteStatustree", AuthMiddleware::class, ["Admin"]);
 
 // mange event admin
-$router->get("/admin/events",AdminControllerBack::class,"getAllEvent");
-$router->get("/admin/accept",AdminControllerBack::class,"updatestatus");
-$router->get("/admin/refuse",AdminControllerBack::class,"updatestatusRefuse");
-$router->get("/admin/delete",AdminControllerBack::class,"deleteEvent");
-$router->post("/update-profile",SettingController::class,"updateProfile");
-$router->get("/event/Reserver",EventController::class,"Resererpage");
+$router->get("/admin/events",AdminControllerBack::class,"getAllEvent", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/accept",AdminControllerBack::class,"updatestatus", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/refuse",AdminControllerBack::class,"updatestatusRefuse", AuthMiddleware::class, ["Admin"]);
+$router->get("/admin/delete",AdminControllerBack::class,"deleteEvent", AuthMiddleware::class, ["Admin"]);
+$router->post("/update-profile",SettingController::class,"updateProfile", AuthMiddleware::class, ["Participant", "Organizer"]);
 
 
-//$router->get("/getTicket",MailController::class,"get");
-$router->get("/getMail",MailController::class,"sendApprovedMail");
+// $router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser", AuthMiddleware::class, ["Organizer"]);
 
-
-$router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
-$router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
-
-
-//$router->get("/getTicket",MailController::class,"get");
-$router->post("/getMail",TicketController::class,"bookFree");
-//$router->get("/getMail",MailController::class,"sendApprovedMail");
 
 $router->post("/Sponsoring",SponseurController::class, "create");
 
-
-$router->get("/organizer/sponser", SponseurController::class, "affichersponsorings");
-$router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
-$router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
-$router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");
 $router->post("/switch-role", AuthController::class, "switchRole");
 $router->get("/event/teckte",EventController::class,"tecktepage");
 
-$router->get("/organizer/sponser", OrganizerController::class, "PageSponser");
-$router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser");
 
 
-//$router->get("/getTicket",MailController::class,"get");
-$router->post("/getMail",TicketController::class,"bookFree");
-//$router->get("/getMail",MailController::class,"sendApprovedMail");
 
-$router->post("/Sponsoring",SponseurController::class, "create");
-
-
-$router->get("/organizer/sponser", SponseurController::class, "affichersponsorings");
+$router->get("/organizer/sponser", SponseurController::class, "affichersponsorings", AuthMiddleware::class, ["Organizer"]);
+$router->get("/organizer/createsponser", OrganizerController::class, "PageCreteSponser", AuthMiddleware::class, ["Organizer"]);
 $router->post("/sponsor/delete",SponseurController::class, "deletesponsoring");
 $router->post("/sponsor/updatepage",OrganizerController::class, "updatesponsoringpage");
 $router->post("/Sponsoring/updte",SponseurController::class, "updatesponsoring");

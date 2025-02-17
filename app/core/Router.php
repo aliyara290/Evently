@@ -41,7 +41,7 @@ class Router {
             if($route["middleware"]) {
                 $middleware = $route["middleware"];
                 $role = $route["role"];
-                $middleware = new $middleware();
+                    $middleware = new $middleware();
                 if(!$middleware->handle($role)) {
                     header("location: /forbidden"); 
                 }

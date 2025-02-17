@@ -82,7 +82,6 @@ class StasitickCountroler {
         $TotalEventsPending = $this->classEvent->TotalEventpending($this->connection);
         $TotalEventsAccepted = $this->classEvent->TotalEventaccepted($this->connection);
         $TotalUsers = $this->get_class->TotalUser($this->connection);
-        var_dump($TotalUsers);
         echo $this->twig->render('back/dashboard.twig', [
             'TotalCategories' => $TotalCategories,
             'TotalEvents' => $TotalEvents,
