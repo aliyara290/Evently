@@ -14,12 +14,11 @@ class EventController {
         $this->eventData = new Event();
     }
     public function page() {
-//        var_dump($_GET['id']);
         $this->eventData->setId($_GET['id']);
         $event=$this->eventData->getEventById($_GET['id']);
-//        var_dump($event);
+        $sponsorings=$this->eventData->getSponsoringsById($_GET['id']);
 
-        View::render("event/page", ["user" => $this->userData,"event" => $event]);
+        View::render("event/page", ["user" => $this->userData,"event" => $event, "sponsorings" => $sponsorings]);
     }
 
     public function Resererpage() {

@@ -55,7 +55,7 @@ class OrganizerController
     public function Event_management_page()
     {
         $this->eventData->setId($this->userData['id']);
-        $events = $this->eventData->getOrganizerEvents($this->userData['id']);
+        $events = $this->eventData->getOrganizerEvents();
         View::render("organizer/Event_management", ["events" => $events]);
     }
 

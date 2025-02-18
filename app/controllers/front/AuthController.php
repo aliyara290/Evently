@@ -55,16 +55,20 @@ class AuthController
             $this->userModel->setGoogleId($googleUser->id);
             $this->userModel->setAvatar($googleUser->picture);
             $this->userModel->register();
-        }
+            echo "yes";
+        } else echo "no";
 
         $getUserId = $this->userModel->findByEmail($googleUser->email);
         $id =  $getUserId[0]["id"];
+        $roles = $this->userModel->findRole($id);
         Session::set("user", [
-            "id" => $id,
-            "email" => $googleUser->email,
-            "firstName" => $googleUser->givenName,
-            "lastName" => $googleUser->familyName,
-            "avatar" => $googleUser->picture
+            "id" => $getUserId[0]["id"],
+            "email" => $getUserId[0]["email"],
+            "firstName" => $getUserId[0]["firstname"],
+            "lastName" => $getUserId[0]["lastname"],
+            "avatar" => $getUserId[0]["avatar"],
+            "roles" => $roles,
+            "active_role" => $getUserId[0]["id"] === 10 ? "Admin" : $roles[0]["name"]
         ]);
         header('Location: /');
         exit();
@@ -116,7 +120,7 @@ class AuthController
                     "lastName" => $check["lastname"],
                     "avatar" => $check["avatar"],
                     "roles" => $roles,
-                    "active_role" => $roles[0]["name"]
+                    "active_role" => $check["id"] === 10 ? "Admin" : $roles[0]["name"]
                 ]);
                 header("location: /");
 
@@ -137,31 +141,33 @@ class AuthController
     public function logout()
     {
         Session::destroy();
+        Session::remove("user");
+        Session::set("user", [
+            "active_role" => "guest"
+        ]);
         header("location: /login");
         exit;
     }
     public function switchRole()
-{
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["role"])) {
-        $newRole = $_POST["role"];
-        
-        // Get the roles from the session
-        $roles = Session::get("user")["roles"];
-        
-        // Find the role in the session
-        foreach ($roles as $role) {
-            if ($role["name"] === $newRole) {
-                // Update the active role in the session
-                $_SESSION["user"]["active_role"] = $role["name"];  // Store the role's name as a string
-                break;
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["role"])) {
+            $newRole = $_POST["role"];
+
+            // Get the roles from the session
+            $roles = Session::get("user")["roles"];
+
+            // Find the role in the session
+            foreach ($roles as $role) {
+                if ($role["name"] === $newRole) {
+                    // Update the active role in the session
+                    $_SESSION["user"]["active_role"] = $role["name"];  // Store the role's name as a string
+                    break;
+                }
             }
         }
+
+        // Redirect to the homepage (or wherever you want the user to go after switching roles)
+        header("Location: /");
+        exit();
     }
-
-    // Redirect to the homepage (or wherever you want the user to go after switching roles)
-    header("Location: /");
-    exit();
-}
-
-
 }

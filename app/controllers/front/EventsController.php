@@ -60,13 +60,13 @@ class EventsController
 
 
                 // Format and set sales start period
-                $salesStartDate = Validator::validateDate($_POST['event_start']);
-                $salesStartTime = Validator::validateDate($_POST['event_time']);
+                $salesStartDate = Validator::validateDate($_POST['eve_start_day']);
+                $salesStartTime = Validator::validateDate($_POST['eve_start_time']);
                 $formattedSalesStart = date('Y-m-d H:i:s', strtotime("$salesStartDate $salesStartTime"));
 
                 // Format and set sales end period
-                $salesEndDate = Validator::validateDate($_POST['event_end']);
-                $salesEndTime = Validator::validateDate($_POST['event_time']);
+                $salesEndDate = Validator::validateDate($_POST['eve_end_day']);
+                $salesEndTime = Validator::validateDate($_POST['eve_end_time']);
                 $formattedSalesEnd = date('Y-m-d H:i:s', strtotime("$salesEndDate $salesEndTime"));
 
                 $this->eventData->setStartDate($formattedSalesStart);
@@ -77,13 +77,10 @@ class EventsController
 
                 
                 $check = $this->eventData->createEvent();
-                $getLastEventId = $this->eventData->getLastEventId();
-                if ($getLastEventId) {
+                if ($check) {
                     foreach ($_POST['sponsorings_id'] as $sponsoringId) {
-                        $this->eventData->addSponsoringToEvent($getLastEventId['id'], $sponsoringId);
+                        $this->eventData->addSponsoringToEvent($check, $sponsoringId);
                     }
-                }
-                if($check) {
                     header("location: /events");
                     exit();
                 }

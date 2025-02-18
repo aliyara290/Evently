@@ -4,7 +4,7 @@ namespace App\Controllers\Front;
 use App\Core\View;
 use App\Core\Session;
 use App\Models\Profille;
-use APP\Core\Validator;
+use App\Core\Validator;
 
 class SettingController {
     private $userData;
@@ -38,8 +38,11 @@ class SettingController {
             $photo = $_POST['userPicture'];
     
             if ($userId && $firstName && $lastName) {
-                $this->classprofille->updateProfile($userId, $firstName, $lastName, $bio, $photo);
-                header("location: /setting/profile");
+                $check = $this->classprofille->updateProfile($userId, $firstName, $lastName, $bio, $photo);
+                if($check) {
+
+                    header("location: /setting/profile");
+                }
             } else {
                 die("Données manquantes !");
             }
