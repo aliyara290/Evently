@@ -2,7 +2,7 @@
 
 ## Project Context
 
-Event management platforms like Eventbrite enable organizers to create, manage, and promote events both online and in-person.
+Evently is a comprehensive platform that enables organizers to create, manage, and promote both online and in-person events. Integrated with Stripe, it offers a seamless and secure ticket purchasing experience for participants.
 
 This project aims to develop an advanced Eventbrite clone by following best practices in PHP MVC with PostgreSQL and integrating AJAX for dynamic interactions.
 
