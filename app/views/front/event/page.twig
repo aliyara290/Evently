@@ -33,6 +33,20 @@
 						<p class="text-md text-darkblue">{{ event.content }}</p>
 					</div>
 				</div>
+				<div class="pt-5">
+					<div class="pb-5">
+						<h4 class="text-xl font-medium font-unbounded text-darkblue">Event sponsoring</h4>
+					</div>
+					<div class="w-4/5">
+						<ul class="flex items-center gap-4">
+							{% for sponsor in sponsorings %}
+								<li class="w-20 h-20 overflow-hidden rounded-lg">
+									<img class="w-full h-full object-cover" src="/assets/upload/{{ sponsor.logo }}" alt="">
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
 			</div>
 			<div class="col-span-4">
 				<div class="sticky top-20 flex flex-col gap-5">
@@ -40,8 +54,16 @@
 						<h4 class="text-xl font-medium font-unbounded text-darkblue">Organized by</h4>
 					</div>
 					<div class="flex items-center gap-5 p-6 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
-						<div class="relative w-16 h-16 bg-darkblue rounded-full overflow-hidden shadow-md">
-							<img src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F471036159%2F246897696989%2F1%2Foriginal.20230316-212255?w=512&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C324%2C1068%2C1068&s=e956794fdd057a3435666ea6c789b1a4" alt="">
+						<div class="relative w-16 h-16 bg-gray-300 rounded-full overflow-hidden shadow-md flex items-center justify-center">
+							{% if user.avatar is not empty %}
+								<img src="{{ user.avatar }}" alt="">
+							{% else %}
+							<span class="text-orange">
+								<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" class="size-9">
+									<path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z"></path>
+								</svg>
+							</span>
+							{% endif %}
 						</div>
 						<div class="flex flex-col">
 							<span class="text-lg capitalize font-medium font-unbounded text-orange">
@@ -53,8 +75,8 @@
 
 					<div class="flex flex-col gap-5 p-6 bg-gray-100 rounded-xl border border-1 border-gray-300 shadow-md">
 						<div class="flex flex-col gap-1">
-							<span class="text-md font-unbounded font-medium text-darkblue">from</span>
 							<div class="flex items-center gap-2">
+								<span class="text-md font-unbounded font-medium text-darkblue">from</span>
 								<span class="text-md text-darkblue">
 									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
 										<path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
@@ -69,9 +91,9 @@
 									GMT+1</span>
 							</div>
 						</div>
-						<span class="text-md font-unbounded font-medium text-darkblue">To</span>
 
 						<div class="flex items-center gap-2">
+							<span class="text-md font-unbounded font-medium text-darkblue">To</span>
 							<span class="text-md text-darkblue">
 								<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-6">
 									<path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"/>
@@ -129,7 +151,7 @@
 							</div>
 
 						{% else %}
-						<div class="w-full">
+							<div class="w-full">
 								<div class="w-full h-12 bg-orange-300 text-white text-md font-unbounded font-medium rounded-xl flex items-center justify-center">
 									Sold out
 								</div>

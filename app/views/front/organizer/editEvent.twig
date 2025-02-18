@@ -135,8 +135,8 @@
                 <div id="regionsAndCities"
                      class="hidden flex flex-col gap-2">
                     </label>
-                    <div class="flex  gap-5">
-                        <select name="region"
+                    <div class="flex gap-5">
+                        <select name="region" id="region-select"
                                 class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]">
                             <option value="">Select Region</option>
                             {% for region in regions %}
@@ -146,11 +146,13 @@
                                 </option>
                             {% endfor %}
                         </select>
-                        <select id="city" name="city"
+
+                        <select id="city-select" name="city"
                                 class="px-3 outline-darkblue border-1 border-gray-300 rounded-md h-[50px]">
                             <option value="">Select City</option>
                             {% for city in cities %}
-                                <option value="{{ city.id }}" {% if city.id == event.city_id %}selected{% endif %}>
+                                <option value="{{ city.id }}"
+                                        {% if city.id == event.city_id %}selected{% endif %}>
                                     {{ city.ville }}
                                 </option>
                             {% endfor %}
@@ -440,4 +442,43 @@ document
     }
   });
 </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const regionSelect = document.getElementById('region-select');
+            const citySelect = document.getElementById('city-select');
+            const currentCityId = '{{ event.city_id }}';
+
+            regionSelect.addEventListener('change', function() {
+                const regionId = this.value;
+                updateCities(regionId);
+            });
+
+            function updateCities(regionId) {
+                citySelect.innerHTML = '<option value="">Select City</option>';
+
+                if (regionId) {
+                    fetch(`/get-cities-by-region?id=${regionId}`)
+                        .then(response => response.json())
+                        .then(cities => {
+                            cities.forEach(city => {
+                                const option = document.createElement('option');
+                                option.value = city.id;
+                                option.textContent = city.ville;
+                                if (city.id == currentCityId) {
+                                    option.selected = true;
+                                }
+                                citySelect.appendChild(option);
+                            });
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            }
+
+            const initialRegionId = '{{ event.region_id }}';
+            if (initialRegionId) {
+                updateCities(initialRegionId);
+            }
+        });
+    </script>
 {% endblock %}
