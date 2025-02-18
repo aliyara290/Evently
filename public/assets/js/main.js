@@ -31,7 +31,6 @@ subSearchBtn.addEventListener("click", function (e) {
 
       .then((response) => {
         // eventsContainer.innerHTML = "";
-        console.log(response.data);
 
         if (response.data.events.length > 0) {
           document.getElementById("pagination__ev").style.display = "flex";
@@ -108,7 +107,6 @@ searchCityInput.addEventListener("input", () => {
     axios
       .get("/events/city?city=" + encodeURIComponent(query))
       .then((response) => {
-        console.log(response.data);
 
         if (response.data.cities.length > 0) {
           cityContainer.innerHTML = response.data.cities
@@ -146,6 +144,8 @@ filterSubmitBtn.addEventListener("click", (e) => {
   let categoryV = document.querySelector("input[name='category-option']:checked");
   // let priceV = document.querySelector("input[name='price-option']:checked");
   let dateV = document.querySelector("[name='eventDate']");
+  console.log(dateV.value);
+  
   let eventsContainer = document.getElementById("events__lists");
   // let checkPrice = priceV === null ? "false" : priceV.value;
   
@@ -160,7 +160,7 @@ filterSubmitBtn.addEventListener("click", (e) => {
       )
       .then((response) => {
         // eventsContainer.innerHTML = "";
-        console.log(response.data);
+console.log(dateV.value);
 
         if (response.data.eventsFilter.length > 0) {
           document.getElementById("pagination__ev").style.display = "flex";
@@ -176,9 +176,9 @@ filterSubmitBtn.addEventListener("click", (e) => {
                                       }" class="h-44 w-full object-cover"/>
                                       <div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
                                           <time datetime="${
-                                            event.event_date
+                                            event.start_date
                                           }" class="block text-xs text-gray-500">
-                                              ${event.event_date}
+                                              ${event.start_date}
                                           </time>
 
                                           <h3 class="text-lg text-gray-900">${
