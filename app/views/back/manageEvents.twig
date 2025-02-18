@@ -11,23 +11,23 @@
                 {% for event in events %}
 				<li class="pending__course">
 					<div class="course__cover">
-						<img src="/assets/images/linkedin.png" alt="">
+						<img src="/assets/upload/{{event.image}}" alt="">
 					</div>
 					<div class="courseTeacher">
 						<div class="teacher__picture-c">
 
-							<img src="{{event.image}}" alt="">
+							<img src="" alt="">
 
 						</div>
 						<div class="organiser__name-c">
 							<span>
-								<p>{{event.firstname}}</p>
+								<h5 class="font-medium text-md font-unbounded">{{event.firstname}} {{event.lastname}}</h5>
 							</span>
 						</div>
 					</div>
 					<div class="event__title-c">
 						<a href="/event?slug=">
-							<h3>{{event.title}}</h3>
+							<h3 class="font-medium text-xl font-unbounded">{{event.title}}</h3>
 						</a>
 					</div>
 					<div class="acc_ref-article">
@@ -59,13 +59,11 @@
 					<li>
 						<a href="?page=" class="pagination-link pagination-prev">Prev</a>
 					</li>
-
 					<li>
-						<a href="?page=">
+						<a href="?page=" class="pagination-link">
 							1
 						</a>
 					</li>
-
 					<li>
 						<a href="?page=" class="pagination-link pagination-next">Next</a>
 					</li>
@@ -85,7 +83,7 @@
     {% for event in events_active %}
 				<li class="pending__course">
 					<div class="course__cover">
-						<img src="{{event.image}}" alt="">
+						<img src="/assets/upload/{{event.image}}" alt="">
 					</div>
 					<div class="courseTeacher">
 

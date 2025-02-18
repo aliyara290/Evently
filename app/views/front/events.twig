@@ -1,6 +1,41 @@
 {% extends "/layouts/Base.twig"%}
-
+{% block header %}
+	<div class="border border-xs border-[#b2b2b2] rounded-full bg-gray-50 px-1 py-1 flex items-center">
+		<div class="flex items-center gap-2 w-[300px] pl-0.5">
+			<span class="">
+				<svg x="0" y="0" viewbox="0 0 24 24" xml:space="preserve" width="25px" class="fill-gray-600">
+					<path d="M10 14c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm3.5.9c-1 .7-2.2 1.1-3.5 1.1-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6c0 1.3-.4 2.5-1.1 3.4l5.1 5.1-1.5 1.5-5-5.1z"></path>
+				</svg>
+			</span>
+			<div class="w-full">
+				<input type="text" id="searchForEvents" placeholder="Search for events" class="h-[35px] w-full outline-none border-none text-sm/12">
+			</div>
+		</div>
+		<div class="w-[1px] h-[38px] bg-[#B2B2B2]"></div>
+		<div class="pl-2 relative flex items-center gap-2 w-[300px]">
+			<span class="">
+				<svg x="0" y="0" viewbox="0 0 24 24" xml:space="preserve" width="25px" class="fill-gray-600">
+					<path d="M11.6 11.6c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0-7.6C8.5 4 6 6.5 6 9.6 6 13.8 11.6 20 11.6 20s5.6-6.2 5.6-10.4c0-3.1-2.5-5.6-5.6-5.6z"></path>
+				</svg>
+			</span>
+			<div class="w-full">
+				<input type="text" value="{{ inpValue }}" id="cityValue" placeholder="Search for events" class="h-[35px] w-full outline-none border-none text-sm/12">
+			</div>
+			<div class="">
+				<button type="submit" id="subSearchBtn" class="w-[38px] h-[38px] bg-[#f05537] rounded-full flex justify-center items-center cursor-pointer hover:bg-[#d63621]">
+					<svg x="0" y="0" viewbox="0 0 24 24" xml:space="preserve" width="25px" class="fill-white">
+						<path d="M10 14c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm3.5.9c-1 .7-2.2 1.1-3.5 1.1-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6c0 1.3-.4 2.5-1.1 3.4l5.1 5.1-1.5 1.5-5-5.1z"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="absolute bg-white w-full min-h-max overflow-y-auto top-[120%] right-0 rounded-sm border-1 border-gray-50">
+				<ul class="flex flex-col" id="searchForCity"></ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}
 {% block content %}
+	<div id="overlay" class="fixed top-0 left-0 bg-[#00000036] w-full h-full z-50 hidden"></div>
 	<main class="mx-auto p-6 flex flex-col gap-10 mb-6">
 		<div class="flex flex-col gap-1.5 pt-6">
 			<h2 class="text-gray-800 font-bold font-unbounded text-3xl">Events in Morocco</h2>
@@ -20,165 +55,169 @@
 						</div>
 
 					</div>
-					<div class="space-y-4">
-						<details class="overflow-hidden rounded-sm border border-gray-300 [&_summary::-webkit-details-marker]:hidden" open>
-							<summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-								<span class="text-sm font-medium">
-									Categories
-								</span>
+					<div class="w-full">
+						<form class="space-y-4" method="POST">
+							<details class="overflow-hidden rounded-sm border border-gray-300 [&_summary::-webkit-details-marker]:hidden" open>
+								<summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+									<span class="text-sm font-medium">
+										Categories
+									</span>
 
-								<span class="transition group-open:-rotate-180">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-									</svg>
-								</span>
-							</summary>
+									<span class="transition group-open:-rotate-180">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+											<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+										</svg>
+									</span>
+								</summary>
+								<div class="border-t border-gray-200 bg-white p-3 max-h-52 overflow-auto">
+									{% for category in categories %}
+										<div class="flex items-center space-x-2">
+											<input type="radio" id="{{ category.name }}" class="cursor-pointer" name="category-option" value="{{ category.name }}">
+											<label for="{{ category.name }}" class="text-lg cursor-pointer">{{ category.name }}</label>
+										</div>
+									{% endfor %}
 
-							<div class="border-t border-gray-200 bg-white">
-								<select name="category_sr" multiple>
-									<option value="">businness</option>
-									<option value="">businness</option>
-									<option value="">businness</option>
-									<option value="">businness</option>
-									<option value="">businness</option>
-								</select>
+
+								</div>
+							</details>
+							{# <details class="overflow-hidden rounded-sm border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+								<summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+									<span class="text-sm font-medium">
+										Price
+									</span>
+
+									<span class="transition group-open:-rotate-180">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+											<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+										</svg>
+									</span>
+								</summary>
+
+								<div class="border-t border-gray-200 bg-white p-3">
+									<div class="flex items-center space-x-2">
+										<input type="radio" id="free" class="cursor-pointer" name="price-option" value="false">
+										<label for="free" class="text-lg cursor-pointer">Free</label>
+									</div>
+									<div class="flex items-center space-x-2">
+										<input type="radio" id="paid" class="cursor-pointer" name="price-option" value="true">
+										<label for="paid" class="text-lg cursor-pointer">Paid</label>
+									</div>
+								</div>
+
+							</details> #}
+							<details class="overflow-hidden rounded-sm border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
+								<summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
+									<span class="text-sm font-medium">
+										Date
+									</span>
+
+									<span class="transition group-open:-rotate-180">
+										<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+											<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+										</svg>
+									</span>
+								</summary>
+
+								<div class="border-t border-gray-200 bg-white p-3">
+									<div class="flex flex-col gap-2">
+										<input type="date" placeholder="Event date" class="eventDatePicker p-3 outline-darkblue border-1 border-gray-300 rounded-md resize-none h-[50]" name="eventDate">
+									</div>
+								</div>
+
+							</details>
+							<div class="w-full">
+								<button type="submit" id="submit-filter-btn" class="w-full h-[45px] bg-orange text-white rounded-sm text-md hover:bg-darkOrange outline-none cursor-pointer">
+									Search
+								</button>
 							</div>
-						</details>
-						<details class="overflow-hidden rounded-sm border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-							<summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-								<span class="text-sm font-medium">
-									Price
-								</span>
-
-								<span class="transition group-open:-rotate-180">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-									</svg>
-								</span>
-							</summary>
-
-							<div class="border-t border-gray-200 bg-white p-3">
-								<div class="flex items-center space-x-2">
-									<input type="radio" id="free" class="cursor-pointer" name="price-option">
-									<label for="free" class="text-lg cursor-pointer">Free</label>
-								</div>
-								<div class="flex items-center space-x-2">
-									<input type="radio" id="paid" class="cursor-pointer" name="price-option">
-									<label for="paid" class="text-lg cursor-pointer">Paid</label>
-								</div>
-
-							</div>
-
-						</details>
-						<details class="overflow-hidden rounded-sm border border-gray-300 [&_summary::-webkit-details-marker]:hidden">
-							<summary class="flex cursor-pointer items-center justify-between gap-2 bg-white p-4 text-gray-900 transition">
-								<span class="text-sm font-medium">
-									Date
-								</span>
-
-								<span class="transition group-open:-rotate-180">
-									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
-									</svg>
-								</span>
-							</summary>
-
-							<div class="border-t border-gray-200 bg-white p-3">
-								<div class="flex items-center space-x-2">
-									<input type="radio" id="today" class="cursor-pointer" name="date-option">
-									<label for="today" class="text-lg cursor-pointer">Today</label>
-								</div>
-								<div class="flex items-center space-x-2">
-									<input type="radio" id="tomorrow" class="cursor-pointer" name="date-option">
-									<label for="tomorrow" class="text-lg cursor-pointer">Tomorrow</label>
-								</div>
-								<div class="flex items-center space-x-2">
-									<input type="radio" id="this-week" class="cursor-pointer" name="date-option">
-									<label for="this-week" class="text-lg cursor-pointer">This week</label>
-								</div>
-								<div class="flex items-center space-x-2">
-									<input type="radio" id="this-month" class="cursor-pointer" name="date-option">
-									<label for="this-month" class="text-lg cursor-pointer">This month</label>
-								</div>
-							</div>
-
-						</details>
+						</form>
 					</div>
 				</div>
 			</div>
 			<div class="col-span-9 w-full">
+				<div class="hidden mb-4" id="searchValue">
+					<h5 class="text-xl text-darkblue font-unbounded">Search for
+						<span class="text-orange" id="userInputValue"></span>
+						in
+						<span class="text-orange" id="userInputCity"></span>
+					</h5>
+				</div>
 				<div class="relative">
-					<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 grid-rows-1">
+					<ul id="events__lists" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 grid-rows-1">
 						{% for event in records %}
 							<li>
-								<article class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg h-full">
-									<img alt="" src="/assets/upload/{{ event.image }}" class="h-44 w-full object-cover"/>
-									<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
-										<time datetime="{{ event.start_date|date('Y-m-d') }}" class="block text-xs text-gray-500">
-											{{ event.end_date|date('jS M Y') }}
-										</time>
+								<a href="/event?id={{ event.id }}">
+									<article class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg h-full">
+										<img alt="" src="/assets/upload/{{ event.image }}" class="h-44 w-full object-cover"/>
+										<div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
+											<time datetime="{{ event.start_date|date('Y-m-d') }}" class="block text-xs text-gray-500">
+												{{ event.end_date|date('jS M Y') }}
+											</time>
 
-										<a href="{{ event.event_link }}">
 											<h3 class="text-lg text-gray-900">{{ event.title }}</h3>
-										</a>
 
-										<p class="line-clamp-3 text-sm/relaxed text-gray-500">{{ event.ville }}, {{ event.region }}</p>
+											<p class="line-clamp-3 text-sm/relaxed text-gray-500">{{ event.ville }},
+												{{ event.region }}</p>
 
-										<div class="flex items-center gap-2">
-											{% if event.price == 0 %}
-												<span class="text-green-500 font-medium">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-                                        <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-                                    </svg>
-                                </span>
-												<span class="text-green-500 font-medium">Free</span>
-											{% else %}
-												<span class="text-blue-500 font-medium">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
-                                        <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
-                                    </svg>
-                                </span>
-												<span class="text-blue-500 font-medium">{{ event.price }} DH</span>
-											{% endif %}
+											<div class="flex items-center gap-2">
+												{% if event.price == 0 %}
+													<span class="text-green-500 font-medium">
+														<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
+															<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+														</svg>
+													</span>
+													<span class="text-green-500 font-medium">Free</span>
+												{% else %}
+													<span class="text-blue-500 font-medium">
+														<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="size-4">
+															<path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+														</svg>
+													</span>
+													<span class="text-blue-500 font-medium">{{ event.price }}
+														DH</span>
+												{% endif %}
+											</div>
 										</div>
-									</div>
-								</article>
+									</article>
+								</a>
 							</li>
 						{% endfor %}
 					</ul>
 				</div>
-				<div class="w-full flex justify-center pt-8">
-					<nav class="flex items-center -space-x-px" aria-label="Pagination">
-						<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg border border-gray-200 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Previous">
-							<svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="m15 18-6-6 6-6"></path>
-							</svg>
-							<span class="sr-only">Previous</span>
-						</button>
-						<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center bg-gray-200 text-gray-800 border border-gray-200 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none" aria-current="page">1</button>
-						<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center border border-gray-200 text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">2</button>
-						<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center border border-gray-200 text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">3</button>
-						<div class="hs-tooltip inline-block border border-gray-200">
-							<button type="button" class="cursor-pointer hs-tooltip-toggle group min-h-[36px] min-w-[36px] flex justify-center items-center text-gray-400 hover:text-blue-600 p-2 text-sm focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
-								<span class="group-hover:hidden text-xs">•••</span>
-								<svg class="group-hover:block hidden shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-									<path d="m6 17 5-5-5-5"></path>
-									<path d="m13 17 5-5-5-5"></path>
+				{% if records > 0 %}
+					<div id="pagination__ev" class="w-full flex justify-center pt-8">
+						{# <nav class="flex items-center -space-x-px" aria-label="Pagination">
+							<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg border border-gray-200 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Previous">
+								<svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="m15 18-6-6 6-6"></path>
 								</svg>
-								<span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm" role="tooltip">
-									Next 4 pages
-								</span>
+								<span class="sr-only">Previous</span>
 							</button>
-						</div>
-						<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center border border-gray-200 text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">8</button>
-						<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg border border-gray-200 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
-							<span class="sr-only">Next</span>
-							<svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="m9 18 6-6-6-6"></path>
-							</svg>
-						</button>
-					</nav>
-				</div>
+							<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center bg-gray-200 text-gray-800 border border-gray-200 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none" aria-current="page">1</button>
+							<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center border border-gray-200 text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">2</button>
+							<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center border border-gray-200 text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">3</button>
+							<div class="hs-tooltip inline-block border border-gray-200">
+								<button type="button" class="cursor-pointer hs-tooltip-toggle group min-h-[36px] min-w-[36px] flex justify-center items-center text-gray-400 hover:text-blue-600 p-2 text-sm focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">
+									<span class="group-hover:hidden text-xs">•••</span>
+									<svg class="group-hover:block hidden shrink-0 size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="m6 17 5-5-5-5"></path>
+										<path d="m13 17 5-5-5-5"></path>
+									</svg>
+									<span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm" role="tooltip">
+										Next 4 pages
+									</span>
+								</button>
+							</div>
+							<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] flex justify-center items-center border border-gray-200 text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none">8</button>
+							<button type="button" class="cursor-pointer min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg border border-gray-200 text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" aria-label="Next">
+								<span class="sr-only">Next</span>
+								<svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="m9 18 6-6-6-6"></path>
+								</svg>
+							</button>
+						</nav> #}
+					</div>
+				{% endif %}
 				<div class="w-full">
 					<div class="flex flex-col gap-1.5 pb-6 pt-14">
 						<h2 class="text-gray-800 font-bold font-unbounded text-3xl">Frequently asked questions</h2>
@@ -241,4 +280,17 @@
 			</div>
 		</div>
 	</main>
+{% endblock %}
+
+{% block scripts %}
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script>
+		flatpickr(".eventDatePicker", {
+dateFormat: "Y-m-d", {
+# defaultDate: "today",
+#
+}
+disableMobile: true
+});
+	</script>
 {% endblock %}

@@ -1,0 +1,65 @@
+{% block content %}
+
+<body class="bg-gray-100 flex">
+
+    <!-- Sidebar -->
+    {% include 'front/organizer/layout/sidebar.twig' %}
+
+    <!-- Contenu principal -->
+    <div class="ml-64 w-full">
+
+        <!-- Header -->
+        {% include 'front/organizer/layout/header.twig' %}
+
+        <!-- Section Sponsors -->
+        <main class="p-8">
+            <div class="max-w-6xl mx-auto mb-8">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-3xl font-bold text-gray-800">Nos Sponsors</h1>
+                    <a href="/organizer/createsponser" class="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition">
+                        <span class="text-2xl">+</span> <span>Ajouter un sponsor</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Grille des sponsors -->
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for sponsor in sponsorings %}
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <img src="/assets/upload/{{ sponsor.logo }}" alt="Logo sponsor" class="w-20 h-20 object-cover rounded">
+                        <div class="flex gap-2">
+                          
+
+                            <form action="/sponsor/delete" method="POST">
+                                <input type="hidden" name="sponsor_id" value="{{ sponsor.id }}">
+                                <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+
+                            <form action="/sponsor/updatepage" method="POST">
+                                <input type="hidden" name="sponsor_id" value="{{ sponsor.id }}">
+                                <button class="p-2 text-green-600 hover:bg-green-50 rounded-lg">
+                                <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ sponsor.name }}</h3>
+                    <span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium mb-3">
+                        Platine
+                    </span>
+                    <p class="text-gray-600">Leader en solutions technologiques</p>
+
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+
+    </div>
+
+</body>
+
+{% endblock %}

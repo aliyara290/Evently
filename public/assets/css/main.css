@@ -9,10 +9,10 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #f05537;
+  background-color: #979696;
 }
 
 ::-webkit-scrollbar-track {
@@ -68,12 +68,11 @@ select[multiple]::-webkit-scrollbar-track {
 
 select {
   width: 100%;
-  height: 4.5rem;
-  padding: 0 1.5rem;
-  font-size: 1.4rem;
+  padding: 12px 15px;
+  font-size: 14px;
   font-family: 'Poppins', sans-serif;
   color: #757575;
-  background-color: #efefef96;
+  background-color: #fff;
   border-radius: 5px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -84,10 +83,6 @@ select {
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 16px;
-}
-
-select:hover {
-  border-color: #1e2532;
 }
 
 select:focus {

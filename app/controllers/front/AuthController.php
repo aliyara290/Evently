@@ -29,7 +29,6 @@ class AuthController
     public function googleLogin()
     {
         $authUrl = $this->client->createAuthUrl();
-        echo $authUrl;
         header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
         exit();
     }
@@ -46,7 +45,7 @@ class AuthController
 
         $oauth = new Oauth2($this->client);
         $googleUser = $oauth->userinfo->get();
-        
+
         $user = $this->userModel->findByEmail($googleUser->email);
 
         if (!$user) {
@@ -56,16 +55,20 @@ class AuthController
             $this->userModel->setGoogleId($googleUser->id);
             $this->userModel->setAvatar($googleUser->picture);
             $this->userModel->register();
-        }
+            echo "yes";
+        } else echo "no";
+
         $getUserId = $this->userModel->findByEmail($googleUser->email);
         $id =  $getUserId[0]["id"];
-        
+        $roles = $this->userModel->findRole($id);
         Session::set("user", [
-            "id" => $id,
-            "email" => $googleUser->email,
-            "firstName" => $googleUser->givenName,
-            "lastName" => $googleUser->familyName,
-            "avatar" => $googleUser->picture
+            "id" => $getUserId[0]["id"],
+            "email" => $getUserId[0]["email"],
+            "firstName" => $getUserId[0]["firstname"],
+            "lastName" => $getUserId[0]["lastname"],
+            "avatar" => $getUserId[0]["avatar"],
+            "roles" => $roles,
+            "active_role" => $getUserId[0]["id"] === 10 ? "Admin" : $roles[0]["name"]
         ]);
         header('Location: /');
         exit();
@@ -76,8 +79,9 @@ class AuthController
         view::render("register");
     }
 
-    public function register() {
-        if($_SERVER["REQUEST_METHOD"] === "POST") {
+    public function register()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $firstName = Validator::sanitize($_POST["u_firstname"]);
             $lastName = Validator::sanitize($_POST["u_lastname"]);
             $email = Validator::validateEmail($_POST["u_email"]);
@@ -87,7 +91,7 @@ class AuthController
             $this->userModel->setEmail($email);
             $this->userModel->setPassword($password);
             $check = $this->userModel->register();
-            if($check) {
+            if ($check) {
                 header("location: /login");
             }
         }
@@ -99,24 +103,27 @@ class AuthController
     }
     public function login()
     {
-        if($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $email = Validator::validateEmail($_POST["u_email"]);
             $password = Validator::validatePassword($_POST["u_password"]);
-            echo $email;
-            echo $password;
             $this->userModel->setEmail($email);
             $this->userModel->setPassword($password);
             $check = $this->userModel->login();
+            $user = $this->userModel->findByEmail($_POST["u_email"]);
 
-            if($check) {
+            if ($check) {
+                $roles = $this->userModel->findRole($user[0]["id"]);
                 Session::set("user", [
-                    "id" => $check[0]["id"],
-                    "email" => $check[0]["email"],
-                    "firstName" => $check[0]["firstname"],
-                    "lastName" => $check[0]["lastname"],
-                    "avatar" => $check[0]["avatar"]
+                    "id" => $check["id"],
+                    "email" => $check["email"],
+                    "firstName" => $check["firstname"],
+                    "lastName" => $check["lastname"],
+                    "avatar" => $check["avatar"],
+                    "roles" => $roles,
+                    "active_role" => $check["id"] === 10 ? "Admin" : $roles[0]["name"]
                 ]);
                 header("location: /");
+
                 exit();
             }
         }
@@ -131,9 +138,36 @@ class AuthController
         view::render("resetPassword");
     }
 
-    public function logout() {
+    public function logout()
+    {
         Session::destroy();
+        Session::remove("user");
+        Session::set("user", [
+            "active_role" => "guest"
+        ]);
         header("location: /login");
         exit;
+    }
+    public function switchRole()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["role"])) {
+            $newRole = $_POST["role"];
+
+            // Get the roles from the session
+            $roles = Session::get("user")["roles"];
+
+            // Find the role in the session
+            foreach ($roles as $role) {
+                if ($role["name"] === $newRole) {
+                    // Update the active role in the session
+                    $_SESSION["user"]["active_role"] = $role["name"];  // Store the role's name as a string
+                    break;
+                }
+            }
+        }
+
+        // Redirect to the homepage (or wherever you want the user to go after switching roles)
+        header("Location: /");
+        exit();
     }
 }

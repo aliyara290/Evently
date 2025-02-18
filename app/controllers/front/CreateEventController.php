@@ -26,4 +26,16 @@ class CreateEventController
         View::render("create/create", ["user" => $this->userData, "categories" => $categories, "regions" => $regions, "cities" => $cities, "sponsorings" => $sponsorings]);
     }
 
+    public function getCitiesByRegion()
+    {
+        $regionId = $_GET['id'] ?? null;
+        if (!$regionId) {
+            echo json_encode([]);
+            return;
+        }
+
+        $cities = $this->eventData->getCitiesByRegion($regionId);
+        echo json_encode($cities);
+    }
+
 }

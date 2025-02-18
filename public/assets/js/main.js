@@ -1,15 +1,227 @@
-// const axios = require('axios');
+const searchInput = document.getElementById("searchForEvents");
+const cityValueSt = document.getElementById("cityValue");
+const subSearchBtn = document.getElementById("subSearchBtn");
+let cityContainer = document.getElementById("searchForCity");
 
-// Make a request for a user with a given ID
-axios.get('https://jsonplaceholder.typicode.com/users')
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  })
-  .finally(function () {
-  });
+subSearchBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  document.getElementById("overlay").style.display = "none";
+
+  cityContainer.innerHTML = "";
+  let query = searchInput.value.trim();
+  let city = cityValueSt.value.trim();
+  let eventsContainer = document.getElementById("events__lists");
+  let userInputValue = document.getElementById("userInputValue");
+  let userInputCity = document.getElementById("userInputCity");
+  userInputValue.textContent = query;
+  userInputCity.textContent = city !== "" ? city : "Morocco";
+  // if (query === "") {
+  //   location.reload();
+  // }
+  let searchValue = document.getElementById("searchValue");
+  if (query.length > 2 || city.length > 2) {
+    searchValue.classList.remove("hidden");
+    axios
+      .get(
+        "/events/search?q=" +
+          encodeURIComponent(query) +
+          "&city=" +
+          encodeURIComponent(city)
+      )
+
+      .then((response) => {
+        // eventsContainer.innerHTML = "";
+
+        if (response.data.events.length > 0) {
+          document.getElementById("pagination__ev").style.display = "flex";
+
+          eventsContainer.innerHTML = response.data.events
+            .map((event) => {
+              return `
+                          <li>
+                              <a href="/event?id=${event.id}">
+                                  <article class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg h-full">
+                                      <img alt="" src="/assets/upload/${
+                                        event.image
+                                      }" class="h-44 w-full object-cover"/>
+                                      <div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
+                                          <time datetime="${
+                                            event.event_date
+                                          }" class="block text-xs text-gray-500">
+                                              ${event.event_date}
+                                          </time>
+
+                                          <h3 class="text-lg text-gray-900">${
+                                            event.title
+                                          }</h3>
+
+                                          <p class="line-clamp-3 text-sm/relaxed text-gray-500">
+                                              ${event.ville || "Unknown City"}
+                                          </p>
+
+                                          <div class="flex items-center gap-2">
+                                              ${
+                                                event.price == 0
+                                                  ? `<span class="text-green-500 font-medium">
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                                          <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+                                                      </svg>
+                                                  </span>
+                                                  <span class="text-green-500 font-medium">Free</span>`
+                                                  : `<span class="text-blue-500 font-medium">
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                                          <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+                                                      </svg>
+                                                  </span>
+                                                  <span class="text-blue-500 font-medium">${event.price} DH</span>`
+                                              }
+                                          </div>
+                                      </div>
+                                  </article>
+                              </a>
+                          </li>
+                      `;
+            })
+            .join("");
+        } else {
+          document.getElementById("pagination__ev").style.display = "none";
+          eventsContainer.innerHTML = "<p>No events found.</p>";
+        }
+      })
+      .catch((error) => console.error("Error fetching events:", error));
+  } else {
+    searchValue.classList.add("hidden");
+  }
+});
+
+const searchCityInput = document.getElementById("cityValue");
+searchCityInput.addEventListener("input", () => {
+  document.getElementById("overlay").style.display = "block";
+  let query = searchCityInput.value.trim();
+  if (query === "") {
+    cityContainer.innerHTML = "";
+  }
+  if (query.length >= 1) {
+    // searchValue.classList.remove("hidden");
+    cityContainer.classList.remove("hidden");
+    axios
+      .get("/events/city?city=" + encodeURIComponent(query))
+      .then((response) => {
+
+        if (response.data.cities.length > 0) {
+          cityContainer.innerHTML = response.data.cities
+            .map((city) => {
+              return `
+                          <li class="hover:bg-gray-200 mx-1 mt-1 bg-[#f5f4f4] p-2 cursor-pointer text-sm text-gray-600 rounded-sm">${city.ville}</li>
+                      `;
+            })
+            .join("");
+
+          const searchForCity = document.querySelectorAll("#searchForCity li");
+          searchForCity.forEach((city) => {
+            city.addEventListener("click", (e) => {
+              document.getElementById("overlay").style.display = "none";
+
+              let target = e.target.textContent;
+              let cityValue = document.querySelector("#cityValue");
+              cityValue.value = target;
+              cityContainer.innerHTML = "";
+            });
+          });
+        } else {
+          cityContainer.innerHTML = "<p>No events found.</p>";
+        }
+      })
+      .catch((error) => console.error("Error fetching events:", error));
+  } else {
+    searchValue.classList.add("hidden");
+  }
+});
+
+const filterSubmitBtn = document.getElementById("submit-filter-btn");
+filterSubmitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  let categoryV = document.querySelector("input[name='category-option']:checked");
+  // let priceV = document.querySelector("input[name='price-option']:checked");
+  let dateV = document.querySelector("[name='eventDate']");
+  console.log(dateV.value);
+  
+  let eventsContainer = document.getElementById("events__lists");
+  // let checkPrice = priceV === null ? "false" : priceV.value;
+  
+  if (categoryV || dateV) {
+    // searchValue.classList.remove("hidden");
+    axios
+      .get(
+        "/events/filter?category=" +
+          encodeURIComponent(categoryV.value) +
+          "&date=" +
+          encodeURIComponent(dateV.value)
+      )
+      .then((response) => {
+        // eventsContainer.innerHTML = "";
+console.log(dateV.value);
+
+        if (response.data.eventsFilter.length > 0) {
+          document.getElementById("pagination__ev").style.display = "flex";
+
+          eventsContainer.innerHTML = response.data.eventsFilter
+            .map((event) => {
+              return `
+                          <li>
+                              <a href="/event?id=${event.id}">
+                                  <article class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg h-full">
+                                      <img alt="" src="/assets/upload/${
+                                        event.image
+                                      }" class="h-44 w-full object-cover"/>
+                                      <div class="bg-white p-4 sm:p-6 flex flex-col gap-2">
+                                          <time datetime="${
+                                            event.start_date
+                                          }" class="block text-xs text-gray-500">
+                                              ${event.start_date}
+                                          </time>
+
+                                          <h3 class="text-lg text-gray-900">${
+                                            event.title
+                                          }</h3>
+
+                                          <p class="line-clamp-3 text-sm/relaxed text-gray-500">
+                                              ${event.ville || "Unknown City"}
+                                          </p>
+
+                                          <div class="flex items-center gap-2">
+                                              ${
+                                                event.price == 0
+                                                  ? `<span class="text-green-500 font-medium">
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                                          <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+                                                      </svg>
+                                                  </span>
+                                                  <span class="text-green-500 font-medium">Free</span>`
+                                                  : `<span class="text-blue-500 font-medium">
+                                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                                                          <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd"/>
+                                                      </svg>
+                                                  </span>
+                                                  <span class="text-blue-500 font-medium">${event.price} DH</span>`
+                                              }
+                                          </div>
+                                      </div>
+                                  </article>
+                              </a>
+                          </li>
+                      `;
+            })
+            .join("");
+        } else {
+          document.getElementById("pagination__ev").style.display = "none";
+          eventsContainer.innerHTML = "<p>No events found.</p>";
+        }
+      })
+      .catch((error) => console.error("Error fetching events:", error));
+  }
+});
+
 
 
 function togglePassword(id) {
@@ -170,22 +382,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
-
-
-const fileInputs = document.querySelectorAll('.file-input');
-const fileNames = document.querySelectorAll('.file-name');
+const fileInputs = document.querySelectorAll(".file-input");
+const fileNames = document.querySelectorAll(".file-name");
 
 fileInputs.forEach((fileInput, index) => {
-  fileInput.addEventListener('change', function () {
+  fileInput.addEventListener("change", function () {
     if (this.files && this.files[0]) {
       fileNames[index].textContent = this.files[0].name;
     } else {
-      fileNames[index].textContent = 'No file chosen';
+      fileNames[index].textContent = "No file chosen";
     }
-
   });
 });
-
-
-

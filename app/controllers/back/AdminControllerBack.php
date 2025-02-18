@@ -1,5 +1,7 @@
 <?php 
 namespace App\Controllers\back;
+
+use App\Controllers\Mail\MailController;
 use App\Models\Category;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -12,6 +14,7 @@ class AdminControllerBack {
     protected $loader;
     private $connection;
     private $get_class;
+    private $mail;
     private $classEvent;
     private $role = 'Participant';
     public function __construct(){
@@ -23,6 +26,7 @@ class AdminControllerBack {
         $this->loader = new FilesystemLoader('C:\laragon\www\EVENTLY\app\views');
         $this->twig = new Environment($this->loader);
         $this->classEvent = new Event();
+        $this->mail = new MailController();
     }
 
     public function getallUsers(){
@@ -60,7 +64,6 @@ class AdminControllerBack {
     public function deleteUser(){
         if(isset($_GET['UserId'])){
             $id = (int) $_GET['UserId'];
-            var_dump($id);
             $this->get_class->deleteUser($this->connection,$id);
             header('Location: /admin/Mange_user'); 
             exit; 
@@ -82,16 +85,17 @@ class AdminControllerBack {
     
     public function getAllEventActive (){
         $usersData = $this->classEvent->redAllEventsActive($this->connection);
-        var_dump($usersData);
         echo  $this->twig->render('back/manageEvents.twig', ['events_active' => $usersData]);
     }
     
 
     public function updatestatus(){
         if(isset($_GET['eventId'])) {
-            $this->classEvent->updateStatusEvent($_GET['eventId'],$this->connection);
+            $check = $this->classEvent->updateStatusEvent($_GET['eventId'],$this->connection);
+            if($check) {
+                $this->mail->sendApprovedMail();
+            }
             header('Location: /admin/events'); 
-
         }else{
             echo "id no corict";
         }

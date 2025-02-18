@@ -20,7 +20,6 @@ class Database {
         try {
             $this->pdo = new PDO($dsn, $username, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "seccuss";
         } catch(PDOException $e) {
             echo "failed to connect: " . $e->getMessage();
         }
