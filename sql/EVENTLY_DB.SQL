@@ -261,6 +261,10 @@ ALTER TABLE IF EXISTS public.ticket
     ON DELETE CASCADE;
 
 
+
+
+
+
 ALTER TABLE IF EXISTS public.user_role
     ADD CONSTRAINT user_role_role_id_fkey FOREIGN KEY (role_id)
     REFERENCES public.role (id) MATCH SIMPLE

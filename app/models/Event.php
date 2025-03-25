@@ -15,17 +15,12 @@ class Event
     private int $id;
     private $pdo;
     private $mail;
-
     private string $image;
     private string $title;
     private string $description;
     private string $content;
     private bool $isValidate = true;
-
-
     private string $category;
-
-
     private string $eventMode;
     private string $places;
     private string $regionId;
@@ -37,13 +32,9 @@ class Event
     private string $endDate;
     private string $eventLink;
     private string $status;
-
     private string $price;
-
     private $eventDate;
-
     private $eventTime;
-
     private array $sponsorings = [];
 
     public function __construct()
@@ -271,6 +262,7 @@ public function updateStatusEvent($id, $pdo,)
     $check = $stmt->execute();
     return $check;
 }
+
 public function deleteEventId($id)
 {
     try {
@@ -289,7 +281,6 @@ public function deleteEventId($id)
     }
 }
 
-
 public function updateStatusEventRrefuse($id, $pdo,)
 {
 
@@ -302,9 +293,6 @@ public function updateStatusEventRrefuse($id, $pdo,)
 
     $stmt->execute();
 }
-
-
-   
 
 public function createEvent()
 {
@@ -339,7 +327,6 @@ public function createEvent()
         return false;
     }
 }
-
 
     public function removeSponsoringsFromEvent($id)
     {
@@ -532,6 +519,7 @@ GROUP BY
       
         $sql = "SELECT 
                 event.image,
+                event.id,
                 event.title,  
                 event.start_date,  
                 event.description,  

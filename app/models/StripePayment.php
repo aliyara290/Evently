@@ -22,7 +22,6 @@ class StripePayment extends Payment
     public function createCheckoutSession($amount, $currency, $event, $places)
     {
         Stripe::setApiKey($this->stripeSecretKey);
-
         try {
             $checkoutSession = Session::create([
                 'payment_method_types' => ['card'],
@@ -38,7 +37,7 @@ class StripePayment extends Payment
                         'quantity' => $places,
                     ],
                 ],
-                'mode' => 'payment', 
+                'mode' => 'payment',
                 'success_url' => 'http://localhost:8080/payment/confirm?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => 'http://localhost:8080/payment/cancel',
             ]);
@@ -46,7 +45,7 @@ class StripePayment extends Payment
             return [
                 'status' => 'success',
                 'session_id' => $checkoutSession->id,
-                'checkout_url' => $checkoutSession->url, 
+                'checkout_url' => $checkoutSession->url,
             ];
         } catch (ApiErrorException $e) {
             return [
@@ -56,13 +55,14 @@ class StripePayment extends Payment
         }
     }
 
-    public function confirmation($sessionId) {
+    public function confirmation($sessionId)
+    {
         try {
             Stripe::setApiKey($this->stripeSecretKey);
-    
+
             // Retrieve session details from Stripe
             $session = Session::retrieve($sessionId);
-    
+
             if ($session->payment_status == 'paid') {
                 // Save payment details in the database
                 $this->savePayment(
