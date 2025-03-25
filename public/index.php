@@ -40,7 +40,7 @@ $router->get("/events/search", EventsController::class, "searchForEvents");
 $router->get("/events/city", EventsController::class, "searchForCity");
 $router->get("/events/filter", EventsController::class, "filter");
 // $router->get("/events", EventsController::class, "page");
-$router->get("/setting/profile", SettingController::class, "profile", AuthMiddleware::class, ["Organizer", "Participant"]);
+$router->get("/setting/profile", SettingController::class, "profile", AuthMiddleware::class, ["Organizer", "Participant", "Admin"]);
 $router->get("/setting/reset", SettingController::class, "setting", AuthMiddleware::class, ["Organizer", "Participant"]);
 $router->get("/account/profile", UserProfileController::class, "page", AuthMiddleware::class, ["Organizer", "Participant"]);
 $router->get("/faqs", AppController::class, "faqs");

@@ -648,9 +648,6 @@
       max-width: 96rem;
     }
   }
-  .m-0 {
-    margin: calc(var(--spacing) * 0);
-  }
   .m-auto {
     margin: auto;
   }
@@ -1438,6 +1435,12 @@
   .object-cover {
     object-fit: cover;
   }
+  .object-\[0\%_50\%\] {
+    object-position: 0% 50%;
+  }
+  .object-\[50\%_0\%\] {
+    object-position: 50% 0%;
+  }
   .object-\[80\%_70\%\] {
     object-position: 80% 70%;
   }
@@ -1908,13 +1911,6 @@
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
         border-color: var(--color-gray-200);
-      }
-    }
-  }
-  .group-hover\:border-gray-300 {
-    &:is(:where(.group):hover *) {
-      @media (hover: hover) {
-        border-color: var(--color-gray-300);
       }
     }
   }
